@@ -1,46 +1,72 @@
-# Astro Starter Kit: Basics
+# NYT87 — Company Website
 
-```sh
-npm create astro@latest -- --template basics
+Official website for **NYT87**, a remote software development company. Built with [Astro](https://astro.build) and deployed to [NYT87.github.io](https://NYT87.github.io).
+
+## About
+
+NYT87 helps companies build robust IT projects and contribute to the open-source community. We specialize in:
+
+- **Web Applications** — Dynamic, responsive frontend experiences
+- **Backend Applications** — Scalable APIs and server-side systems
+- **Infrastructure** — Cloud-native solutions and CI/CD pipelines
+
+## Tech Stack
+
+- **Framework:** [Astro](https://astro.build) (Static Site Generation)
+- **Styling:** Vanilla CSS with Glassmorphism design
+- **Fonts:** [Outfit](https://fonts.google.com/specimen/Outfit) & [Inter](https://fonts.google.com/specimen/Inter) (Google Fonts)
+- **Formatter:** [Biome](https://biomejs.dev) (JS/TS) + [Prettier](https://prettier.io) (Astro files)
+- **Deployment:** GitHub Pages via GitHub Actions
+
+## Project Structure
+
 ```
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
 /
+├── .github/
+│   └── workflows/
+│       └── deploy.yml       # CI/CD — deploys to GitHub Pages on push to main
 ├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
+│   └── assets/              # Static images (logo, brand, etc.)
+├── src/
+│   ├── assets/              # Astro-optimized images (e.g. team photos)
+│   ├── components/          # Reusable Astro components
+│   │   ├── Navigation.astro
+│   │   ├── Hero.astro
+│   │   ├── About.astro
+│   │   ├── Services.astro
+│   │   ├── Projects.astro
+│   │   ├── Team.astro
+│   │   └── Footer.astro
+│   ├── layouts/
+│   │   └── Layout.astro     # Global layout, fonts, and base styles
+│   └── pages/
+│       └── index.astro      # Page entry point
+├── biome.json               # Biome config
+├── .prettierrc              # Prettier config (Astro plugin)
 └── package.json
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Commands
 
-## 🧞 Commands
+All commands are run from the root of the project:
 
-All commands are run from the root of the project, from a terminal:
+| Command | Action |
+| :--- | :--- |
+| `npm install` | Install dependencies |
+| `npm run dev` | Start local dev server at `localhost:4321` |
+| `npm run build` | Build production site to `./dist/` |
+| `npm run preview` | Preview production build locally |
+| `npm run format` | Format all files (Biome + Prettier) |
+| `npm run lint` | Lint and auto-fix with Biome |
+| `npm run check` | Run full format + lint check |
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Deployment
 
-## 👀 Want to learn more?
+The site is automatically deployed to [NYT87.github.io](https://NYT87.github.io) on every push to `main` via GitHub Actions.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+To enable deployment, go to **Settings → Pages** and set the source to **GitHub Actions**.
+
+## Contact
+
+📧 [nyt87@proton.me](mailto:nyt87@proton.me)  
+🐙 [github.com/NYT87](https://github.com/NYT87)
