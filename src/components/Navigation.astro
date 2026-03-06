@@ -2,11 +2,11 @@
 
 ---
 
-<nav class="navbar glass-nav">
+<nav class="navbar">
 	<div class="container nav-content">
-		<a href="#" class="logo-link">
-			<img src="/assets/logo-icon.png" alt="NYT87 Icon" class="nav-brand-img" />
-			<img src="/assets/logo-text.png" alt="NYT87 Text" class="nav-brand-img" />
+		<a href="#" class="logo-link" aria-label="NYT87 home">
+			<img src="/assets/logo-icon.png" alt="NYT87 Icon" class="nav-brand-img icon" />
+			<img src="/assets/logo-text.png" alt="NYT87 Text" class="nav-brand-img text" />
 		</a>
 		<div class="nav-links">
 			<a href="#about">About</a>
@@ -21,50 +21,85 @@
 	.navbar {
 		position: fixed;
 		top: 0;
+		left: 0;
 		width: 100%;
-		z-index: 100;
-		transition: all 0.3s ease;
+		z-index: 60;
+		padding-top: 0.85rem;
 	}
-	.glass-nav {
-		background: rgba(255, 255, 255, 0.85);
-		backdrop-filter: blur(12px);
-		-webkit-backdrop-filter: blur(12px);
-		border-bottom: 1px solid var(--color-border);
-		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-	}
+
 	.nav-content {
-		display: flex;
-		justify-content: space-between;
+		height: 74px;
+		display: grid;
+		grid-template-columns: auto 1fr;
 		align-items: center;
-		height: 80px;
+		gap: 1.2rem;
+		border: 1px solid var(--border);
+		border-radius: 999px;
+		background: rgba(255, 255, 255, 0.78);
+		backdrop-filter: blur(10px);
+		box-shadow: 0 8px 22px rgba(23, 20, 18, 0.08);
+		padding: 0 1rem 0 1.1rem;
 	}
+
 	.logo-link {
-		display: flex;
+		display: inline-flex;
 		align-items: center;
-		gap: 0.75rem;
+		gap: 0.55rem;
 	}
-	.nav-logo {
-		height: 40px;
-		width: auto;
-	}
+
 	.nav-brand-img {
 		height: 24px;
 		width: auto;
-		object-fit: contain;
 	}
+
+	.nav-brand-img.icon {
+		height: 28px;
+	}
+
 	.nav-links {
 		display: flex;
-		align-items: center;
-		gap: 2rem;
-		font-weight: 500;
+		justify-content: flex-end;
+		justify-self: end;
+		gap: clamp(0.8rem, 2vw, 1.6rem);
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 0.92rem;
+		letter-spacing: 0.02em;
 	}
-	.btn-sm {
-		padding: 0.5rem 1.25rem;
-		font-size: 0.95rem;
+
+	.nav-links a {
+		padding: 0.4rem 0.55rem;
+		border-radius: 999px;
+		transition: background-color 0.24s ease;
 	}
-	@media (max-width: 768px) {
+
+	.nav-links a:hover {
+		background: rgba(13, 138, 138, 0.11);
+	}
+
+	@media (max-width: 900px) {
+		.nav-content {
+			grid-template-columns: auto;
+			justify-content: space-between;
+		}
+
 		.nav-links {
 			display: none;
+		}
+	}
+
+	@media (max-width: 768px) {
+		.navbar {
+			padding-top: 0.6rem;
+		}
+
+		.nav-content {
+			height: 64px;
+			padding: 0 0.7rem 0 0.85rem;
+		}
+
+		.nav-brand-img.text {
+			height: 20px;
 		}
 	}
 </style>

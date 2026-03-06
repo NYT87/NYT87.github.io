@@ -1,13 +1,25 @@
 ---
 interface Props {
 	title: string;
+	description?: string;
+	image?: string;
+	noindex?: boolean;
 }
 
-const { title } = Astro.props;
+const {
+	title,
+	description = "NYT87 is a remote software development company building reliable web applications, backend systems, and cloud infrastructure.",
+	image = "/assets/brand.png",
+	noindex = false,
+} = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const ogImageUrl = new URL(image, Astro.site);
+const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en-US">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -17,19 +29,35 @@ const { title } = Astro.props;
 		<link rel="manifest" href="/site.webmanifest" />
 		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<!-- Google Fonts: preload to prevent FOUT -->
+		<meta name="description" content={description} />
+		<meta name="robots" content={robotsContent} />
+		<meta name="theme-color" content="#d1632a" />
+		<link rel="canonical" href={canonicalUrl} />
+
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:site_name" content="NYT87" />
+		<meta property="og:image" content={ogImageUrl} />
+
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImageUrl} />
+
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<!-- Preload the font CSS as high priority resource -->
 		<link
 			rel="preload"
 			as="style"
-			href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Space+Grotesk:wght@500;700&display=swap"
 		/>
 		<link
 			rel="stylesheet"
-			href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Space+Grotesk:wght@500;700&display=swap"
 		/>
+		<slot name="head" />
 		<title>{title}</title>
 	</head>
 	<body>
@@ -38,166 +66,245 @@ const { title } = Astro.props;
 </html>
 
 <style is:global>
-	/* Fallback fonts with adjusted metrics to minimize layout shift (FOUT) */
 	@font-face {
-		font-family: "Inter Fallback";
+		font-family: "Manrope Fallback";
 		font-style: normal;
 		font-weight: 400;
 		src: local("Arial");
 		ascent-override: 90%;
-		descent-override: 22.43%;
+		descent-override: 22%;
 		line-gap-override: 0%;
-		size-adjust: 107%;
+		size-adjust: 106%;
 	}
+
 	@font-face {
-		font-family: "Outfit Fallback";
+		font-family: "Space Grotesk Fallback";
 		font-style: normal;
-		font-weight: 400;
+		font-weight: 500;
 		src: local("Arial");
-		ascent-override: 96%;
+		ascent-override: 94%;
 		descent-override: 20%;
 		line-gap-override: 0%;
-		size-adjust: 100%;
+		size-adjust: 102%;
 	}
+
 	:root {
-		--color-bg: #fafafa;
-		--color-surface: #ffffff;
-		--color-primary: #3b82f6;
-		--color-primary-glow: rgba(59, 130, 246, 0.4);
-		--color-text: #09090b;
-		--color-text-muted: #52525b;
-		--color-border: rgba(0, 0, 0, 0.1);
-		--font-heading: "Outfit", "Outfit Fallback", sans-serif;
-		--font-body: "Inter", "Inter Fallback", sans-serif;
+		--bg: #f5f2ec;
+		--surface: #fffdf9;
+		--surface-strong: #ffffff;
+		--text: #181715;
+		--muted: #605b55;
+		--border: rgba(24, 23, 21, 0.12);
+		--brand: #d1632a;
+		--brand-2: #0d8a8a;
+		--brand-soft: rgba(209, 99, 42, 0.14);
+		--shadow: 0 14px 36px rgba(31, 23, 16, 0.08);
+		--radius-lg: 26px;
+		--radius-md: 18px;
+		--font-heading: "Space Grotesk", "Space Grotesk Fallback", sans-serif;
+		--font-body: "Manrope", "Manrope Fallback", sans-serif;
+		--section-anchor-offset: 4rem;
 	}
+
+	* {
+		box-sizing: border-box;
+	}
+
 	html,
 	body {
 		margin: 0;
 		padding: 0;
-		width: 100%;
-		min-height: 100vh;
-		background-color: var(--color-bg);
-		color: var(--color-text);
-		font-family: var(--font-body);
-		line-height: 1.6;
-		scroll-behavior: smooth;
+		min-height: 100%;
 		overflow-x: hidden;
 	}
 
-	/* Typography */
+	html {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
+
+	html::-webkit-scrollbar,
+	body::-webkit-scrollbar {
+		display: none;
+	}
+
+	html {
+		scroll-padding-top: 0;
+	}
+
+	body {
+		font-family: var(--font-body);
+		color: var(--text);
+		background:
+			radial-gradient(circle at 10% 8%, rgba(13, 138, 138, 0.18), transparent 40%),
+			radial-gradient(circle at 90% 20%, rgba(209, 99, 42, 0.15), transparent 44%), var(--bg);
+		line-height: 1.65;
+	}
+
 	h1,
 	h2,
 	h3,
 	h4 {
 		font-family: var(--font-heading);
-		font-weight: 800;
-		margin-top: 0;
-		line-height: 1.2;
+		letter-spacing: -0.03em;
+		line-height: 1.1;
+		margin: 0;
 	}
 
 	p {
-		color: var(--color-text-muted);
-		font-size: 1.125rem;
+		margin: 0;
+		color: var(--muted);
+		font-size: clamp(1rem, 0.96rem + 0.2vw, 1.1rem);
 	}
 
 	a {
-		color: var(--color-text);
 		text-decoration: none;
-		transition: color 0.3s ease;
+		color: inherit;
 	}
 
-	a:hover {
-		color: var(--color-primary);
-	}
-
-	/* Layout Utilities */
 	.container {
-		max-width: 1200px;
-		margin: 0 auto;
-		padding: 0 2rem;
+		width: min(1120px, calc(100% - 2.5rem));
+		margin-inline: auto;
 	}
 
 	.section {
-		padding: 6rem 0;
+		padding: 1rem 0 clamp(3rem, 6vw, 5.25rem);
+		scroll-margin-top: var(--section-anchor-offset);
+	}
+
+	.section-head {
+		display: grid;
+		gap: 1rem;
+		margin-bottom: clamp(1.8rem, 3vw, 2.8rem);
+	}
+
+	.section-kicker {
+		display: inline-flex;
+		width: fit-content;
+		padding: 0.38rem 0.8rem;
+		border-radius: 999px;
+		font-weight: 700;
+		font-size: 0.8rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		background: var(--brand-soft);
+		color: var(--brand);
 	}
 
 	.section-title {
-		font-size: 2.5rem;
-		margin-bottom: 3rem;
-		text-align: center;
-		background: linear-gradient(to right, #18181b, #52525b);
-		-webkit-background-clip: text;
-		color: transparent;
+		font-size: clamp(2rem, 1.4rem + 2vw, 3.2rem);
 	}
 
-	/* Glassmorphic Card */
+	.panel {
+		background: linear-gradient(160deg, var(--surface-strong), var(--surface));
+		border: 1px solid var(--border);
+		border-radius: var(--radius-lg);
+		box-shadow: var(--shadow);
+	}
+
 	.glass-card {
-		background: rgba(255, 255, 255, 0.7);
-		backdrop-filter: blur(16px);
-		-webkit-backdrop-filter: blur(16px);
-		border: 1px solid var(--color-border);
-		border-radius: 16px;
-		padding: 2rem;
-		box-shadow:
-			0 4px 6px -1px rgba(0, 0, 0, 0.05),
-			0 2px 4px -2px rgba(0, 0, 0, 0.025);
+		background: linear-gradient(160deg, var(--surface-strong), var(--surface));
+		border: 1px solid var(--border);
+		border-radius: var(--radius-md);
+		box-shadow: 0 10px 24px rgba(31, 23, 16, 0.06);
 		transition:
-			transform 0.3s ease,
-			box-shadow 0.3s ease;
+			transform 0.28s ease,
+			box-shadow 0.28s ease,
+			border-color 0.28s ease;
 	}
 
 	.glass-card:hover {
-		transform: translateY(-5px);
-		box-shadow:
-			0 10px 30px rgba(0, 0, 0, 0.08),
-			0 0 20px var(--color-primary-glow);
-		border-color: rgba(59, 130, 246, 0.2);
+		transform: translateY(-4px);
+		box-shadow: 0 16px 30px rgba(31, 23, 16, 0.1);
+		border-color: rgba(209, 99, 42, 0.34);
 	}
 
-	/* Buttons */
 	.btn {
-		display: inline-block;
-		padding: 0.875rem 2rem;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.85rem 1.4rem;
+		border-radius: 999px;
 		font-family: var(--font-heading);
-		font-weight: 600;
-		font-size: 1.1rem;
-		border-radius: 9999px;
-		cursor: pointer;
-		transition: all 0.3s ease;
-		border: none;
+		font-weight: 700;
+		font-size: 0.98rem;
+		letter-spacing: 0.01em;
+		transition:
+			transform 0.24s ease,
+			box-shadow 0.24s ease,
+			background-color 0.24s ease,
+			color 0.24s ease;
 	}
 
 	.btn-primary {
-		background: var(--color-primary);
-		color: white;
-		box-shadow: 0 4px 15px var(--color-primary-glow);
+		color: #fff;
+		background: linear-gradient(135deg, #c2511a, var(--brand));
+		box-shadow: 0 10px 24px rgba(209, 99, 42, 0.32);
 	}
 
 	.btn-primary:hover {
-		background: #2563eb;
 		transform: translateY(-2px);
-		box-shadow: 0 6px 20px var(--color-primary-glow);
+		box-shadow: 0 14px 30px rgba(209, 99, 42, 0.38);
+	}
+
+	.btn-outline {
+		border: 1px solid rgba(13, 138, 138, 0.28);
+		background: rgba(13, 138, 138, 0.08);
+		color: #066a6a;
+	}
+
+	.btn-outline:hover {
+		transform: translateY(-2px);
+		background: rgba(13, 138, 138, 0.14);
+	}
+
+	@keyframes fade-up {
+		from {
+			opacity: 0;
+			transform: translateY(14px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	.reveal {
+		animation: fade-up 0.65s ease both;
+	}
+
+	.reveal-delay-1 {
+		animation-delay: 0.1s;
+	}
+
+	.reveal-delay-2 {
+		animation-delay: 0.2s;
+	}
+
+	.reveal-delay-3 {
+		animation-delay: 0.3s;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		* {
+			animation-duration: 0.01ms !important;
+			animation-iteration-count: 1 !important;
+			transition-duration: 0.01ms !important;
+			scroll-behavior: auto !important;
+		}
 	}
 
 	@media (max-width: 768px) {
+		:root {
+			--section-anchor-offset: 5.2rem;
+		}
+
 		.container {
-			padding: 0 1rem;
+			width: min(1120px, calc(100% - 1.4rem));
 		}
-		.section {
-			padding: 3rem 0;
-		}
-		.section-title {
-			font-size: 1.75rem;
-			margin-bottom: 1.5rem;
-		}
-		.glass-card {
-			padding: 1.25rem;
-		}
+
 		.btn {
-			display: block;
 			width: 100%;
-			text-align: center;
-			box-sizing: border-box;
 		}
 	}
 </style>

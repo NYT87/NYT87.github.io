@@ -2,112 +2,152 @@
 
 ---
 
-<header class="hero">
-	<div class="hero-glow"></div>
+<header class="hero section">
 	<div class="container hero-content">
-		<img src="/assets/brand.png" alt="NYT87 Wordmark" class="hero-text-logo" />
-		<p class="hero-subtitle">
-			Building innovative digital solutions, powerful applications, and reliable infrastructure for
-			the modern web.
-		</p>
-		<div class="hero-actions">
-			<a href="#services" class="btn btn-primary">Our Services</a>
-			<a href="#projects" class="btn btn-outline">View Portfolio</a>
+		<div class="hero-copy reveal">
+			<span class="section-kicker">Remote Software Studio</span>
+			<h1>Designing and engineering products that survive real-world scale.</h1>
+			<p>
+				NYT87 partners with teams to build reliable web platforms, backend systems, and cloud
+				infrastructure with product-minded execution.
+			</p>
+			<div class="hero-actions reveal reveal-delay-1">
+				<a href="#services" class="btn btn-primary">Explore Services</a>
+				<a href="#projects" class="btn btn-outline">See Projects</a>
+			</div>
+		</div>
+		<div class="hero-panel panel reveal reveal-delay-2">
+			<img src="/assets/brand.png" alt="NYT87 Wordmark" class="hero-logo" />
+			<div class="metrics">
+				<div>
+					<strong>8+ years</strong>
+					<span>remote-first delivery</span>
+				</div>
+				<div>
+					<strong>Global</strong>
+					<span>cross-timezone collaboration</span>
+				</div>
+				<div>
+					<strong>Product + Infra</strong>
+					<span>end-to-end ownership</span>
+				</div>
+			</div>
 		</div>
 	</div>
 </header>
 
 <style>
 	.hero {
+		margin-top: 1.1rem;
+		padding-top: clamp(2rem, 7vw, 5.8rem);
 		position: relative;
-		min-height: 100vh;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		text-align: center;
-		padding-top: 80px;
-		overflow: hidden;
 	}
-	.hero-glow {
+
+	.hero::after {
+		content: "";
 		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		width: 600px;
-		height: 600px;
-		background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(250, 250, 250, 0) 70%);
-		z-index: 0;
+		right: -120px;
+		top: 16%;
+		width: 280px;
+		height: 280px;
+		border-radius: 50%;
+		background: radial-gradient(circle, rgba(13, 138, 138, 0.22), transparent 64%);
 		pointer-events: none;
 	}
+
 	.hero-content {
-		position: relative;
-		z-index: 1;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		max-width: 800px;
+		display: grid;
+		grid-template-columns: 1.1fr 0.9fr;
+		gap: clamp(1.4rem, 3vw, 2.8rem);
+		align-items: stretch;
 	}
-	.hero-text-logo {
-		max-width: 260px;
-		height: auto;
+
+	.hero-copy {
+		display: grid;
+		align-content: center;
+		gap: 1.2rem;
 	}
-	.text-gradient {
-		background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-		-webkit-background-clip: text;
-		color: transparent;
+
+	.hero-copy h1 {
+		font-size: clamp(2.1rem, 1.45rem + 2.5vw, 4rem);
+		max-width: 16ch;
 	}
-	.hero-subtitle {
-		font-size: 1.25rem;
-		max-width: 600px;
-		margin-bottom: 3rem;
+
+	.hero-copy p {
+		max-width: 58ch;
 	}
+
 	.hero-actions {
 		display: flex;
-		gap: 1rem;
-		justify-content: center;
+		gap: 0.75rem;
+		flex-wrap: wrap;
 	}
-	.btn-outline {
-		background: transparent;
-		border: 1px solid var(--color-border);
-		color: var(--color-text);
+
+	.hero-actions .btn {
+		width: auto;
 	}
-	.btn-outline:hover {
-		border-color: var(--color-primary);
-		background: rgba(59, 130, 246, 0.1);
+
+	.hero-panel {
+		padding: clamp(1.1rem, 2.2vw, 1.8rem);
+		display: grid;
+		gap: 1.3rem;
+		align-content: center;
 	}
-	@keyframes float {
-		0% {
-			transform: translateY(0px);
+
+	.hero-logo {
+		max-width: 220px;
+		width: 100%;
+		height: auto;
+		display: block;
+		margin-inline: auto;
+	}
+
+	.metrics {
+		display: grid;
+		gap: 0.75rem;
+	}
+
+	.metrics div {
+		border: 1px solid var(--border);
+		border-radius: 14px;
+		padding: 0.9rem 1rem;
+		background: rgba(255, 255, 255, 0.76);
+		display: grid;
+		gap: 0.15rem;
+	}
+
+	.metrics strong {
+		font-family: var(--font-heading);
+		font-size: 1rem;
+	}
+
+	.metrics span {
+		color: var(--muted);
+		font-size: 0.9rem;
+	}
+
+	@media (max-width: 900px) {
+		.hero-content {
+			grid-template-columns: 1fr;
 		}
-		50% {
-			transform: translateY(-20px);
-		}
-		100% {
-			transform: translateY(0px);
+
+		.hero-copy h1 {
+			max-width: 100%;
 		}
 	}
-	.floating {
-		animation: float 6s ease-in-out infinite;
-	}
+
 	@media (max-width: 768px) {
 		.hero {
-			padding-left: 1rem;
-			padding-right: 1rem;
+			margin-top: 3rem;
+			padding-top: 1.2rem;
 		}
-		.hero-content {
-			width: 100%;
+
+		.hero::after {
+			display: none;
 		}
-		.hero-text-logo {
-			max-width: 180px;
-		}
-		.hero-subtitle {
-			font-size: 1rem;
-			max-width: 100%;
-			word-break: break-word;
-		}
+
 		.hero-actions {
-			flex-direction: column;
-			width: 100%;
+			gap: 0.6rem;
 		}
 	}
 </style>

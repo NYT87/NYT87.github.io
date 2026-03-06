@@ -1,37 +1,41 @@
 ---
-
+const services = [
+	{
+		icon: "Web",
+		title: "Web Applications",
+		description:
+			"Product-grade frontends and full-stack experiences built for performance, usability, and long-term maintainability.",
+	},
+	{
+		icon: "API",
+		title: "Backend Systems",
+		description:
+			"Scalable APIs and core services with observability, domain modeling, and resilient integrations.",
+	},
+	{
+		icon: "Ops",
+		title: "Cloud Infrastructure",
+		description:
+			"Infrastructure and delivery pipelines that keep deployments reliable, secure, and easy to evolve.",
+	},
+];
 ---
 
 <section id="services" class="section">
 	<div class="container">
-		<h2 class="section-title">What We Do</h2>
+		<div class="section-head reveal">
+			<span class="section-kicker">Services</span>
+			<h2 class="section-title">Capabilities across product, platform, and operations.</h2>
+		</div>
 		<div class="services-grid">
-			<div class="service-card glass-card">
-				<div class="service-icon">🌐</div>
-				<h3>Web Applications</h3>
-				<p>
-					Dynamic, responsive, and high-performance web applications tailored to your business needs
-					using the latest frontend technologies.
-				</p>
-			</div>
-
-			<div class="service-card glass-card">
-				<div class="service-icon">⚙️</div>
-				<h3>Backend Applications</h3>
-				<p>
-					Secure, scalable, and efficient server-side architectures and APIs designed to handle
-					complex business logic and heavy traffic.
-				</p>
-			</div>
-
-			<div class="service-card glass-card">
-				<div class="service-icon">☁️</div>
-				<h3>Infrastructure</h3>
-				<p>
-					Cloud-native infrastructure solutions, deployment pipelines, and operational reliability
-					to keep your applications running smoothly 24/7.
-				</p>
-			</div>
+			{
+				services.map((service, index) => (
+					<article class={`service-card glass-card reveal reveal-delay-${index + 1}`}>
+						<h3>{service.title}</h3>
+						<p>{service.description}</p>
+					</article>
+				))
+			}
 		</div>
 	</div>
 </section>
@@ -39,27 +43,27 @@
 <style>
 	.services-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-		gap: 2rem;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1rem;
 	}
-	.service-icon {
-		font-size: 3rem;
-		margin-bottom: 1.5rem;
+
+	.service-card {
+		padding: 1.2rem;
+		display: grid;
+		gap: 0.65rem;
 	}
+
 	.service-card h3 {
-		font-size: 1.5rem;
-		margin-bottom: 1rem;
+		font-size: 1.24rem;
 	}
-	@media (max-width: 768px) {
+
+	.service-card p {
+		font-size: 0.97rem;
+	}
+
+	@media (max-width: 980px) {
 		.services-grid {
 			grid-template-columns: 1fr;
-		}
-		.service-icon {
-			font-size: 2rem;
-			margin-bottom: 0.75rem;
-		}
-		.service-card h3 {
-			font-size: 1.25rem;
 		}
 	}
 </style>

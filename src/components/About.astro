@@ -4,77 +4,84 @@
 
 <section id="about" class="section about-section">
 	<div class="container">
-		<h2 class="section-title">About Us</h2>
+		<div class="section-head reveal">
+			<span class="section-kicker">About NYT87</span>
+			<h2 class="section-title">A delivery partner for teams building serious software.</h2>
+		</div>
 		<div class="about-grid">
-			<div class="about-text glass-card">
-				<h3>Empowering Digital Transformation</h3>
+			<article class="about-text panel reveal reveal-delay-1">
+				<h3>From MVPs to production platforms</h3>
 				<p>
-					At NYT87, our mission is to help companies develop robust IT projects and contribute to
-					the open-source community. We believe in engineering excellence, clean code, and creating
-					solutions that make a real difference.
+					We work with startups and established teams to turn ambiguous product ideas into clear,
+					testable software outcomes. Our process emphasizes maintainable architecture and
+					predictable delivery.
 				</p>
 				<p>
-					Whether you are a startup looking to build your first MVP or an established enterprise
-					needing scalable infrastructure, our team has the expertise to bring your vision to life.
-					As a fully remote company with over 8 years of experience working remotely, we seamlessly
-					integrate with teams worldwide.
+					Because we are fully remote and async-capable, we integrate directly into your workflow,
+					align around measurable milestones, and keep technical execution transparent from day one.
 				</p>
-			</div>
-			<div class="about-visual">
-				<img src="/assets/brand.png" alt="NYT87 Logo" class="about-logo floating" />
-			</div>
+			</article>
+			<aside class="about-visual reveal reveal-delay-2" aria-hidden="true">
+				<div class="visual-card glass-card">
+					<img src="/assets/logo-icon.png" alt="" class="about-logo" />
+					<p>Engineering quality, clear communication, and business impact.</p>
+				</div>
+			</aside>
 		</div>
 	</div>
 </section>
 
 <style>
 	.about-section {
-		background: linear-gradient(to bottom, var(--color-bg), var(--color-surface));
+		position: relative;
 	}
+
 	.about-grid {
 		display: grid;
-		grid-template-columns: 1.5fr 1fr;
-		gap: 4rem;
-		align-items: center;
+		grid-template-columns: 1.25fr 0.75fr;
+		gap: clamp(1rem, 2.5vw, 2rem);
+		align-items: stretch;
 	}
+
+	.about-text {
+		padding: clamp(1.3rem, 2.3vw, 2rem);
+		display: grid;
+		gap: 1rem;
+	}
+
 	.about-text h3 {
-		font-size: 2rem;
-		margin-bottom: 1.5rem;
-		color: var(--color-primary);
+		font-size: clamp(1.3rem, 1rem + 1vw, 2rem);
 	}
+
 	.about-visual {
 		display: flex;
-		justify-content: center;
+		align-items: stretch;
 	}
+
+	.visual-card {
+		padding: 1.3rem;
+		display: grid;
+		align-content: center;
+		justify-items: center;
+		gap: 1rem;
+		text-align: center;
+		width: 100%;
+	}
+
 	.about-logo {
-		max-width: 100%;
+		width: clamp(110px, 14vw, 150px);
 		height: auto;
-		filter: drop-shadow(0 0 30px rgba(59, 130, 246, 0.2));
+		filter: drop-shadow(0 10px 20px rgba(13, 138, 138, 0.24));
 	}
-	@keyframes float {
-		0% {
-			transform: translateY(0px);
-		}
-		50% {
-			transform: translateY(-20px);
-		}
-		100% {
-			transform: translateY(0px);
-		}
+
+	.visual-card p {
+		max-width: 24ch;
+		font-size: 0.95rem;
 	}
-	.floating {
-		animation: float 6s ease-in-out infinite;
-	}
-	@media (max-width: 768px) {
+
+	@media (max-width: 900px) {
 		.about-grid {
 			grid-template-columns: 1fr;
-		}
-		.about-visual {
-			display: none;
-		}
-		.about-text h3 {
-			font-size: 1.4rem;
-			margin-bottom: 1rem;
 		}
 	}
 </style>

@@ -7,9 +7,37 @@ import Projects from "../components/Projects.astro";
 import Services from "../components/Services.astro";
 import Team from "../components/Team.astro";
 import Layout from "../layouts/Layout.astro";
+
+const seo = {
+	title: "NYT87 | Remote Software Development Studio",
+	description:
+		"NYT87 builds scalable web applications, backend systems, and cloud infrastructure for startups and product teams worldwide.",
+};
+
+const organizationSchema = {
+	"@context": "https://schema.org",
+	"@type": "Organization",
+	name: "NYT87",
+	url: "https://nyt87.github.io",
+	logo: "https://nyt87.github.io/assets/logo-icon.png",
+	email: "mailto:nyt87@proton.me",
+	sameAs: ["https://github.com/NYT87", "https://www.linkedin.com/in/jm8nav/"],
+};
+
+const websiteSchema = {
+	"@context": "https://schema.org",
+	"@type": "WebSite",
+	name: "NYT87",
+	url: "https://nyt87.github.io",
+	description: seo.description,
+};
 ---
 
-<Layout title="NYT87 | Software Development">
+<Layout title={seo.title} description={seo.description}>
+	<Fragment slot="head">
+		<script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+		<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+	</Fragment>
 	<Navigation />
 	<Hero />
 	<About />

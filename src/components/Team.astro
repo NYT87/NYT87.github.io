@@ -5,170 +5,87 @@ import joseImg from "../assets/jose.jpeg";
 
 <section id="team" class="section">
 	<div class="container">
-		<h2 class="section-title">Meet the Team</h2>
-		<div class="team-grid">
-			<!-- Member 1 -->
-			<div class="team-card glass-card">
-				<div class="team-profile">
-					<Image src={joseImg} alt="José Miguel" class="team-avatar" />
-					<div class="team-info-block">
-						<div class="team-header-row">
-							<h3 class="team-name">José Miguel</h3>
-							<a
-								href="https://www.linkedin.com/in/jm8nav/"
-								target="_blank"
-								rel="noopener noreferrer"
-								class="team-social-link"
-								aria-label="LinkedIn Profile"
-							>
-								<svg
-									class="social-icon"
-									xmlns="http://www.w3.org/2000/svg"
-									viewBox="0 0 24 24"
-									width="24"
-									height="24"
-									fill="currentColor"
-								>
-									<path
-										d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
-									></path>
-								</svg>
-							</a>
-						</div>
-						<div class="team-role-row">
-							<p class="team-role">CTO & Senior Software Engineer</p>
-						</div>
-					</div>
-				</div>
-				<div class="team-desc-row">
-					<p class="team-desc">
-						José Miguel Navarro Iglesias is a Senior Software Engineer who thrives at the
-						intersection of product, engineering, and scale. He has experience building backend and
-						full-stack systems, with a practical approach to solving hard problems and shipping
-						reliable solutions. With a strong software engineering foundation, he helps transform
-						ambitious ideas into technology that is fast, scalable, and built for growth.
-					</p>
+		<div class="section-head reveal">
+			<span class="section-kicker">Team</span>
+			<h2 class="section-title">Senior engineering leadership with product discipline.</h2>
+		</div>
+		<article class="team-card panel reveal reveal-delay-1">
+			<div class="team-top">
+				<Image src={joseImg} alt="José Miguel" class="team-avatar" />
+				<div class="team-meta">
+					<h3>José Miguel</h3>
+					<p class="team-role">CTO & Senior Software Engineer</p>
+					<a
+						href="https://www.linkedin.com/in/jm8nav/"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="team-link"
+					>
+						LinkedIn profile
+					</a>
 				</div>
 			</div>
-		</div>
+			<p class="team-desc">
+				José Miguel Navarro Iglesias builds software at the intersection of product delivery,
+				reliable architecture, and scaling strategy. He has led backend and full-stack initiatives
+				that turn ambitious ideas into fast, stable systems ready for growth.
+			</p>
+		</article>
 	</div>
 </section>
 
 <style>
-	.team-grid {
-		display: flex;
-		flex-direction: column;
-		gap: 2rem;
-	}
 	.team-card {
-		text-align: left;
+		padding: clamp(1.2rem, 2.6vw, 2rem);
+		display: grid;
+		gap: 1rem;
 	}
-	.team-profile {
+
+	.team-top {
 		display: flex;
-		justify-content: center;
+		gap: 1rem;
 		align-items: center;
-		gap: 1.5rem;
-		margin-bottom: 1rem;
 	}
+
 	.team-avatar {
-		width: 100px;
-		height: 100px;
-		flex-shrink: 0;
+		width: 98px;
+		height: 98px;
 		aspect-ratio: 1 / 1;
-		border-radius: 50%;
+		border-radius: 22px;
 		object-fit: cover;
-		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-		border: 2px solid var(--color-primary);
+		border: 1px solid rgba(13, 138, 138, 0.3);
 	}
-	.team-info-block {
-		flex: 1;
+
+	.team-meta {
+		display: grid;
+		gap: 0.38rem;
 	}
-	.team-header-row {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: center;
-		margin-bottom: 0.5rem;
+
+	.team-meta h3 {
+		font-size: 1.3rem;
 	}
-	.team-role-row {
-		text-align: left;
-	}
-	.team-desc-row {
-		text-align: left;
-	}
-	.team-avatar-placeholder {
-		width: 100px;
-		height: 100px;
-		margin: 0 auto 1.5rem;
-		border-radius: 50%;
-		background: linear-gradient(135deg, var(--color-primary), #60a5fa);
-		color: white;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-family: var(--font-heading);
-		font-size: 2.5rem;
-		font-weight: 800;
-		box-shadow: 0 10px 25px var(--color-primary-glow);
-	}
-	.team-name {
-		font-size: 1.5rem;
-		margin: 0;
-	}
+
 	.team-role {
-		color: var(--color-primary);
-		font-weight: 500;
-		font-size: 1.1rem;
-		margin: 0;
+		font-size: 0.98rem;
+		color: var(--brand);
+		font-weight: 700;
 	}
+
+	.team-link {
+		font-family: var(--font-heading);
+		font-size: 0.86rem;
+		color: #066a6a;
+	}
+
 	.team-desc {
-		color: var(--color-text-muted);
-		font-size: 0.95rem;
-		line-height: 1.6;
-		margin: 0;
+		font-size: 0.98rem;
+		max-width: 80ch;
 	}
-	.team-social-link {
-		color: var(--color-text-muted);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		padding: 0.5rem;
-		transition: color 0.3s ease;
-	}
-	.team-social-link:hover {
-		color: var(--color-primary);
-	}
-	.social-icon {
-		width: 24px;
-		height: 24px;
-		transition: transform 0.3s ease;
-	}
-	.social-icon:hover {
-		transform: scale(1.1);
-	}
+
 	@media (max-width: 768px) {
-		.team-profile {
+		.team-top {
 			flex-direction: column;
-			align-items: center;
-			text-align: center;
-			gap: 1rem;
-		}
-		.team-info-block {
-			width: 100%;
-		}
-		.team-header-row {
-			justify-content: center;
-			gap: 0.5rem;
-		}
-		.team-name {
-			font-size: 1.25rem;
-		}
-		.team-role {
-			font-size: 1rem;
-		}
-		.team-role-row,
-		.team-desc-row {
-			text-align: center;
+			align-items: flex-start;
 		}
 	}
 </style>
