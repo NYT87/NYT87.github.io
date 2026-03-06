@@ -17,12 +17,18 @@ const { title } = Astro.props;
 		<link rel="manifest" href="/site.webmanifest" />
 		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<!-- Google Fonts: Outfit and Inter -->
+		<!-- Google Fonts: preload to prevent FOUT -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<!-- Preload the font CSS as high priority resource -->
 		<link
+			rel="preload"
+			as="style"
 			href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap"
+		/>
+		<link
 			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap"
 		/>
 		<title>{title}</title>
 	</head>
@@ -32,6 +38,27 @@ const { title } = Astro.props;
 </html>
 
 <style is:global>
+	/* Fallback fonts with adjusted metrics to minimize layout shift (FOUT) */
+	@font-face {
+		font-family: "Inter Fallback";
+		font-style: normal;
+		font-weight: 400;
+		src: local("Arial");
+		ascent-override: 90%;
+		descent-override: 22.43%;
+		line-gap-override: 0%;
+		size-adjust: 107%;
+	}
+	@font-face {
+		font-family: "Outfit Fallback";
+		font-style: normal;
+		font-weight: 400;
+		src: local("Arial");
+		ascent-override: 96%;
+		descent-override: 20%;
+		line-gap-override: 0%;
+		size-adjust: 100%;
+	}
 	:root {
 		--color-bg: #fafafa;
 		--color-surface: #ffffff;
@@ -40,8 +67,8 @@ const { title } = Astro.props;
 		--color-text: #09090b;
 		--color-text-muted: #52525b;
 		--color-border: rgba(0, 0, 0, 0.1);
-		--font-heading: "Outfit", sans-serif;
-		--font-body: "Inter", sans-serif;
+		--font-heading: "Outfit", "Outfit Fallback", sans-serif;
+		--font-body: "Inter", "Inter Fallback", sans-serif;
 	}
 	html,
 	body {
