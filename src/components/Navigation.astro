@@ -1,0 +1,70 @@
+---
+
+---
+
+<nav class="navbar glass-nav">
+	<div class="container nav-content">
+		<a href="#" class="logo-link">
+			<img src="/assets/logo-icon.png" alt="NYT87 Icon" class="nav-brand-img" />
+			<img src="/assets/logo-text.png" alt="NYT87 Text" class="nav-brand-img" />
+		</a>
+		<div class="nav-links">
+			<a href="#about">About</a>
+			<a href="#services">Services</a>
+			<a href="#projects">Projects</a>
+			<a href="#team">Team</a>
+		</div>
+	</div>
+</nav>
+
+<style>
+	.navbar {
+		position: fixed;
+		top: 0;
+		width: 100%;
+		z-index: 100;
+		transition: all 0.3s ease;
+	}
+	.glass-nav {
+		background: rgba(255, 255, 255, 0.85);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
+		border-bottom: 1px solid var(--color-border);
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+	}
+	.nav-content {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		height: 80px;
+	}
+	.logo-link {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+	.nav-logo {
+		height: 40px;
+		width: auto;
+	}
+	.nav-brand-img {
+		height: 24px;
+		width: auto;
+		object-fit: contain;
+	}
+	.nav-links {
+		display: flex;
+		align-items: center;
+		gap: 2rem;
+		font-weight: 500;
+	}
+	.btn-sm {
+		padding: 0.5rem 1.25rem;
+		font-size: 0.95rem;
+	}
+	@media (max-width: 768px) {
+		.nav-links {
+			display: none;
+		}
+	}
+</style>

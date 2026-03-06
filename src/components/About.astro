@@ -1,0 +1,80 @@
+---
+
+---
+
+<section id="about" class="section about-section">
+	<div class="container">
+		<h2 class="section-title">About Us</h2>
+		<div class="about-grid">
+			<div class="about-text glass-card">
+				<h3>Empowering Digital Transformation</h3>
+				<p>
+					At NYT87, our mission is to help companies develop robust IT projects and contribute to
+					the open-source community. We believe in engineering excellence, clean code, and creating
+					solutions that make a real difference.
+				</p>
+				<p>
+					Whether you are a startup looking to build your first MVP or an established enterprise
+					needing scalable infrastructure, our team has the expertise to bring your vision to life.
+					As a fully remote company with over 8 years of experience working remotely, we seamlessly
+					integrate with teams worldwide.
+				</p>
+			</div>
+			<div class="about-visual">
+				<img src="/assets/brand.png" alt="NYT87 Logo" class="about-logo floating" />
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.about-section {
+		background: linear-gradient(to bottom, var(--color-bg), var(--color-surface));
+	}
+	.about-grid {
+		display: grid;
+		grid-template-columns: 1.5fr 1fr;
+		gap: 4rem;
+		align-items: center;
+	}
+	.about-text h3 {
+		font-size: 2rem;
+		margin-bottom: 1.5rem;
+		color: var(--color-primary);
+	}
+	.about-visual {
+		display: flex;
+		justify-content: center;
+	}
+	.about-logo {
+		max-width: 100%;
+		height: auto;
+		filter: drop-shadow(0 0 30px rgba(59, 130, 246, 0.2));
+	}
+	@keyframes float {
+		0% {
+			transform: translateY(0px);
+		}
+		50% {
+			transform: translateY(-20px);
+		}
+		100% {
+			transform: translateY(0px);
+		}
+	}
+	.floating {
+		animation: float 6s ease-in-out infinite;
+	}
+	@media (max-width: 768px) {
+		.about-grid {
+			grid-template-columns: 1fr;
+		}
+		.about-visual {
+			display: none;
+		}
+		.about-text h3 {
+			font-size: 1.4rem;
+			margin-bottom: 1rem;
+		}
+	}
+</style>

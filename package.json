@@ -1,0 +1,23 @@
+{
+	"name": "density-doppler",
+	"type": "module",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview",
+		"astro": "astro",
+		"format": "biome format --write . && prettier --write \"**/*.astro\"",
+		"lint": "biome lint --write .",
+		"check": "biome check --write . && prettier --write \"**/*.astro\"",
+		"format:astro": "prettier --write \"**/*.astro\""
+	},
+	"dependencies": {
+		"astro": "^5.17.1"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.4.6",
+		"prettier": "^3.8.1",
+		"prettier-plugin-astro": "^0.14.1"
+	}
+}
