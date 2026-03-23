@@ -67,6 +67,10 @@
 		box-shadow: 0 16px 30px color-mix(in oklch, var(--text) 12%, transparent);
 	}
 
+	a.project-card:hover .project-link {
+		color: color-mix(in oklch, var(--brand) 82%, var(--text));
+	}
+
 	a.project-card:active {
 		transform: translateY(-1px);
 	}
@@ -107,6 +111,9 @@
 		font-size: 0.9rem;
 		color: var(--brand);
 		overflow-wrap: break-word;
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.18em;
 	}
 
 	.project-link.muted {

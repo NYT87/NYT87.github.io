@@ -32,7 +32,8 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
 		<meta name="robots" content={robotsContent} />
-		<meta name="theme-color" content="#d1632a" />
+		<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f2ed" />
+		<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2b3037" />
 		<meta name="color-scheme" content="light dark" />
 		<link rel="canonical" href={canonicalUrl} />
 
@@ -151,6 +152,8 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 			radial-gradient(circle at 12% 10%, oklch(0.93 0.02 208 / 0.18), transparent 32%),
 			radial-gradient(circle at 88% 18%, oklch(0.94 0.025 45 / 0.14), transparent 36%), var(--bg);
 		line-height: 1.65;
+		text-rendering: optimizeLegibility;
+		-webkit-font-smoothing: antialiased;
 	}
 
 	h1,

@@ -77,10 +77,20 @@ import joseImg from "../assets/jose.jpeg";
 	}
 
 	.team-link {
+		display: inline-flex;
+		width: fit-content;
 		font-family: var(--font-heading);
 		font-size: 0.86rem;
 		color: var(--accent);
 		overflow-wrap: anywhere;
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.18em;
+		transition: color 0.24s ease;
+	}
+
+	.team-link:hover {
+		color: color-mix(in oklch, var(--accent) 82%, var(--text));
 	}
 
 	.team-desc {

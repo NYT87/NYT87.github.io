@@ -4,7 +4,7 @@
 
 <nav class="navbar" aria-label="Primary">
 	<div class="container nav-content">
-		<a href="#" class="logo-link" aria-label="NYT87 home">
+		<a href="/" class="logo-link" aria-label="NYT87 home">
 			<img src="/assets/logo-icon.png" alt="NYT87 Icon" class="nav-brand-img icon" />
 			<picture>
 				<source srcset="/assets/logo-text-white.png" media="(prefers-color-scheme: dark)" />
@@ -219,6 +219,8 @@
 		gap: 0.55rem;
 		min-width: 0;
 		line-height: 0;
+		border-radius: 10px;
+		transition: transform 0.2s ease;
 	}
 
 	.logo-link picture {
@@ -268,6 +270,10 @@
 	}
 
 	.nav-links a:active {
+		transform: translateY(1px);
+	}
+
+	.logo-link:active {
 		transform: translateY(1px);
 	}
 
@@ -381,11 +387,19 @@
 		border-radius: 10px;
 		font-family: var(--font-heading);
 		font-weight: 500;
+		transition:
+			background-color 0.24s ease,
+			color 0.24s ease,
+			transform 0.2s ease;
 	}
 
 	.nav-menu-panel a:hover {
 		background: color-mix(in oklch, var(--accent) 4%, transparent);
 		color: color-mix(in oklch, var(--accent) 48%, var(--text));
+	}
+
+	.nav-menu-panel a:active {
+		transform: translateY(1px);
 	}
 
 	.nav-menu-panel-fallback {
