@@ -5,19 +5,19 @@
 <header class="hero section">
 	<div class="container hero-content">
 		<div class="hero-copy reveal">
-			<span class="section-kicker">Remote Software Studio</span>
+			<span class="section-kicker">Senior Engineers for High-Stakes Product Work</span>
 			<h1>Designing and engineering products that survive real-world scale.</h1>
 			<p>
-				NYT87 partners with companies that need senior engineering judgment across product delivery,
-				backend systems, and cloud infrastructure without the overhead of a bloated consultancy.
+				NYT87 helps teams deliver product, backend, and infrastructure work that cannot afford weak
+				execution, unclear ownership, or expensive rewrites later.
 			</p>
 			<div class="hero-actions reveal reveal-delay-1">
-				<a href="#services" class="btn btn-primary">Explore Services</a>
-				<a href="#contact" class="btn btn-outline">Start a Conversation</a>
+				<a href="#services" class="btn btn-primary">See What We Build</a>
+				<a href="#contact" class="btn btn-outline">Discuss Your Project</a>
 			</div>
 		</div>
 		<div class="hero-panel panel reveal reveal-delay-2">
-			<p class="hero-eyebrow">Operating Notes</p>
+			<p class="hero-eyebrow">How We Work</p>
 			<picture>
 				<source srcset="/assets/brand-dark.png" media="(prefers-color-scheme: dark)" />
 				<img src="/assets/brand.png" alt="NYT87 Wordmark" class="hero-logo" />
@@ -26,18 +26,20 @@
 				<div class="hero-log-row">
 					<span class="hero-log-label">Delivery</span>
 					<p>
-						Small senior team, direct communication, and milestones tied to real product outcomes.
+						A small senior team, direct communication, and milestones tied to shipping decisions.
 					</p>
 				</div>
 				<div class="hero-log-row">
 					<span class="hero-log-label">Systems</span>
 					<p>
-						Web applications, APIs, platform services, and infrastructure built for maintainability.
+						Web products, APIs, platform services, and infrastructure built to stay maintainable.
 					</p>
 				</div>
 				<div class="hero-log-row">
 					<span class="hero-log-label">Mode</span>
-					<p>Remote-first collaboration with clear documentation and straightforward execution.</p>
+					<p>
+						Remote-first collaboration with documented decisions, clear owners, and steady delivery.
+					</p>
 				</div>
 			</div>
 		</div>
@@ -47,42 +49,44 @@
 <style>
 	.hero {
 		margin-top: 1.1rem;
-		padding-top: clamp(2rem, 7vw, 5.8rem);
+		padding-top: clamp(2rem, 6vw, 5.2rem);
 		position: relative;
+		overflow-x: clip;
 	}
 
 	.hero::after {
 		content: "";
 		position: absolute;
-		right: -120px;
-		top: 16%;
-		width: 280px;
-		height: 280px;
+		right: -90px;
+		top: 18%;
+		width: 140px;
+		height: 140px;
 		border-radius: 50%;
-		background: radial-gradient(circle, rgba(13, 138, 138, 0.22), transparent 64%);
+		background: radial-gradient(circle, var(--brand-shadow), transparent 64%);
 		pointer-events: none;
+		opacity: 0.32;
 	}
 
 	.hero-content {
 		display: grid;
 		grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-		gap: clamp(1.4rem, 3vw, 2.8rem);
+		gap: clamp(1.4rem, 3vw, 2.4rem);
 		align-items: stretch;
 	}
 
 	.hero-copy {
 		display: grid;
 		align-content: center;
-		gap: 1.2rem;
+		gap: 1rem;
 		min-width: 0;
 	}
 
 	.hero-copy h1 {
-		font-size: clamp(2.2rem, 1.5rem + 2.5vw, 4rem);
+		font-size: clamp(2.1rem, 1.55rem + 2.2vw, 3.7rem);
 		max-width: 12ch;
 		max-inline-size: 100%;
-		line-height: 1.02;
-		letter-spacing: -0.045em;
+		line-height: 1.04;
+		letter-spacing: -0.04em;
 		overflow-wrap: anywhere;
 		text-wrap: balance;
 	}
@@ -96,6 +100,7 @@
 		display: flex;
 		gap: 0.75rem;
 		flex-wrap: wrap;
+		padding-top: 0.15rem;
 	}
 
 	.hero-actions .btn {
@@ -103,9 +108,9 @@
 	}
 
 	.hero-panel {
-		padding: clamp(1.1rem, 2.2vw, 1.8rem);
+		padding: clamp(1.1rem, 2vw, 1.6rem);
 		display: grid;
-		gap: 1rem;
+		gap: 0.9rem;
 		align-content: center;
 		min-width: 0;
 		position: relative;
@@ -116,16 +121,21 @@
 		content: "";
 		position: absolute;
 		inset: 0 0 auto 0;
-		height: 3px;
-		background: linear-gradient(90deg, var(--brand), var(--accent));
+		height: 1px;
+		background: linear-gradient(
+			90deg,
+			color-mix(in oklch, var(--brand) 62%, var(--surface-strong)),
+			color-mix(in oklch, var(--accent) 54%, var(--surface-strong))
+		);
+		transform-origin: left center;
 	}
 
 	.hero-eyebrow {
 		font-family: var(--font-heading);
-		font-size: 0.8rem;
+		font-size: 0.76rem;
 		letter-spacing: 0.14em;
 		text-transform: uppercase;
-		color: var(--accent);
+		color: color-mix(in oklch, var(--accent) 48%, var(--text));
 	}
 
 	.hero-logo {
@@ -154,7 +164,7 @@
 	.hero-log-label {
 		font-family: var(--font-heading);
 		font-size: 0.82rem;
-		font-weight: 700;
+		font-weight: 500;
 		text-transform: uppercase;
 		letter-spacing: 0.12em;
 		color: var(--muted);
@@ -163,6 +173,100 @@
 	.hero-log-row p {
 		font-size: 0.96rem;
 		max-width: 38ch;
+	}
+
+	@keyframes hero-copy-settle {
+		from {
+			opacity: 0;
+			transform: translate3d(0, 26px, 0);
+		}
+
+		55% {
+			opacity: 1;
+		}
+
+		to {
+			opacity: 1;
+			transform: translate3d(0, 0, 0);
+		}
+	}
+
+	@keyframes hero-panel-settle {
+		from {
+			opacity: 0;
+			transform: translate3d(0, 32px, 0) scale(0.985);
+		}
+
+		60% {
+			opacity: 1;
+		}
+
+		to {
+			opacity: 1;
+			transform: translate3d(0, 0, 0) scale(1);
+		}
+	}
+
+	@keyframes hero-rule-draw {
+		from {
+			transform: scaleX(0.18);
+			opacity: 0.35;
+		}
+
+		to {
+			transform: scaleX(1);
+			opacity: 1;
+		}
+	}
+
+	@keyframes hero-row-reveal {
+		from {
+			opacity: 0;
+			transform: translate3d(0, 18px, 0);
+		}
+
+		to {
+			opacity: 1;
+			transform: translate3d(0, 0, 0);
+		}
+	}
+
+	@supports (animation-timeline: view()) {
+		.hero-copy {
+			animation: hero-copy-settle 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+			animation-timeline: view(block);
+			animation-range: entry 0% cover 42%;
+		}
+
+		.hero-panel {
+			animation: hero-panel-settle 1.05s cubic-bezier(0.22, 1, 0.36, 1) both;
+			animation-timeline: view(block);
+			animation-range: entry 8% cover 48%;
+		}
+
+		.hero-panel::before {
+			animation: hero-rule-draw 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+			animation-timeline: view(block);
+			animation-range: entry 10% cover 34%;
+		}
+
+		.hero-log-row {
+			opacity: 0;
+			animation: hero-row-reveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+			animation-timeline: view(block);
+		}
+
+		.hero-log-row:nth-child(1) {
+			animation-range: entry 12% cover 24%;
+		}
+
+		.hero-log-row:nth-child(2) {
+			animation-range: entry 18% cover 30%;
+		}
+
+		.hero-log-row:nth-child(3) {
+			animation-range: entry 24% cover 36%;
+		}
 	}
 
 	@media (max-width: 900px) {
@@ -200,6 +304,17 @@
 		.hero-log-row {
 			grid-template-columns: 1fr;
 			gap: 0.35rem;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.hero-copy,
+		.hero-panel,
+		.hero-log-row,
+		.hero-panel::before {
+			animation: none !important;
+			transform: none !important;
+			opacity: 1 !important;
 		}
 	}
 </style>

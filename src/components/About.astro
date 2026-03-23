@@ -9,7 +9,7 @@
 			<h2 class="section-title">A delivery partner for teams building serious software.</h2>
 		</div>
 		<div class="about-grid">
-			<article class="about-text panel reveal reveal-delay-1">
+			<article class="about-text reveal reveal-delay-1">
 				<h3>From MVPs to production platforms</h3>
 				<p>
 					We work with startups and established teams to turn ambiguous product ideas into clear,
@@ -22,8 +22,9 @@
 				</p>
 			</article>
 			<aside class="about-visual reveal reveal-delay-2" aria-hidden="true">
-				<div class="visual-card glass-card">
+				<div class="visual-card">
 					<img src="/assets/logo-icon.png" alt="" class="about-logo" />
+					<span class="visual-label">Studio Mark</span>
 					<p>Engineering quality, clear communication, and business impact.</p>
 				</div>
 			</aside>
@@ -38,20 +39,22 @@
 
 	.about-grid {
 		display: grid;
-		grid-template-columns: 1.25fr 0.75fr;
-		gap: clamp(1rem, 2.5vw, 2rem);
+		grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.65fr);
+		gap: clamp(1.2rem, 3vw, 3rem);
 		align-items: stretch;
 	}
 
 	.about-text {
-		padding: clamp(1.3rem, 2.3vw, 2rem);
+		padding: clamp(0.3rem, 0.8vw, 0.6rem) 0 0;
 		display: grid;
-		gap: 1rem;
+		gap: 1.15rem;
 		min-width: 0;
+		max-width: 60ch;
 	}
 
 	.about-text h3 {
-		font-size: clamp(1.3rem, 1rem + 1vw, 2rem);
+		font-size: clamp(1.35rem, 1rem + 1vw, 2.1rem);
+		max-width: 15ch;
 	}
 
 	.about-visual {
@@ -61,24 +64,37 @@
 	}
 
 	.visual-card {
-		padding: 1.3rem;
+		padding: clamp(1.25rem, 2.2vw, 1.7rem);
 		display: grid;
 		align-content: center;
-		justify-items: center;
-		gap: 1rem;
-		text-align: center;
+		justify-items: start;
+		gap: 0.9rem;
+		text-align: left;
 		width: 100%;
+		min-height: 100%;
+		border-top: 1px solid var(--line-strong);
+		border-bottom: 1px solid var(--border);
+		background: linear-gradient(180deg, transparent, var(--accent-wash));
 	}
 
 	.about-logo {
 		width: clamp(110px, 14vw, 150px);
 		height: auto;
-		filter: drop-shadow(0 10px 20px rgba(13, 138, 138, 0.24));
+		filter: drop-shadow(0 10px 20px var(--brand-shadow));
+	}
+
+	.visual-label {
+		font-family: var(--font-heading);
+		font-size: 0.76rem;
+		font-weight: 500;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: color-mix(in oklch, var(--accent) 68%, var(--text));
 	}
 
 	.visual-card p {
-		max-width: 24ch;
-		font-size: 0.95rem;
+		max-width: 26ch;
+		font-size: 0.98rem;
 		overflow-wrap: break-word;
 	}
 

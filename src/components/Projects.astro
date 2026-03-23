@@ -6,7 +6,7 @@
 	<div class="container">
 		<div class="section-head reveal">
 			<span class="section-kicker">Selected Work</span>
-			<h2 class="section-title">Projects focused on utility, speed, and clarity.</h2>
+			<h2 class="section-title">Recent work built for everyday use, not demo-day polish.</h2>
 		</div>
 		<div class="projects-grid">
 			<a
@@ -23,18 +23,18 @@
 					A centralized wallet for airline loyalty information with QR and barcode support, designed
 					for quick access and practical day-to-day use.
 				</p>
-				<span class="project-link">View repository</span>
+				<span class="project-link">Review the codebase</span>
 			</a>
 
-			<article class="project-card panel placeholder reveal reveal-delay-2">
+			<article class="project-note reveal reveal-delay-2">
 				<div class="project-head">
-					<h3>More Launches</h3>
+					<h3>More client work</h3>
 				</div>
 				<p>
-					Additional internal tools and client systems are in active development and will be
-					published here soon.
+					Private client systems and internal delivery tools are not public yet, but we can walk
+					through relevant work in a conversation.
 				</p>
-				<span class="project-link muted">Portfolio update coming soon</span>
+				<span class="project-link muted">More examples available on request</span>
 			</article>
 		</div>
 	</div>
@@ -47,12 +47,13 @@
 
 	.projects-grid {
 		display: grid;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 1rem;
+		grid-template-columns: minmax(0, 1.2fr) minmax(220px, 0.8fr);
+		gap: clamp(1rem, 2.5vw, 2rem);
+		align-items: stretch;
 	}
 
 	.project-card {
-		padding: 1.3rem;
+		padding: clamp(1.3rem, 2.4vw, 1.7rem);
 		display: grid;
 		gap: 1rem;
 		min-width: 0;
@@ -64,6 +65,10 @@
 	a.project-card:hover {
 		transform: translateY(-4px);
 		box-shadow: 0 16px 30px color-mix(in oklch, var(--text) 12%, transparent);
+	}
+
+	a.project-card:active {
+		transform: translateY(-1px);
 	}
 
 	.project-head {
@@ -108,8 +113,13 @@
 		color: var(--muted);
 	}
 
-	.placeholder {
-		opacity: 0.92;
+	.project-note {
+		padding: 0.6rem 0 0;
+		display: grid;
+		align-content: start;
+		gap: 1rem;
+		border-top: 1px solid var(--line-strong);
+		max-width: 34ch;
 	}
 
 	@media (max-width: 900px) {

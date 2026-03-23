@@ -16,6 +16,10 @@
 				</div>
 			</div>
 			<div class="footer-brand">
+				<p class="footer-note">
+					If you need senior engineering judgment, reach out with the problem you are trying to
+					solve.
+				</p>
 				<picture>
 					<source srcset="/assets/logo-text-white.png" media="(prefers-color-scheme: dark)" />
 					<img src="/assets/logo-text.png" alt="NYT87" class="footer-logo" />
@@ -45,8 +49,17 @@
 
 	.footer-brand {
 		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
 		justify-content: flex-end;
+		gap: 0.7rem;
 		width: 100%;
+	}
+
+	.footer-note {
+		max-width: 30ch;
+		font-size: 0.92rem;
+		text-align: right;
 	}
 
 	.footer-logo {
@@ -81,6 +94,17 @@
 		color: var(--accent);
 		font-weight: 700;
 		white-space: nowrap;
+		transition:
+			color 0.24s ease,
+			opacity 0.24s ease;
+	}
+
+	.footer-links a:hover {
+		color: color-mix(in oklch, var(--accent) 84%, var(--text));
+	}
+
+	.footer-links a:active {
+		opacity: 0.8;
 	}
 
 	.footer-bottom {
@@ -111,8 +135,13 @@
 
 		.footer-brand {
 			align-self: stretch;
+			align-items: flex-start;
 			justify-content: flex-start;
 			padding-top: 0.3rem;
+		}
+
+		.footer-note {
+			text-align: left;
 		}
 
 		.footer-links {

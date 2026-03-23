@@ -18,20 +18,174 @@
 			<a href="#team">Team</a>
 			<a href="#contact">Contact</a>
 		</div>
-		<details class="nav-menu">
-			<summary aria-label="Open navigation menu">
+		<div class="nav-menu">
+			<button
+				type="button"
+				class="nav-menu-button"
+				id="mobile-nav-trigger"
+				aria-label="Open navigation menu"
+				aria-expanded="false"
+				aria-controls="mobile-nav-panel"
+			>
 				<span class="nav-menu-icon" aria-hidden="true"></span>
-			</summary>
-			<div class="nav-menu-panel panel">
+			</button>
+			<div
+				id="mobile-nav-panel"
+				class="nav-menu-panel panel"
+				aria-labelledby="mobile-nav-trigger"
+				aria-hidden="true"
+				tabindex="-1"
+				hidden
+			>
 				<a href="#about">About</a>
 				<a href="#services">Services</a>
 				<a href="#projects">Projects</a>
 				<a href="#team">Team</a>
 				<a href="#contact">Contact</a>
 			</div>
-		</details>
+			<noscript>
+				<div class="nav-menu-panel nav-menu-panel-fallback panel">
+					<a href="#about">About</a>
+					<a href="#services">Services</a>
+					<a href="#projects">Projects</a>
+					<a href="#team">Team</a>
+					<a href="#contact">Contact</a>
+				</div>
+			</noscript>
+		</div>
 	</div>
 </nav>
+
+<script>
+	const navMenu = document.querySelector(".nav-menu");
+	const menuButton = navMenu?.querySelector(".nav-menu-button");
+	const menuPanel = navMenu?.querySelector(".nav-menu-panel");
+	const menuLinks = menuPanel ? Array.from(menuPanel.querySelectorAll("a")) : [];
+	const mobileBreakpoint = window.matchMedia("(max-width: 900px)");
+
+	if (navMenu && menuButton instanceof HTMLButtonElement && menuPanel instanceof HTMLElement) {
+		const controller = new AbortController();
+		const { signal } = controller;
+		let previousFocus = null;
+
+		const focusFirstLink = () => {
+			const firstLink = menuLinks[0];
+			if (firstLink instanceof HTMLElement) {
+				firstLink.focus();
+			} else {
+				menuPanel.focus();
+			}
+		};
+
+		const setMenuState = (open, options = {}) => {
+			const { restoreFocus = false } = options;
+			navMenu.dataset.open = open ? "true" : "false";
+			menuButton.setAttribute("aria-expanded", String(open));
+			menuButton.setAttribute(
+				"aria-label",
+				open ? "Close navigation menu" : "Open navigation menu"
+			);
+			menuPanel.hidden = !open;
+			menuPanel.setAttribute("aria-hidden", String(!open));
+
+			if (open) {
+				previousFocus =
+					document.activeElement instanceof HTMLElement ? document.activeElement : null;
+				requestAnimationFrame(focusFirstLink);
+			} else if (restoreFocus) {
+				(previousFocus ?? menuButton).focus();
+				previousFocus = null;
+			}
+		};
+
+		const closeMenu = (options = {}) => setMenuState(false, options);
+		const toggleMenu = () => {
+			if (navMenu.dataset.open === "true") {
+				closeMenu({ restoreFocus: true });
+				return;
+			}
+
+			setMenuState(true);
+		};
+
+		setMenuState(false);
+
+		menuButton.addEventListener("click", toggleMenu, { signal });
+
+		menuLinks.forEach((link) => {
+			link.addEventListener("click", () => closeMenu(), { signal });
+		});
+
+		document.addEventListener(
+			"click",
+			(event) => {
+				if (
+					navMenu.dataset.open === "true" &&
+					event.target instanceof Node &&
+					!navMenu.contains(event.target)
+				) {
+					closeMenu();
+				}
+			},
+			{ signal }
+		);
+
+		document.addEventListener(
+			"keydown",
+			(event) => {
+				if (event.key === "Escape") {
+					closeMenu({ restoreFocus: true });
+					return;
+				}
+
+				if (
+					event.key === "Tab" &&
+					navMenu.dataset.open === "true" &&
+					menuLinks.length > 0 &&
+					document.activeElement instanceof HTMLElement
+				) {
+					const firstLink = menuLinks[0];
+					const lastLink = menuLinks[menuLinks.length - 1];
+
+					if (event.shiftKey && document.activeElement === firstLink) {
+						event.preventDefault();
+						lastLink.focus();
+					} else if (!event.shiftKey && document.activeElement === lastLink) {
+						event.preventDefault();
+						firstLink.focus();
+					}
+				}
+			},
+			{ signal }
+		);
+
+		mobileBreakpoint.addEventListener(
+			"change",
+			(event) => {
+				if (!event.matches) {
+					closeMenu();
+				}
+			},
+			{ signal }
+		);
+
+		window.addEventListener(
+			"hashchange",
+			() => {
+				closeMenu();
+			},
+			{ signal }
+		);
+
+		window.addEventListener(
+			"pagehide",
+			() => {
+				controller.abort();
+			},
+			{ once: true }
+		);
+	}
+</script>
 
 <style>
 	.navbar {
@@ -53,10 +207,9 @@
 		width: min(100%, var(--max-width));
 		margin-inline: auto;
 		border: 1px solid var(--border);
-		border-radius: 999px;
-		background: color-mix(in oklch, var(--surface-strong) 88%, transparent);
-		backdrop-filter: blur(12px);
-		box-shadow: var(--shadow-sm);
+		border-radius: 14px;
+		background: var(--surface-strong);
+		box-shadow: 0 2px 8px color-mix(in oklch, var(--text) 4%, transparent);
 		padding: 0 1rem;
 	}
 
@@ -92,8 +245,8 @@
 		min-width: 0;
 		gap: clamp(0.8rem, 2vw, 1.6rem);
 		font-family: var(--font-heading);
-		font-weight: 700;
-		font-size: 0.92rem;
+		font-weight: 500;
+		font-size: 0.88rem;
 		letter-spacing: 0.02em;
 	}
 
@@ -101,16 +254,21 @@
 		display: inline-flex;
 		align-items: center;
 		min-height: 44px;
-		padding: 0.4rem 0.55rem;
-		border-radius: 999px;
+		padding: 0.35rem 0.5rem;
+		border-radius: 10px;
 		transition:
 			background-color 0.24s ease,
-			color 0.24s ease;
+			color 0.24s ease,
+			transform 0.2s ease;
 	}
 
 	.nav-links a:hover {
-		background: color-mix(in oklch, var(--accent) 12%, transparent);
-		color: var(--accent);
+		background: color-mix(in oklch, var(--accent) 4%, transparent);
+		color: color-mix(in oklch, var(--accent) 48%, var(--text));
+	}
+
+	.nav-links a:active {
+		transform: translateY(1px);
 	}
 
 	.nav-menu {
@@ -118,37 +276,34 @@
 		width: 44px;
 		height: 44px;
 		display: none;
-		place-items: center;
 		align-self: center;
 	}
 
-	.nav-menu summary {
-		list-style: none;
-		appearance: none;
-		-webkit-appearance: none;
+	.nav-menu-button {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
 		width: 44px;
 		height: 44px;
 		padding: 0;
-		line-height: 0;
 		border: 0;
-		border-radius: 50%;
+		border-radius: 10px;
 		background: transparent;
 		color: var(--text);
 		cursor: pointer;
-		margin: 0;
-		vertical-align: top;
+		transition:
+			background-color 0.24s ease,
+			color 0.24s ease,
+			transform 0.2s ease;
 	}
 
-	.nav-menu summary::-webkit-details-marker {
-		display: none;
+	.nav-menu-button:hover {
+		background: color-mix(in oklch, var(--accent) 4%, transparent);
+		color: color-mix(in oklch, var(--accent) 48%, var(--text));
 	}
 
-	.nav-menu summary::marker {
-		content: "";
-		display: none;
+	.nav-menu-button:active {
+		transform: translateY(1px);
 	}
 
 	.nav-menu-icon {
@@ -187,16 +342,16 @@
 		top: 5px;
 	}
 
-	.nav-menu[open] .nav-menu-icon {
+	.nav-menu[data-open="true"] .nav-menu-icon {
 		background: transparent;
 	}
 
-	.nav-menu[open] .nav-menu-icon::before {
+	.nav-menu[data-open="true"] .nav-menu-icon::before {
 		top: 0;
 		transform: rotate(45deg);
 	}
 
-	.nav-menu[open] .nav-menu-icon::after {
+	.nav-menu[data-open="true"] .nav-menu-icon::after {
 		top: 0;
 		transform: rotate(-45deg);
 	}
@@ -210,6 +365,12 @@
 		padding: 0.5rem;
 		display: grid;
 		gap: 0.15rem;
+		background: var(--surface-strong);
+		border-radius: 14px;
+	}
+
+	.nav-menu-panel[hidden] {
+		display: none !important;
 	}
 
 	.nav-menu-panel a {
@@ -217,14 +378,20 @@
 		align-items: center;
 		min-height: 44px;
 		padding: 0.7rem 0.85rem;
-		border-radius: 14px;
+		border-radius: 10px;
 		font-family: var(--font-heading);
-		font-weight: 700;
+		font-weight: 500;
 	}
 
 	.nav-menu-panel a:hover {
-		background: color-mix(in oklch, var(--accent) 10%, transparent);
-		color: var(--accent);
+		background: color-mix(in oklch, var(--accent) 4%, transparent);
+		color: color-mix(in oklch, var(--accent) 48%, var(--text));
+	}
+
+	.nav-menu-panel-fallback {
+		position: static;
+		width: min(240px, calc(100vw - 2rem));
+		margin-top: 0.6rem;
 	}
 
 	@media (max-width: 900px) {

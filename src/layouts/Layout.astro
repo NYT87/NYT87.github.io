@@ -103,12 +103,15 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 		--line-strong: oklch(0.74 0.014 70 / 0.9);
 		--brand: oklch(0.63 0.18 45);
 		--brand-strong: oklch(0.56 0.17 43);
-		--accent: oklch(0.58 0.11 208);
-		--accent-soft: oklch(0.94 0.03 208 / 0.95);
-		--brand-soft: oklch(0.93 0.04 45 / 0.95);
+		--accent: oklch(0.54 0.08 208);
+		--accent-soft: oklch(0.95 0.018 208 / 0.92);
+		--brand-soft: oklch(0.95 0.028 45 / 0.9);
 		--focus-ring: oklch(0.72 0.16 45 / 0.9);
-		--shadow: 0 18px 40px oklch(0.24 0.02 60 / 0.09);
-		--shadow-sm: 0 8px 24px oklch(0.24 0.02 60 / 0.06);
+		--shadow: 0 16px 34px oklch(0.24 0.02 60 / 0.07);
+		--shadow-sm: 0 6px 18px oklch(0.24 0.02 60 / 0.045);
+		--accent-wash: color-mix(in oklch, var(--accent) 8%, transparent);
+		--accent-wash-strong: color-mix(in oklch, var(--accent) 12%, transparent);
+		--brand-shadow: oklch(0.5 0.06 208 / 0.1);
 		--radius-lg: 26px;
 		--radius-md: 18px;
 		--radius-sm: 12px;
@@ -134,17 +137,6 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 		margin: 0;
 		padding: 0;
 		min-height: 100%;
-		overflow-x: hidden;
-	}
-
-	html {
-		-ms-overflow-style: none;
-		scrollbar-width: none;
-	}
-
-	html::-webkit-scrollbar,
-	body::-webkit-scrollbar {
-		display: none;
 	}
 
 	html {
@@ -155,9 +147,9 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 		font-family: var(--font-body);
 		color: var(--text);
 		background:
-			linear-gradient(180deg, oklch(1 0 0 / 0.2), oklch(1 0 0 / 0) 16rem),
-			radial-gradient(circle at 10% 8%, oklch(0.92 0.03 208 / 0.8), transparent 40%),
-			radial-gradient(circle at 90% 20%, oklch(0.92 0.04 45 / 0.7), transparent 44%), var(--bg);
+			linear-gradient(180deg, oklch(1 0 0 / 0.08), oklch(1 0 0 / 0) 11rem),
+			radial-gradient(circle at 12% 10%, oklch(0.93 0.02 208 / 0.18), transparent 32%),
+			radial-gradient(circle at 88% 18%, oklch(0.94 0.025 45 / 0.14), transparent 36%), var(--bg);
 		line-height: 1.65;
 	}
 
@@ -170,6 +162,7 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 		line-height: 1.1;
 		margin: 0;
 		overflow-wrap: anywhere;
+		hyphens: auto;
 		text-wrap: balance;
 	}
 
@@ -178,6 +171,7 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 		color: var(--muted);
 		font-size: clamp(1rem, 0.96rem + 0.2vw, 1.1rem);
 		overflow-wrap: break-word;
+		hyphens: auto;
 	}
 
 	a {
@@ -193,7 +187,6 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 	main {
 		display: block;
 		max-width: 100%;
-		overflow-x: hidden;
 	}
 
 	.container {
@@ -226,7 +219,7 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 		white-space: normal;
 		overflow-wrap: anywhere;
 		background: var(--brand-soft);
-		color: var(--brand);
+		color: color-mix(in oklch, var(--brand) 88%, var(--text));
 	}
 
 	.section-title {
@@ -240,23 +233,6 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 		box-shadow: var(--shadow);
 	}
 
-	.glass-card {
-		background: linear-gradient(180deg, var(--surface-strong), var(--surface-muted));
-		border: 1px solid var(--border);
-		border-radius: var(--radius-md);
-		box-shadow: 0 10px 24px rgba(31, 23, 16, 0.06);
-		transition:
-			transform 0.28s ease,
-			box-shadow 0.28s ease,
-			border-color 0.28s ease;
-	}
-
-	.glass-card:hover {
-		transform: translateY(-4px);
-		box-shadow: 0 18px 32px oklch(0.24 0.02 60 / 0.11);
-		border-color: color-mix(in oklch, var(--brand) 34%, var(--border));
-	}
-
 	.btn {
 		display: inline-flex;
 		align-items: center;
@@ -265,8 +241,8 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 		padding: 0.85rem 1.4rem;
 		border-radius: 999px;
 		font-family: var(--font-heading);
-		font-weight: 700;
-		font-size: 0.98rem;
+		font-weight: 500;
+		font-size: 0.94rem;
 		letter-spacing: 0.01em;
 		transition:
 			transform 0.24s ease,
@@ -278,23 +254,23 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 	.btn-primary {
 		color: var(--surface-strong);
 		background: linear-gradient(135deg, var(--brand-strong), var(--brand));
-		box-shadow: 0 10px 24px color-mix(in oklch, var(--brand) 32%, transparent);
+		box-shadow: 0 8px 18px color-mix(in oklch, var(--brand) 22%, transparent);
 	}
 
 	.btn-primary:hover {
 		transform: translateY(-2px);
-		box-shadow: 0 14px 30px color-mix(in oklch, var(--brand) 38%, transparent);
+		box-shadow: 0 10px 22px color-mix(in oklch, var(--brand) 26%, transparent);
 	}
 
 	.btn-outline {
 		border-color: color-mix(in oklch, var(--accent) 28%, var(--border));
-		background: color-mix(in oklch, var(--accent) 10%, var(--surface-strong));
+		background: color-mix(in oklch, var(--accent) 6%, var(--surface-strong));
 		color: var(--accent);
 	}
 
 	.btn-outline:hover {
 		transform: translateY(-2px);
-		background: color-mix(in oklch, var(--accent) 16%, var(--surface-strong));
+		background: color-mix(in oklch, var(--accent) 10%, var(--surface-strong));
 	}
 
 	.skip-link {
@@ -373,18 +349,18 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 			--muted: oklch(0.77 0.015 80);
 			--border: oklch(0.4 0.015 250 / 0.7);
 			--line-strong: oklch(0.55 0.015 250 / 0.8);
-			--brand-soft: oklch(0.38 0.09 45 / 0.34);
-			--accent-soft: oklch(0.34 0.05 208 / 0.4);
+			--brand-soft: oklch(0.36 0.06 45 / 0.24);
+			--accent-soft: oklch(0.32 0.035 208 / 0.28);
 			--focus-ring: oklch(0.73 0.16 45 / 0.95);
-			--shadow: 0 20px 42px oklch(0.02 0.01 250 / 0.42);
-			--shadow-sm: 0 10px 26px oklch(0.02 0.01 250 / 0.28);
+			--shadow: 0 18px 38px oklch(0.02 0.01 250 / 0.34);
+			--shadow-sm: 0 8px 20px oklch(0.02 0.01 250 / 0.2);
 		}
 
 		body {
 			background:
-				linear-gradient(180deg, oklch(0.3 0.01 250 / 0.18), oklch(0.18 0.01 250 / 0) 18rem),
-				radial-gradient(circle at 10% 8%, oklch(0.34 0.06 208 / 0.38), transparent 40%),
-				radial-gradient(circle at 90% 20%, oklch(0.38 0.09 45 / 0.28), transparent 44%), var(--bg);
+				linear-gradient(180deg, oklch(0.3 0.01 250 / 0.07), oklch(0.18 0.01 250 / 0) 13rem),
+				radial-gradient(circle at 10% 8%, oklch(0.3 0.035 208 / 0.1), transparent 34%),
+				radial-gradient(circle at 90% 20%, oklch(0.34 0.055 45 / 0.08), transparent 38%), var(--bg);
 		}
 	}
 
