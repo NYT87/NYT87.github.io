@@ -55,6 +55,7 @@
 		padding: 1.3rem;
 		display: grid;
 		gap: 1rem;
+		min-width: 0;
 		transition:
 			transform 0.24s ease,
 			box-shadow 0.24s ease;
@@ -70,6 +71,7 @@
 		justify-content: space-between;
 		align-items: flex-start;
 		gap: 0.8rem;
+		min-width: 0;
 	}
 
 	.project-head h3 {
@@ -99,6 +101,7 @@
 		font-family: var(--font-heading);
 		font-size: 0.9rem;
 		color: var(--brand);
+		overflow-wrap: break-word;
 	}
 
 	.project-link.muted {
@@ -118,6 +121,10 @@
 	@media (max-width: 520px) {
 		.project-head {
 			flex-direction: column;
+		}
+
+		.project-tag {
+			white-space: normal;
 		}
 	}
 </style>

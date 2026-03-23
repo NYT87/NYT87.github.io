@@ -47,6 +47,7 @@
 		padding: clamp(1.3rem, 2.3vw, 2rem);
 		display: grid;
 		gap: 1rem;
+		min-width: 0;
 	}
 
 	.about-text h3 {
@@ -56,6 +57,7 @@
 	.about-visual {
 		display: flex;
 		align-items: stretch;
+		min-width: 0;
 	}
 
 	.visual-card {
@@ -77,6 +79,7 @@
 	.visual-card p {
 		max-width: 24ch;
 		font-size: 0.95rem;
+		overflow-wrap: break-word;
 	}
 
 	@media (max-width: 900px) {
