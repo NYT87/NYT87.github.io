@@ -8,28 +8,36 @@
 			<span class="section-kicker">Remote Software Studio</span>
 			<h1>Designing and engineering products that survive real-world scale.</h1>
 			<p>
-				NYT87 partners with teams to build reliable web platforms, backend systems, and cloud
-				infrastructure with product-minded execution.
+				NYT87 partners with companies that need senior engineering judgment across product delivery,
+				backend systems, and cloud infrastructure without the overhead of a bloated consultancy.
 			</p>
 			<div class="hero-actions reveal reveal-delay-1">
 				<a href="#services" class="btn btn-primary">Explore Services</a>
-				<a href="#projects" class="btn btn-outline">See Projects</a>
+				<a href="#contact" class="btn btn-outline">Start a Conversation</a>
 			</div>
 		</div>
 		<div class="hero-panel panel reveal reveal-delay-2">
-			<img src="/assets/brand.png" alt="NYT87 Wordmark" class="hero-logo" />
-			<div class="metrics">
-				<div>
-					<strong>8+ years</strong>
-					<span>remote-first delivery</span>
+			<p class="hero-eyebrow">Operating Notes</p>
+			<picture>
+				<source srcset="/assets/brand-dark.png" media="(prefers-color-scheme: dark)" />
+				<img src="/assets/brand.png" alt="NYT87 Wordmark" class="hero-logo" />
+			</picture>
+			<div class="hero-log" aria-label="Studio operating principles">
+				<div class="hero-log-row">
+					<span class="hero-log-label">Delivery</span>
+					<p>
+						Small senior team, direct communication, and milestones tied to real product outcomes.
+					</p>
 				</div>
-				<div>
-					<strong>Global</strong>
-					<span>cross-timezone collaboration</span>
+				<div class="hero-log-row">
+					<span class="hero-log-label">Systems</span>
+					<p>
+						Web applications, APIs, platform services, and infrastructure built for maintainability.
+					</p>
 				</div>
-				<div>
-					<strong>Product + Infra</strong>
-					<span>end-to-end ownership</span>
+				<div class="hero-log-row">
+					<span class="hero-log-label">Mode</span>
+					<p>Remote-first collaboration with clear documentation and straightforward execution.</p>
 				</div>
 			</div>
 		</div>
@@ -57,7 +65,7 @@
 
 	.hero-content {
 		display: grid;
-		grid-template-columns: 1.1fr 0.9fr;
+		grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
 		gap: clamp(1.4rem, 3vw, 2.8rem);
 		align-items: stretch;
 	}
@@ -66,15 +74,22 @@
 		display: grid;
 		align-content: center;
 		gap: 1.2rem;
+		min-width: 0;
 	}
 
 	.hero-copy h1 {
-		font-size: clamp(2.1rem, 1.45rem + 2.5vw, 4rem);
-		max-width: 16ch;
+		font-size: clamp(2.2rem, 1.5rem + 2.5vw, 4rem);
+		max-width: 12ch;
+		max-inline-size: 100%;
+		line-height: 1.02;
+		letter-spacing: -0.045em;
+		overflow-wrap: anywhere;
+		text-wrap: balance;
 	}
 
 	.hero-copy p {
 		max-width: 58ch;
+		max-inline-size: 100%;
 	}
 
 	.hero-actions {
@@ -90,40 +105,64 @@
 	.hero-panel {
 		padding: clamp(1.1rem, 2.2vw, 1.8rem);
 		display: grid;
-		gap: 1.3rem;
+		gap: 1rem;
 		align-content: center;
+		min-width: 0;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.hero-panel::before {
+		content: "";
+		position: absolute;
+		inset: 0 0 auto 0;
+		height: 3px;
+		background: linear-gradient(90deg, var(--brand), var(--accent));
+	}
+
+	.hero-eyebrow {
+		font-family: var(--font-heading);
+		font-size: 0.8rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--accent);
 	}
 
 	.hero-logo {
-		max-width: 220px;
+		max-width: 180px;
 		width: 100%;
 		height: auto;
 		display: block;
-		margin-inline: auto;
+		margin-inline: 0;
 	}
 
-	.metrics {
+	.hero-log {
 		display: grid;
-		gap: 0.75rem;
+		gap: 0;
+		border-top: 1px solid var(--line-strong);
 	}
 
-	.metrics div {
-		border: 1px solid var(--border);
-		border-radius: 14px;
-		padding: 0.9rem 1rem;
-		background: rgba(255, 255, 255, 0.76);
+	.hero-log-row {
 		display: grid;
-		gap: 0.15rem;
+		grid-template-columns: minmax(84px, 110px) 1fr;
+		gap: 0.9rem;
+		padding: 0.95rem 0;
+		border-bottom: 1px solid var(--border);
+		align-items: start;
 	}
 
-	.metrics strong {
+	.hero-log-label {
 		font-family: var(--font-heading);
-		font-size: 1rem;
+		font-size: 0.82rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.12em;
+		color: var(--muted);
 	}
 
-	.metrics span {
-		color: var(--muted);
-		font-size: 0.9rem;
+	.hero-log-row p {
+		font-size: 0.96rem;
+		max-width: 38ch;
 	}
 
 	@media (max-width: 900px) {
@@ -146,8 +185,21 @@
 			display: none;
 		}
 
+		.hero-copy h1 {
+			font-size: clamp(1.9rem, 10vw, 3.1rem);
+		}
+
+		.hero-copy p {
+			font-size: 0.98rem;
+		}
+
 		.hero-actions {
 			gap: 0.6rem;
+		}
+
+		.hero-log-row {
+			grid-template-columns: 1fr;
+			gap: 0.35rem;
 		}
 	}
 </style>

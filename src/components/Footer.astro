@@ -3,19 +3,24 @@
 ---
 
 <footer id="contact" class="footer section">
-	<div class="container footer-panel panel reveal">
-		<div class="footer-links">
-			<div>
-				<h4>Contact</h4>
-				<a href="mailto:nyt87@proton.me">nyt87@proton.me</a>
+	<div class="container">
+		<div class="footer-panel panel reveal">
+			<div class="footer-links">
+				<div>
+					<h4>Contact</h4>
+					<a href="mailto:nyt87@proton.me">nyt87@proton.me</a>
+				</div>
+				<div>
+					<h4>GitHub</h4>
+					<a href="https://github.com/NYT87" target="_blank" rel="noopener noreferrer">NYT87</a>
+				</div>
 			</div>
-			<div>
-				<h4>GitHub</h4>
-				<a href="https://github.com/NYT87" target="_blank" rel="noopener noreferrer">NYT87</a>
+			<div class="footer-brand">
+				<picture>
+					<source srcset="/assets/logo-text-white.png" media="(prefers-color-scheme: dark)" />
+					<img src="/assets/logo-text.png" alt="NYT87" class="footer-logo" />
+				</picture>
 			</div>
-		</div>
-		<div class="footer-brand">
-			<img src="/assets/logo-text.png" alt="NYT87" class="footer-logo" />
 		</div>
 	</div>
 	<div class="container footer-bottom">
@@ -30,7 +35,7 @@
 	}
 
 	.footer-panel {
-		padding: 1.2rem;
+		padding: clamp(1.2rem, 2.8vw, 1.6rem);
 		display: flex;
 		justify-content: space-between;
 		align-items: flex-end;
@@ -41,6 +46,7 @@
 	.footer-brand {
 		display: flex;
 		justify-content: flex-end;
+		width: 100%;
 	}
 
 	.footer-logo {
@@ -64,7 +70,7 @@
 	}
 
 	.footer-links a {
-		color: #066a6a;
+		color: var(--accent);
 		font-weight: 700;
 	}
 
@@ -81,6 +87,7 @@
 		.footer-panel {
 			flex-direction: column;
 			align-items: flex-start;
+			padding: 1.15rem;
 		}
 
 		.footer-links {
@@ -89,9 +96,14 @@
 	}
 
 	@media (max-width: 560px) {
+		.footer-panel {
+			padding: 1rem;
+		}
+
 		.footer-brand {
-			align-self: flex-end;
-			justify-content: flex-end;
+			align-self: stretch;
+			justify-content: flex-start;
+			padding-top: 0.3rem;
 		}
 
 		.footer-links {

@@ -2,18 +2,34 @@
 
 ---
 
-<nav class="navbar">
+<nav class="navbar" aria-label="Primary">
 	<div class="container nav-content">
 		<a href="#" class="logo-link" aria-label="NYT87 home">
 			<img src="/assets/logo-icon.png" alt="NYT87 Icon" class="nav-brand-img icon" />
-			<img src="/assets/logo-text.png" alt="NYT87 Text" class="nav-brand-img text" />
+			<picture>
+				<source srcset="/assets/logo-text-white.png" media="(prefers-color-scheme: dark)" />
+				<img src="/assets/logo-text.png" alt="" class="nav-brand-img text" />
+			</picture>
 		</a>
 		<div class="nav-links">
 			<a href="#about">About</a>
 			<a href="#services">Services</a>
 			<a href="#projects">Projects</a>
 			<a href="#team">Team</a>
+			<a href="#contact">Contact</a>
 		</div>
+		<details class="nav-menu">
+			<summary aria-label="Open navigation menu">
+				<span class="nav-menu-icon" aria-hidden="true"></span>
+			</summary>
+			<div class="nav-menu-panel panel">
+				<a href="#about">About</a>
+				<a href="#services">Services</a>
+				<a href="#projects">Projects</a>
+				<a href="#team">Team</a>
+				<a href="#contact">Contact</a>
+			</div>
+		</details>
 	</div>
 </nav>
 
@@ -25,41 +41,55 @@
 		width: 100%;
 		z-index: 60;
 		padding-top: 0.85rem;
+		padding-inline: var(--page-gutter);
 	}
 
 	.nav-content {
-		height: 74px;
+		min-height: 74px;
 		display: grid;
-		grid-template-columns: auto 1fr;
+		grid-template-columns: auto 1fr auto;
 		align-items: center;
-		gap: 1.2rem;
+		gap: 1rem;
+		width: min(100%, var(--max-width));
+		margin-inline: auto;
 		border: 1px solid var(--border);
 		border-radius: 999px;
-		background: rgba(255, 255, 255, 0.78);
-		backdrop-filter: blur(10px);
-		box-shadow: 0 8px 22px rgba(23, 20, 18, 0.08);
-		padding: 0 1rem 0 1.1rem;
+		background: color-mix(in oklch, var(--surface-strong) 88%, transparent);
+		backdrop-filter: blur(12px);
+		box-shadow: var(--shadow-sm);
+		padding: 0 1rem;
 	}
 
 	.logo-link {
 		display: inline-flex;
 		align-items: center;
 		gap: 0.55rem;
+		min-width: 0;
+		line-height: 0;
+	}
+
+	.logo-link picture {
+		display: flex;
+		align-items: center;
+		min-width: 0;
 	}
 
 	.nav-brand-img {
 		height: 24px;
 		width: auto;
+		display: block;
 	}
 
 	.nav-brand-img.icon {
 		height: 28px;
+		flex-shrink: 0;
 	}
 
 	.nav-links {
 		display: flex;
 		justify-content: flex-end;
 		justify-self: end;
+		min-width: 0;
 		gap: clamp(0.8rem, 2vw, 1.6rem);
 		font-family: var(--font-heading);
 		font-weight: 700;
@@ -68,23 +98,142 @@
 	}
 
 	.nav-links a {
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
 		padding: 0.4rem 0.55rem;
 		border-radius: 999px;
-		transition: background-color 0.24s ease;
+		transition:
+			background-color 0.24s ease,
+			color 0.24s ease;
 	}
 
 	.nav-links a:hover {
-		background: rgba(13, 138, 138, 0.11);
+		background: color-mix(in oklch, var(--accent) 12%, transparent);
+		color: var(--accent);
+	}
+
+	.nav-menu {
+		position: relative;
+		width: 44px;
+		height: 44px;
+		display: none;
+		place-items: center;
+		align-self: center;
+	}
+
+	.nav-menu summary {
+		list-style: none;
+		appearance: none;
+		-webkit-appearance: none;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 44px;
+		height: 44px;
+		padding: 0;
+		line-height: 0;
+		border: 0;
+		border-radius: 50%;
+		background: transparent;
+		color: var(--text);
+		cursor: pointer;
+		margin: 0;
+		vertical-align: top;
+	}
+
+	.nav-menu summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.nav-menu summary::marker {
+		content: "";
+		display: none;
+	}
+
+	.nav-menu-icon {
+		position: relative;
+		display: block;
+		width: 16px;
+		height: 2px;
+		flex: 0 0 auto;
+		border-radius: 999px;
+		background: currentColor;
+		transform: translateY(0.5px);
+		transition:
+			background-color 0.2s ease,
+			transform 0.24s ease;
+	}
+
+	.nav-menu-icon::before,
+	.nav-menu-icon::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		width: 16px;
+		height: 2px;
+		border-radius: 999px;
+		background: currentColor;
+		transition:
+			transform 0.24s ease,
+			top 0.24s ease;
+	}
+
+	.nav-menu-icon::before {
+		top: -5px;
+	}
+
+	.nav-menu-icon::after {
+		top: 5px;
+	}
+
+	.nav-menu[open] .nav-menu-icon {
+		background: transparent;
+	}
+
+	.nav-menu[open] .nav-menu-icon::before {
+		top: 0;
+		transform: rotate(45deg);
+	}
+
+	.nav-menu[open] .nav-menu-icon::after {
+		top: 0;
+		transform: rotate(-45deg);
+	}
+
+	.nav-menu-panel {
+		position: absolute;
+		right: 0;
+		top: calc(100% + 0.6rem);
+		width: min(240px, calc(100vw - 2rem));
+		padding: 0.5rem;
+		display: grid;
+		gap: 0.15rem;
+	}
+
+	.nav-menu-panel a {
+		display: flex;
+		align-items: center;
+		min-height: 44px;
+		padding: 0.7rem 0.85rem;
+		border-radius: 14px;
+		font-family: var(--font-heading);
+		font-weight: 700;
+	}
+
+	.nav-menu-panel a:hover {
+		background: color-mix(in oklch, var(--accent) 10%, transparent);
+		color: var(--accent);
 	}
 
 	@media (max-width: 900px) {
-		.nav-content {
-			grid-template-columns: auto;
-			justify-content: space-between;
-		}
-
 		.nav-links {
 			display: none;
+		}
+
+		.nav-menu {
+			display: grid;
+			justify-self: end;
 		}
 	}
 
@@ -94,12 +243,15 @@
 		}
 
 		.nav-content {
-			height: 64px;
-			padding: 0 0.7rem 0 0.85rem;
+			min-height: 64px;
+			gap: 0;
+			padding: 0 0.8rem;
 		}
 
 		.nav-brand-img.text {
 			height: 20px;
+			max-width: min(96px, 26vw);
+			object-fit: contain;
 		}
 	}
 </style>

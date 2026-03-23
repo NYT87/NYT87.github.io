@@ -62,7 +62,7 @@
 
 	a.project-card:hover {
 		transform: translateY(-4px);
-		box-shadow: 0 16px 30px rgba(31, 23, 16, 0.12);
+		box-shadow: 0 16px 30px color-mix(in oklch, var(--text) 12%, transparent);
 	}
 
 	.project-head {
@@ -84,15 +84,15 @@
 		letter-spacing: 0.08em;
 		padding: 0.3rem 0.55rem;
 		border-radius: 999px;
-		background: rgba(209, 99, 42, 0.16);
+		background: var(--brand-soft);
 		color: var(--brand);
 		white-space: nowrap;
 		flex-shrink: 0;
 	}
 
 	.project-tag.soon {
-		background: rgba(13, 138, 138, 0.18);
-		color: #066a6a;
+		background: var(--accent-soft);
+		color: var(--accent);
 	}
 
 	.project-link {

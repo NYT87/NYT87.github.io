@@ -1,4 +1,5 @@
 ---
+/** biome-ignore-all lint/correctness/noUnusedImports: they are used in the layout for structured data */
 import { Image } from "astro:assets";
 import joseImg from "../assets/jose.jpeg";
 ---
@@ -39,12 +40,14 @@ import joseImg from "../assets/jose.jpeg";
 		padding: clamp(1.2rem, 2.6vw, 2rem);
 		display: grid;
 		gap: 1rem;
+		min-width: 0;
 	}
 
 	.team-top {
 		display: flex;
 		gap: 1rem;
 		align-items: center;
+		min-width: 0;
 	}
 
 	.team-avatar {
@@ -53,12 +56,13 @@ import joseImg from "../assets/jose.jpeg";
 		aspect-ratio: 1 / 1;
 		border-radius: 22px;
 		object-fit: cover;
-		border: 1px solid rgba(13, 138, 138, 0.3);
+		border: 1px solid color-mix(in oklch, var(--accent) 30%, var(--border));
 	}
 
 	.team-meta {
 		display: grid;
 		gap: 0.38rem;
+		min-width: 0;
 	}
 
 	.team-meta h3 {
@@ -74,7 +78,7 @@ import joseImg from "../assets/jose.jpeg";
 	.team-link {
 		font-family: var(--font-heading);
 		font-size: 0.86rem;
-		color: #066a6a;
+		color: var(--accent);
 	}
 
 	.team-desc {
