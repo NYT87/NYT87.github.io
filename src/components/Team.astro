@@ -14,7 +14,10 @@ import joseImg from "../assets/jose.jpeg";
 			<div class="team-top">
 				<Image src={joseImg} alt="José Miguel" class="team-avatar" />
 				<div class="team-meta">
-					<h3>José Miguel</h3>
+					<div class="team-name">
+						<h3>José Miguel</h3>
+						<span class="team-tag">Founder</span>
+					</div>
 					<p class="team-role">CTO & Senior Software Engineer</p>
 					<a
 						href="https://www.linkedin.com/in/jm8nav/"
@@ -63,6 +66,26 @@ import joseImg from "../assets/jose.jpeg";
 		display: grid;
 		gap: 0.38rem;
 		min-width: 0;
+	}
+
+	.team-name {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.55rem;
+		min-width: 0;
+	}
+
+	.team-tag {
+		font-family: var(--font-heading);
+		font-size: 0.72rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		padding: 0.3rem 0.55rem;
+		border-radius: 999px;
+		background: var(--accent-soft);
+		color: var(--accent);
+		white-space: nowrap;
 	}
 
 	.team-meta h3 {

@@ -9,12 +9,7 @@
 			<h2 class="section-title">Recent work built for everyday use, not demo-day polish.</h2>
 		</div>
 		<div class="projects-grid">
-			<a
-				href="https://github.com/NYT87/booba-pass"
-				target="_blank"
-				rel="noopener noreferrer"
-				class="project-card panel reveal reveal-delay-1"
-			>
+			<article class="project-card panel reveal reveal-delay-1">
 				<div class="project-head">
 					<h3>Booba Pass</h3>
 					<span class="project-tag">Open Source</span>
@@ -23,10 +18,48 @@
 					A centralized wallet for airline loyalty information with QR and barcode support, designed
 					for quick access and practical day-to-day use.
 				</p>
-				<span class="project-link">Review the codebase</span>
-			</a>
+				<div class="project-links">
+					<a
+						href="https://nyt87.github.io/booba-pass/"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="project-link">Open the live app</a
+					>
+					<a
+						href="https://github.com/NYT87/booba-pass"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="project-link muted">Review the codebase</a
+					>
+				</div>
+			</article>
 
-			<article class="project-note reveal reveal-delay-2">
+			<article class="project-card panel reveal reveal-delay-2">
+				<div class="project-head">
+					<h3>OpenTrack Viewer</h3>
+					<span class="project-tag">Open Source</span>
+				</div>
+				<p>
+					A privacy-first, client-side web app and PWA for viewing activity tracking files, with
+					everything processed locally in the browser.
+				</p>
+				<div class="project-links">
+					<a
+						href="https://nyt87.github.io/opentrack-viewer/"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="project-link">Open the live app</a
+					>
+					<a
+						href="https://github.com/NYT87/opentrack-viewer"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="project-link muted">Review the codebase</a
+					>
+				</div>
+			</article>
+
+			<article class="project-note reveal reveal-delay-3">
 				<div class="project-head">
 					<h3>More client work</h3>
 				</div>
@@ -47,7 +80,7 @@
 
 	.projects-grid {
 		display: grid;
-		grid-template-columns: minmax(0, 1.2fr) minmax(220px, 0.8fr);
+		grid-template-columns: repeat(2, minmax(0, 1fr)) minmax(200px, 0.7fr);
 		gap: clamp(1rem, 2.5vw, 2rem);
 		align-items: stretch;
 	}
@@ -62,17 +95,13 @@
 			box-shadow 0.24s ease;
 	}
 
-	a.project-card:hover {
+	.project-card:hover {
 		transform: translateY(-4px);
 		box-shadow: 0 16px 30px color-mix(in oklch, var(--text) 12%, transparent);
 	}
 
-	a.project-card:hover .project-link {
+	.project-links a:hover {
 		color: color-mix(in oklch, var(--brand) 82%, var(--text));
-	}
-
-	a.project-card:active {
-		transform: translateY(-1px);
 	}
 
 	.project-head {
@@ -120,6 +149,13 @@
 		color: var(--muted);
 	}
 
+	.project-links {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0.4rem 1.1rem;
+	}
+
 	.project-note {
 		padding: 0.6rem 0 0;
 		display: grid;
@@ -129,9 +165,19 @@
 		max-width: 34ch;
 	}
 
+	@media (max-width: 1100px) {
+		.projects-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
 	@media (max-width: 900px) {
 		.projects-grid {
 			grid-template-columns: 1fr;
+		}
+
+		.project-note {
+			max-width: none;
 		}
 	}
 
