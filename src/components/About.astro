@@ -1,4 +1,7 @@
 ---
+/** biome-ignore-all lint/correctness/noUnusedImports: they are used in the template */
+import { Image } from "astro:assets";
+import logoIcon from "../assets/brand/logo-icon.png";
 ---
 
 <section id="about" class="section about-section">
@@ -22,7 +25,7 @@
 			</article>
 			<aside class="about-visual reveal reveal-delay-2" aria-hidden="true">
 				<div class="visual-card">
-					<img src="/assets/logo-icon.png" alt="" class="about-logo" />
+					<Image src={logoIcon} alt="" width={150} densities={[1, 2]} class="about-logo" />
 					<span class="visual-label">Studio Mark</span>
 					<p>Engineering quality, clear communication, and business impact.</p>
 				</div>

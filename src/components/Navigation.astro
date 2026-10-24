@@ -1,13 +1,42 @@
 ---
+/** biome-ignore-all lint/correctness/noUnusedImports: they are used in the template */
+/** biome-ignore-all lint/correctness/noUnusedVariables: they are used in the template */
+import { getImage, Image } from "astro:assets";
+import logoIcon from "../assets/brand/logo-icon.png";
+import logoText from "../assets/brand/logo-text.png";
+import logoTextWhite from "../assets/brand/logo-text-white.png";
+
+const logoTextDark = await getImage({
+	src: logoTextWhite,
+	height: 24,
+	densities: [1, 2],
+});
 ---
 
 <nav class="navbar" aria-label="Primary">
 	<div class="container nav-content">
 		<a href="/" class="logo-link" aria-label="NYT87 home">
-			<img src="/assets/logo-icon.png" alt="NYT87 Icon" class="nav-brand-img icon" />
+			<Image
+				src={logoIcon}
+				alt="NYT87 Icon"
+				height={28}
+				densities={[1, 2]}
+				loading="eager"
+				class="nav-brand-img icon"
+			/>
 			<picture>
-				<source srcset="/assets/logo-text-white.png" media="(prefers-color-scheme: dark)" />
-				<img src="/assets/logo-text.png" alt="" class="nav-brand-img text" />
+				<source
+					srcset={logoTextDark.srcSet.attribute || logoTextDark.src}
+					media="(prefers-color-scheme: dark)"
+				/>
+				<Image
+					src={logoText}
+					alt=""
+					height={24}
+					densities={[1, 2]}
+					loading="eager"
+					class="nav-brand-img text"
+				/>
 			</picture>
 		</a>
 		<div class="nav-links">

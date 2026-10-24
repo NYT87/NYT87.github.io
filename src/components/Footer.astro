@@ -1,4 +1,15 @@
 ---
+/** biome-ignore-all lint/correctness/noUnusedImports: they are used in the template */
+/** biome-ignore-all lint/correctness/noUnusedVariables: they are used in the template */
+import { getImage, Image } from "astro:assets";
+import logoText from "../assets/brand/logo-text.png";
+import logoTextWhite from "../assets/brand/logo-text-white.png";
+
+const logoTextDark = await getImage({
+	src: logoTextWhite,
+	height: 24,
+	densities: [1, 2],
+});
 ---
 
 <footer id="contact" class="footer section">
@@ -22,8 +33,11 @@
 					solve.
 				</p>
 				<picture>
-					<source srcset="/assets/logo-text-white.png" media="(prefers-color-scheme: dark)" />
-					<img src="/assets/logo-text.png" alt="NYT87" class="footer-logo" />
+					<source
+						srcset={logoTextDark.srcSet.attribute || logoTextDark.src}
+						media="(prefers-color-scheme: dark)"
+					/>
+					<Image src={logoText} alt="NYT87" height={24} densities={[1, 2]} class="footer-logo" />
 				</picture>
 			</div>
 		</div>

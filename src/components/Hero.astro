@@ -1,4 +1,15 @@
 ---
+/** biome-ignore-all lint/correctness/noUnusedImports: they are used in the template */
+/** biome-ignore-all lint/correctness/noUnusedVariables: they are used in the template */
+import { getImage, Image } from "astro:assets";
+import brand from "../assets/brand/brand.png";
+import brandDark from "../assets/brand/brand-dark.png";
+
+const brandDarkImg = await getImage({
+	src: brandDark,
+	width: 180,
+	densities: [1, 2],
+});
 ---
 
 <header class="hero section">
@@ -22,13 +33,17 @@
 		<div class="hero-panel panel reveal reveal-delay-2">
 			<p class="hero-eyebrow">How We Work</p>
 			<picture>
-				<source srcset="/assets/brand-dark.png" media="(prefers-color-scheme: dark)" />
-				<img
-					src="/assets/brand.png"
+				<source
+					srcset={brandDarkImg.srcSet.attribute || brandDarkImg.src}
+					media="(prefers-color-scheme: dark)"
+				/>
+				<Image
+					src={brand}
 					alt="NYT87 Wordmark"
+					width={180}
+					densities={[1, 2]}
+					loading="eager"
 					class="hero-logo"
-					width="1024"
-					height="1024"
 				/>
 			</picture>
 			<div class="hero-log" aria-label="Studio operating principles">
