@@ -129,7 +129,7 @@
 	}
 
 	.project-links a:hover {
-		color: color-mix(in oklch, var(--brand) 82%, var(--text));
+		color: color-mix(in oklch, var(--brand-text) 82%, var(--text));
 	}
 
 	.project-head {
@@ -153,7 +153,7 @@
 		padding: 0.3rem 0.55rem;
 		border-radius: 999px;
 		background: var(--brand-soft);
-		color: var(--brand);
+		color: var(--brand-text);
 		white-space: nowrap;
 		flex-shrink: 0;
 	}
@@ -166,7 +166,7 @@
 	.project-link {
 		font-family: var(--font-heading);
 		font-size: 0.9rem;
-		color: var(--brand);
+		color: var(--brand-text);
 		overflow-wrap: break-word;
 		text-decoration: underline;
 		text-decoration-thickness: 1px;
@@ -195,12 +195,6 @@
 
 	.project-note p {
 		max-width: 60ch;
-	}
-
-	@media (max-width: 1100px) {
-		.projects-grid {
-			grid-template-columns: repeat(2, minmax(0, 1fr));
-		}
 	}
 
 	@media (max-width: 900px) {

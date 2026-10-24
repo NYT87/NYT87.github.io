@@ -23,7 +23,13 @@
 			<p class="hero-eyebrow">How We Work</p>
 			<picture>
 				<source srcset="/assets/brand-dark.png" media="(prefers-color-scheme: dark)" />
-				<img src="/assets/brand.png" alt="NYT87 Wordmark" class="hero-logo" />
+				<img
+					src="/assets/brand.png"
+					alt="NYT87 Wordmark"
+					class="hero-logo"
+					width="1024"
+					height="1024"
+				/>
 			</picture>
 			<div class="hero-log" aria-label="Studio operating principles">
 				<div class="hero-log-row">
@@ -51,8 +57,8 @@
 
 <style>
 	.hero {
-		margin-top: 1.1rem;
-		padding-top: clamp(2rem, 6vw, 5.2rem);
+		/* Clear the fixed navbar (≈5.5rem tall incl. its top offset) at every width */
+		padding-top: calc(5.5rem + clamp(1.5rem, 4vw, 3.5rem));
 		position: relative;
 		overflow-x: clip;
 	}
@@ -117,7 +123,8 @@
 		align-content: center;
 		min-width: 0;
 		position: relative;
-		overflow: hidden;
+		/* clip, not hidden: hidden makes this a scroll container, which breaks the rows' view() timeline */
+		overflow: clip;
 	}
 
 	.hero-panel::before {
@@ -237,26 +244,21 @@
 	@supports (animation-timeline: view()) {
 		.hero-copy {
 			animation: hero-copy-settle 1s cubic-bezier(0.22, 1, 0.36, 1) both;
-			animation-timeline: view(block);
 			animation-range: entry 0% cover 42%;
 		}
 
 		.hero-panel {
 			animation: hero-panel-settle 1.05s cubic-bezier(0.22, 1, 0.36, 1) both;
-			animation-timeline: view(block);
 			animation-range: entry 8% cover 48%;
 		}
 
 		.hero-panel::before {
 			animation: hero-rule-draw 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
-			animation-timeline: view(block);
 			animation-range: entry 10% cover 34%;
 		}
 
 		.hero-log-row {
-			opacity: 0;
 			animation: hero-row-reveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
-			animation-timeline: view(block);
 		}
 
 		.hero-log-row:nth-child(1) {
@@ -269,6 +271,15 @@
 
 		.hero-log-row:nth-child(3) {
 			animation-range: entry 24% cover 36%;
+		}
+
+		/* Kept in a separate rule: the CSS minifier folds a same-rule animation-timeline into the
+		   animation shorthand, which is invalid and drops the whole declaration. */
+		.hero-content .hero-copy,
+		.hero-content .hero-panel,
+		.hero-content .hero-panel::before,
+		.hero-panel .hero-log-row {
+			animation-timeline: view(block);
 		}
 	}
 
@@ -284,8 +295,7 @@
 
 	@media (max-width: 768px) {
 		.hero {
-			margin-top: 3rem;
-			padding-top: 1.2rem;
+			padding-top: calc(4.6rem + 1.2rem);
 		}
 
 		.hero::after {

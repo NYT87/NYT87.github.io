@@ -105,8 +105,11 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 		--border: oklch(0.84 0.01 70 / 0.82);
 		--line-strong: oklch(0.74 0.014 70 / 0.9);
 		--brand: oklch(0.63 0.18 45);
-		--brand-strong: oklch(0.56 0.17 43);
-		--accent: oklch(0.54 0.08 208);
+		--brand-strong: oklch(0.5 0.16 43);
+		--brand-fill: oklch(0.55 0.17 44);
+		--brand-text: oklch(0.53 0.16 43);
+		--on-brand: oklch(0.99 0.004 70);
+		--accent: oklch(0.5 0.08 208);
 		--accent-soft: oklch(0.95 0.018 208 / 0.92);
 		--brand-soft: oklch(0.95 0.028 45 / 0.9);
 		--focus-ring: oklch(0.72 0.16 45 / 0.9);
@@ -166,8 +169,7 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 		letter-spacing: -0.03em;
 		line-height: 1.1;
 		margin: 0;
-		overflow-wrap: anywhere;
-		hyphens: auto;
+		overflow-wrap: break-word;
 		text-wrap: balance;
 	}
 
@@ -224,7 +226,7 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 		white-space: normal;
 		overflow-wrap: anywhere;
 		background: var(--brand-soft);
-		color: color-mix(in oklch, var(--brand) 88%, var(--text));
+		color: var(--brand-text);
 	}
 
 	.section-title {
@@ -257,8 +259,8 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 	}
 
 	.btn-primary {
-		color: var(--surface-strong);
-		background: linear-gradient(135deg, var(--brand-strong), var(--brand));
+		color: var(--on-brand);
+		background: linear-gradient(135deg, var(--brand-strong), var(--brand-fill));
 		box-shadow: 0 8px 18px color-mix(in oklch, var(--brand) 22%, transparent);
 	}
 
@@ -354,6 +356,8 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 			--muted: oklch(0.77 0.015 80);
 			--border: oklch(0.4 0.015 250 / 0.7);
 			--line-strong: oklch(0.55 0.015 250 / 0.8);
+			--brand-text: oklch(0.75 0.15 50);
+			--accent: oklch(0.76 0.09 208);
 			--brand-soft: oklch(0.36 0.06 45 / 0.24);
 			--accent-soft: oklch(0.32 0.035 208 / 0.28);
 			--focus-ring: oklch(0.73 0.16 45 / 0.95);
