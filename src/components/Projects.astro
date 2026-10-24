@@ -3,7 +3,7 @@
 const projects = [
 	{
 		name: "Booba Pass",
-		kind: "Open source · Web app",
+		kind: "Open source · Web app · PWA",
 		description:
 			"A centralized wallet for airline loyalty information with QR and barcode support, designed for quick access and practical day-to-day use.",
 		liveUrl: "https://nyt87.github.io/booba-pass/",
@@ -11,7 +11,7 @@ const projects = [
 	},
 	{
 		name: "OpenTrack Viewer",
-		kind: "Open source · PWA",
+		kind: "Open source · Web app · PWA",
 		description:
 			"A privacy-first, client-side web app and PWA for viewing activity tracking files, with everything processed locally in the browser.",
 		liveUrl: "https://nyt87.github.io/opentrack-viewer/",
@@ -79,7 +79,8 @@ const projects = [
 <style>
 	.work-row {
 		display: grid;
-		grid-template-columns: minmax(0, 4fr) minmax(0, 6fr) auto;
+		/* Fixed links column so rows with one or two links line up */
+		grid-template-columns: minmax(0, 4fr) minmax(0, 6fr) 5.5rem;
 		gap: 1.5rem;
 		align-items: baseline;
 		padding: clamp(1.25rem, 2.5vw, 1.75rem) 0.5rem;
