@@ -40,11 +40,13 @@ const logoTextDark = await getImage({
 			</picture>
 		</a>
 		<div class="nav-links">
-			<a href="#about">About</a>
 			<a href="#services">Services</a>
-			<a href="#projects">Projects</a>
+			<a href="#projects">Work</a>
+			<a href="#about">Approach</a>
 			<a href="#team">Team</a>
-			<a href="#contact">Contact</a>
+			<a href="#contact" class="btn btn-outline nav-cta">
+				Contact
+			</a>
 		</div>
 		<div class="nav-menu">
 			<button
@@ -59,23 +61,23 @@ const logoTextDark = await getImage({
 			</button>
 			<div
 				id="mobile-nav-panel"
-				class="nav-menu-panel panel"
+				class="nav-menu-panel"
 				aria-labelledby="mobile-nav-trigger"
 				aria-hidden="true"
 				tabindex="-1"
 				hidden
 			>
-				<a href="#about">About</a>
 				<a href="#services">Services</a>
-				<a href="#projects">Projects</a>
+				<a href="#projects">Work</a>
+				<a href="#about">Approach</a>
 				<a href="#team">Team</a>
 				<a href="#contact">Contact</a>
 			</div>
 			<noscript>
-				<div class="nav-menu-panel nav-menu-panel-fallback panel">
-					<a href="#about">About</a>
+				<div class="nav-menu-panel nav-menu-panel-fallback">
 					<a href="#services">Services</a>
-					<a href="#projects">Projects</a>
+					<a href="#projects">Work</a>
+					<a href="#about">Approach</a>
 					<a href="#team">Team</a>
 					<a href="#contact">Contact</a>
 				</div>
@@ -218,27 +220,18 @@ const logoTextDark = await getImage({
 <style>
 	.navbar {
 		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
+		inset: 0 0 auto;
 		z-index: 60;
-		padding-top: 0.85rem;
-		padding-inline: var(--page-gutter);
+		background: var(--bg);
+		border-bottom: 1px solid var(--border);
 	}
 
 	.nav-content {
-		min-height: 74px;
+		height: var(--nav-height);
 		display: grid;
 		grid-template-columns: auto 1fr auto;
 		align-items: center;
 		gap: 1rem;
-		width: min(100%, var(--max-width));
-		margin-inline: auto;
-		border: 1px solid var(--border);
-		border-radius: 14px;
-		background: var(--surface-strong);
-		box-shadow: 0 2px 8px color-mix(in oklch, var(--text) 4%, transparent);
-		padding: 0 1rem;
 	}
 
 	.logo-link {
@@ -247,8 +240,6 @@ const logoTextDark = await getImage({
 		gap: 0.55rem;
 		min-width: 0;
 		line-height: 0;
-		border-radius: 10px;
-		transition: transform 0.2s ease;
 	}
 
 	.logo-link picture {
@@ -270,39 +261,31 @@ const logoTextDark = await getImage({
 
 	.nav-links {
 		display: flex;
+		align-items: center;
 		justify-content: flex-end;
 		justify-self: end;
-		min-width: 0;
-		gap: clamp(0.8rem, 2vw, 1.6rem);
+		gap: clamp(0.25rem, 1.4vw, 1rem);
 		font-family: var(--font-heading);
 		font-weight: 500;
-		font-size: 0.88rem;
-		letter-spacing: 0.02em;
+		font-size: 0.92rem;
 	}
 
-	.nav-links a {
+	.nav-links a:not(.nav-cta) {
 		display: inline-flex;
 		align-items: center;
 		min-height: 44px;
-		padding: 0.35rem 0.5rem;
-		border-radius: 10px;
-		transition:
-			background-color 0.24s ease,
-			color 0.24s ease,
-			transform 0.2s ease;
+		padding: 0.35rem 0.6rem;
+		color: var(--muted);
+		transition: color 0.2s ease;
 	}
 
-	.nav-links a:hover {
-		background: color-mix(in oklch, var(--accent) 4%, transparent);
-		color: color-mix(in oklch, var(--accent) 48%, var(--text));
+	.nav-links a:not(.nav-cta):hover {
+		color: var(--text);
 	}
 
-	.nav-links a:active {
-		transform: translateY(1px);
-	}
-
-	.logo-link:active {
-		transform: translateY(1px);
+	.nav-cta {
+		margin-left: 0.5rem;
+		padding-block: 0.5rem;
 	}
 
 	.nav-menu {
@@ -320,24 +303,16 @@ const logoTextDark = await getImage({
 		width: 44px;
 		height: 44px;
 		padding: 0;
-		border: 0;
-		border-radius: 10px;
+		border: 1px solid var(--border);
+		border-radius: var(--radius-sm);
 		background: transparent;
 		color: var(--text);
 		cursor: pointer;
-		transition:
-			background-color 0.24s ease,
-			color 0.24s ease,
-			transform 0.2s ease;
+		transition: border-color 0.2s ease;
 	}
 
 	.nav-menu-button:hover {
-		background: color-mix(in oklch, var(--accent) 4%, transparent);
-		color: color-mix(in oklch, var(--accent) 48%, var(--text));
-	}
-
-	.nav-menu-button:active {
-		transform: translateY(1px);
+		border-color: var(--line-strong);
 	}
 
 	.nav-menu-icon {
@@ -345,13 +320,9 @@ const logoTextDark = await getImage({
 		display: block;
 		width: 16px;
 		height: 2px;
-		flex: 0 0 auto;
 		border-radius: 999px;
 		background: currentColor;
-		transform: translateY(0.5px);
-		transition:
-			background-color 0.2s ease,
-			transform 0.24s ease;
+		transition: background-color 0.2s ease;
 	}
 
 	.nav-menu-icon::before,
@@ -395,12 +366,13 @@ const logoTextDark = await getImage({
 		right: 0;
 		top: calc(100% + 0.6rem);
 		width: min(240px, calc(100vw - 2rem));
-		max-width: calc(100vw - (var(--page-gutter) * 2));
-		padding: 0.5rem;
+		padding: 0.4rem;
 		display: grid;
-		gap: 0.15rem;
+		gap: 0.1rem;
 		background: var(--surface-strong);
-		border-radius: 14px;
+		border: 1px solid var(--border);
+		border-radius: var(--radius-md);
+		box-shadow: var(--shadow);
 	}
 
 	.nav-menu-panel[hidden] {
@@ -411,28 +383,19 @@ const logoTextDark = await getImage({
 		display: flex;
 		align-items: center;
 		min-height: 44px;
-		padding: 0.7rem 0.85rem;
-		border-radius: 10px;
+		padding: 0.6rem 0.85rem;
+		border-radius: var(--radius-sm);
 		font-family: var(--font-heading);
 		font-weight: 500;
-		transition:
-			background-color 0.24s ease,
-			color 0.24s ease,
-			transform 0.2s ease;
+		transition: background-color 0.2s ease;
 	}
 
 	.nav-menu-panel a:hover {
-		background: color-mix(in oklch, var(--accent) 4%, transparent);
-		color: color-mix(in oklch, var(--accent) 48%, var(--text));
-	}
-
-	.nav-menu-panel a:active {
-		transform: translateY(1px);
+		background: var(--accent-wash);
 	}
 
 	.nav-menu-panel-fallback {
 		position: static;
-		width: min(240px, calc(100vw - 2rem));
 		margin-top: 0.6rem;
 	}
 
@@ -444,24 +407,6 @@ const logoTextDark = await getImage({
 		.nav-menu {
 			display: grid;
 			justify-self: end;
-		}
-	}
-
-	@media (max-width: 768px) {
-		.navbar {
-			padding-top: 0.6rem;
-		}
-
-		.nav-content {
-			min-height: 64px;
-			gap: 0;
-			padding: 0 0.8rem;
-		}
-
-		.nav-brand-img.text {
-			height: 20px;
-			max-width: min(96px, 26vw);
-			object-fit: contain;
 		}
 	}
 </style>

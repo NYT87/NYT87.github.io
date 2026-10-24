@@ -1,215 +1,152 @@
 ---
+// biome-ignore lint/correctness/noUnusedVariables: it is used in the template
+const projects = [
+	{
+		name: "Booba Pass",
+		kind: "Open source · Web app",
+		description:
+			"A centralized wallet for airline loyalty information with QR and barcode support, designed for quick access and practical day-to-day use.",
+		liveUrl: "https://nyt87.github.io/booba-pass/",
+		repoUrl: "https://github.com/NYT87/booba-pass",
+	},
+	{
+		name: "OpenTrack Viewer",
+		kind: "Open source · PWA",
+		description:
+			"A privacy-first, client-side web app and PWA for viewing activity tracking files, with everything processed locally in the browser.",
+		liveUrl: "https://nyt87.github.io/opentrack-viewer/",
+		repoUrl: "https://github.com/NYT87/opentrack-viewer",
+	},
+	{
+		name: "Agents PP",
+		kind: "Open source · Claude Code plugin",
+		description:
+			"Pair-programming workflows for coding agents: one agent codes while an independent reviewer comments, looping until every comment is resolved.",
+		repoUrl: "https://github.com/NYT87/agents-pp",
+	},
+];
 ---
 
-<section id="projects" class="section projects-section">
-	<div class="container">
-		<div class="section-head reveal">
-			<span class="section-kicker">Selected Work</span>
-			<h2 class="section-title">Recent work built for everyday use, not demo-day polish.</h2>
-		</div>
-		<div class="projects-grid">
-			<article class="project-card panel reveal reveal-delay-1">
-				<div class="project-head">
-					<h3>Booba Pass</h3>
-					<span class="project-tag">Open Source</span>
-				</div>
+<section id="projects" class="section" aria-labelledby="projects-title">
+	<div class="container section-grid">
+		<p class="section-index">
+			<span>02</span>
+			<span>Work</span>
+		</p>
+		<div class="section-body">
+			<h2 id="projects-title" class="section-title">
+				Recent work built for everyday use, not demo-day polish.
+			</h2>
+			<ul class="index-list work-list">
+				{projects.map((project) => (
+					<li class="work-row">
+						<div class="work-head">
+							<h3>{project.name}</h3>
+							<p class="mono-label">{project.kind}</p>
+						</div>
+						<p class="work-desc">{project.description}</p>
+						<div class="work-links">
+							{project.liveUrl && (
+								<a
+									href={project.liveUrl}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="text-link"
+								>
+									Live app<span class="visually-hidden"> for {project.name}</span>
+								</a>
+							)}
+							<a href={project.repoUrl} target="_blank" rel="noopener noreferrer" class="text-link">
+								Code<span class="visually-hidden"> for {project.name}</span>
+							</a>
+						</div>
+					</li>
+				))}
+			</ul>
+			<div class="work-note">
 				<p>
-					A centralized wallet for airline loyalty information with QR and barcode support, designed
-					for quick access and practical day-to-day use.
+					Private client systems and internal delivery tools are not public, but we can walk through
+					relevant work in a conversation.
 				</p>
-				<div class="project-links">
-					<a
-						href="https://nyt87.github.io/booba-pass/"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="project-link"
-					>
-						Open the live app
-					</a>
-					<a
-						href="https://github.com/NYT87/booba-pass"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="project-link muted"
-					>
-						Review the codebase
-					</a>
-				</div>
-			</article>
-
-			<article class="project-card panel reveal reveal-delay-2">
-				<div class="project-head">
-					<h3>OpenTrack Viewer</h3>
-					<span class="project-tag">Open Source</span>
-				</div>
-				<p>
-					A privacy-first, client-side web app and PWA for viewing activity tracking files, with
-					everything processed locally in the browser.
-				</p>
-				<div class="project-links">
-					<a
-						href="https://nyt87.github.io/opentrack-viewer/"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="project-link"
-					>
-						Open the live app
-					</a>
-					<a
-						href="https://github.com/NYT87/opentrack-viewer"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="project-link muted"
-					>
-						Review the codebase
-					</a>
-				</div>
-			</article>
-
-			<article class="project-card panel reveal reveal-delay-3">
-				<div class="project-head">
-					<h3>Agents PP</h3>
-					<span class="project-tag">Open Source</span>
-				</div>
-				<p>
-					Pair-programming workflows for coding agents: one agent codes while an independent
-					reviewer comments, looping until every comment is resolved.
-				</p>
-				<div class="project-links">
-					<a
-						href="https://github.com/NYT87/agents-pp"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="project-link muted"
-					>
-						Review the codebase
-					</a>
-				</div>
-			</article>
-
-			<article class="project-note reveal reveal-delay-3">
-				<div class="project-head">
-					<h3>More client work</h3>
-				</div>
-				<p>
-					Private client systems and internal delivery tools are not public yet, but we can walk
-					through relevant work in a conversation.
-				</p>
-				<span class="project-link muted">More examples available on request</span>
-			</article>
+				<a href="#contact" class="text-link">
+					Ask about client work
+				</a>
+			</div>
 		</div>
 	</div>
 </section>
 
 <style>
-	.projects-section {
-		position: relative;
-	}
-
-	.projects-grid {
+	.work-row {
 		display: grid;
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: clamp(1rem, 2.5vw, 2rem);
-		align-items: stretch;
+		grid-template-columns: minmax(0, 4fr) minmax(0, 6fr) auto;
+		gap: 1.5rem;
+		align-items: baseline;
+		padding: clamp(1.25rem, 2.5vw, 1.75rem) 0.5rem;
+		transition: background-color 0.2s ease;
 	}
 
-	.project-card {
-		padding: clamp(1.3rem, 2.4vw, 1.7rem);
+	.work-row:hover {
+		background: var(--accent-wash);
+	}
+
+	.work-head {
 		display: grid;
-		gap: 1rem;
-		min-width: 0;
-		transition:
-			transform 0.24s ease,
-			box-shadow 0.24s ease;
+		gap: 0.4rem;
 	}
 
-	.project-card:hover {
-		transform: translateY(-4px);
-		box-shadow: 0 16px 30px color-mix(in oklch, var(--text) 12%, transparent);
+	.work-head h3 {
+		font-size: clamp(1.3rem, 1.1rem + 0.6vw, 1.6rem);
 	}
 
-	.project-links a:hover {
-		color: color-mix(in oklch, var(--brand-text) 82%, var(--text));
+	.work-desc {
+		max-width: 52ch;
 	}
 
-	.project-head {
+	.work-links {
 		display: flex;
-		justify-content: space-between;
+		flex-direction: column;
 		align-items: flex-start;
-		gap: 0.8rem;
-		min-width: 0;
+		gap: 0.35rem;
+		font-size: 0.95rem;
 	}
 
-	.project-head h3 {
-		font-size: 1.32rem;
-		min-width: 0;
+	.work-links a {
+		display: inline-flex;
+		align-items: center;
+		min-height: 32px;
 	}
 
-	.project-tag {
-		font-family: var(--font-heading);
-		font-size: 0.72rem;
-		text-transform: uppercase;
-		letter-spacing: 0.08em;
-		padding: 0.3rem 0.55rem;
-		border-radius: 999px;
-		background: var(--brand-soft);
-		color: var(--brand-text);
-		white-space: nowrap;
-		flex-shrink: 0;
-	}
-
-	.project-tag.soon {
-		background: var(--accent-soft);
-		color: var(--accent);
-	}
-
-	.project-link {
-		font-family: var(--font-heading);
-		font-size: 0.9rem;
-		color: var(--brand-text);
-		overflow-wrap: break-word;
-		text-decoration: underline;
-		text-decoration-thickness: 1px;
-		text-underline-offset: 0.18em;
-	}
-
-	.project-link.muted {
-		color: var(--muted);
-	}
-
-	.project-links {
+	.work-note {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: baseline;
-		gap: 0.4rem 1.1rem;
+		justify-content: space-between;
+		gap: 0.75rem 2rem;
 	}
 
-	.project-note {
-		padding: 0.6rem 0 0;
-		display: grid;
-		align-content: start;
-		gap: 1rem;
-		border-top: 1px solid var(--line-strong);
-		grid-column: 1 / -1;
+	.work-note p {
+		max-width: 56ch;
 	}
 
-	.project-note p {
-		max-width: 60ch;
+	.visually-hidden {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
 	}
 
 	@media (max-width: 900px) {
-		.projects-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-
-	@media (max-width: 520px) {
-		.project-head {
-			flex-direction: column;
+		.work-row {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 0.75rem;
 		}
 
-		.project-tag {
-			white-space: normal;
+		.work-links {
+			flex-direction: row;
+			gap: 1.25rem;
 		}
 	}
 </style>

@@ -1,130 +1,94 @@
 ---
-/** biome-ignore-all lint/correctness/noUnusedImports: they are used in the layout for structured data */
+/** biome-ignore-all lint/correctness/noUnusedImports: they are used in the template */
 import { Image } from "astro:assets";
 import joseImg from "../assets/jose.jpeg";
 ---
 
-<section id="team" class="section">
-	<div class="container">
-		<div class="section-head reveal">
-			<span class="section-kicker">Team</span>
-			<h2 class="section-title">Senior engineering leadership with product discipline.</h2>
-		</div>
-		<article class="team-card panel reveal reveal-delay-1">
-			<div class="team-top">
-				<Image src={joseImg} alt="José Miguel" class="team-avatar" />
-				<div class="team-meta">
-					<div class="team-name">
+<section id="team" class="section" aria-labelledby="team-title">
+	<div class="container section-grid">
+		<p class="section-index">
+			<span>04</span>
+			<span>Team</span>
+		</p>
+		<div class="section-body">
+			<h2 id="team-title" class="section-title">
+				Senior engineering leadership with product discipline.
+			</h2>
+			<article class="profile">
+				<Image
+					src={joseImg}
+					alt="Portrait of José Miguel"
+					width={160}
+					height={160}
+					densities={[1, 2]}
+					class="profile-photo"
+				/>
+				<div class="profile-body">
+					<div class="profile-head">
 						<h3>José Miguel</h3>
-						<span class="team-tag">Founder</span>
+						<p class="mono-label">Founder · CTO &amp; Senior Software Engineer</p>
 					</div>
-					<p class="team-role">CTO & Senior Software Engineer</p>
+					<p>
+						José Miguel Navarro Iglesias builds software at the intersection of product delivery,
+						reliable architecture, and scaling strategy. He has led backend and full-stack
+						initiatives that turn ambitious ideas into fast, stable systems ready for growth.
+					</p>
 					<a
 						href="https://www.linkedin.com/in/jm8nav/"
 						target="_blank"
 						rel="noopener noreferrer"
-						class="team-link"
+						class="text-link"
 					>
 						LinkedIn profile
 					</a>
 				</div>
-			</div>
-			<p class="team-desc">
-				José Miguel Navarro Iglesias builds software at the intersection of product delivery,
-				reliable architecture, and scaling strategy. He has led backend and full-stack initiatives
-				that turn ambitious ideas into fast, stable systems ready for growth.
-			</p>
-		</article>
+			</article>
+		</div>
 	</div>
 </section>
 
 <style>
-	.team-card {
-		padding: clamp(1.2rem, 2.6vw, 2rem);
+	.profile {
 		display: grid;
-		gap: 1rem;
-		min-width: 0;
+		grid-template-columns: 160px minmax(0, 1fr);
+		gap: clamp(1.25rem, 3vw, 2.5rem);
+		align-items: start;
+		padding-top: 1.5rem;
+		border-top: 1px solid var(--border);
 	}
 
-	.team-top {
-		display: flex;
-		gap: 1rem;
-		align-items: center;
-		min-width: 0;
-	}
-
-	.team-avatar {
-		width: 98px;
-		height: 98px;
-		aspect-ratio: 1 / 1;
-		border-radius: 22px;
+	.profile-photo {
+		width: 160px;
+		height: 160px;
 		object-fit: cover;
-		border: 1px solid color-mix(in oklch, var(--accent) 30%, var(--border));
+		border-radius: var(--radius-md);
+		border: 1px solid var(--border);
 	}
 
-	.team-meta {
+	.profile-body {
 		display: grid;
-		gap: 0.38rem;
-		min-width: 0;
+		gap: 1rem;
+		justify-items: start;
+		max-width: 62ch;
 	}
 
-	.team-name {
-		display: flex;
-		align-items: center;
-		flex-wrap: wrap;
-		gap: 0.55rem;
-		min-width: 0;
+	.profile-head {
+		display: grid;
+		gap: 0.4rem;
 	}
 
-	.team-tag {
-		font-family: var(--font-heading);
-		font-size: 0.72rem;
-		text-transform: uppercase;
-		letter-spacing: 0.08em;
-		padding: 0.3rem 0.55rem;
-		border-radius: 999px;
-		background: var(--accent-soft);
-		color: var(--accent);
-		white-space: nowrap;
+	.profile-head h3 {
+		font-size: clamp(1.4rem, 1.2rem + 0.6vw, 1.75rem);
 	}
 
-	.team-meta h3 {
-		font-size: 1.3rem;
-		overflow-wrap: break-word;
-	}
+	@media (max-width: 600px) {
+		.profile {
+			grid-template-columns: 1fr;
+		}
 
-	.team-role {
-		font-size: 0.98rem;
-		color: var(--brand-text);
-		font-weight: 700;
-	}
-
-	.team-link {
-		display: inline-flex;
-		width: fit-content;
-		font-family: var(--font-heading);
-		font-size: 0.86rem;
-		color: var(--accent);
-		overflow-wrap: anywhere;
-		text-decoration: underline;
-		text-decoration-thickness: 1px;
-		text-underline-offset: 0.18em;
-		transition: color 0.24s ease;
-	}
-
-	.team-link:hover {
-		color: color-mix(in oklch, var(--accent) 82%, var(--text));
-	}
-
-	.team-desc {
-		font-size: 0.98rem;
-		max-width: 80ch;
-	}
-
-	@media (max-width: 768px) {
-		.team-top {
-			flex-direction: column;
-			align-items: flex-start;
+		.profile-photo {
+			width: 112px;
+			height: 112px;
 		}
 	}
 </style>

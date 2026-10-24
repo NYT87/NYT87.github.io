@@ -1,20 +1,17 @@
 ---
-// biome-ignore lint/correctness/noUnusedVariables: they are used in the layout for structured data
+// biome-ignore lint/correctness/noUnusedVariables: it is used in the template
 const services = [
 	{
-		icon: "Web",
 		title: "Web Applications",
 		description:
 			"Product-grade frontends and full-stack experiences built for performance, usability, and long-term maintainability.",
 	},
 	{
-		icon: "API",
 		title: "Backend Systems",
 		description:
 			"Scalable APIs and core services with observability, domain modeling, and resilient integrations.",
 	},
 	{
-		icon: "Ops",
 		title: "Cloud Infrastructure",
 		description:
 			"Infrastructure and delivery pipelines that keep deployments reliable, secure, and easy to evolve.",
@@ -22,78 +19,63 @@ const services = [
 ];
 ---
 
-<section id="services" class="section">
-	<div class="container">
-		<div class="section-head reveal">
-			<span class="section-kicker">Services</span>
-			<h2 class="section-title">
+<section id="services" class="section" aria-labelledby="services-title">
+	<div class="container section-grid">
+		<p class="section-index">
+			<span>01</span>
+			<span>Services</span>
+		</p>
+		<div class="section-body">
+			<h2 id="services-title" class="section-title">
 				Engineering support across product delivery, systems, and infrastructure.
 			</h2>
-		</div>
-		<div class="services-grid">
-			{services.map((service, index) => (
-				<article class={`service-card reveal reveal-delay-${index + 1}`}>
-					<span class="service-index">0{index + 1}</span>
-					<h3>{service.title}</h3>
-					<p>{service.description}</p>
-				</article>
-			))}
+			<ol class="index-list service-list">
+				{services.map((service, index) => (
+					<li class="service-row">
+						<span class="mono-label service-num">{`0${index + 1}`}</span>
+						<h3>{service.title}</h3>
+						<p>{service.description}</p>
+					</li>
+				))}
+			</ol>
 		</div>
 	</div>
 </section>
 
 <style>
-	.services-grid {
+	.service-row {
 		display: grid;
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 0;
-		border-top: 1px solid var(--line-strong);
+		grid-template-columns: 3rem minmax(0, 4fr) minmax(0, 6fr);
+		gap: 1.5rem;
+		align-items: baseline;
+		padding: clamp(1.25rem, 2.5vw, 1.75rem) 0.5rem;
+		transition: background-color 0.2s ease;
 	}
 
-	.service-card {
-		padding: 1.35rem 1.1rem 1.5rem;
-		display: grid;
-		gap: 0.7rem;
-		min-width: 0;
-		border-bottom: 1px solid var(--border);
-		transition:
-			background-color 0.24s ease,
-			border-color 0.24s ease;
+	.service-row:hover {
+		background: var(--accent-wash);
 	}
 
-	.service-card:not(:first-child) {
-		border-inline-start: 1px solid var(--border);
+	.service-num {
+		color: var(--brand-text);
 	}
 
-	.service-card:hover {
-		background: linear-gradient(180deg, transparent, var(--accent-wash));
-		border-color: color-mix(in oklch, var(--accent) 20%, var(--border));
+	.service-row h3 {
+		font-size: clamp(1.3rem, 1.1rem + 0.6vw, 1.6rem);
 	}
 
-	.service-index {
-		font-family: var(--font-heading);
-		font-size: 0.78rem;
-		font-weight: 700;
-		letter-spacing: 0.14em;
-		text-transform: uppercase;
-		color: var(--accent);
+	.service-row p {
+		max-width: 48ch;
 	}
 
-	.service-card h3 {
-		font-size: 1.24rem;
-	}
-
-	.service-card p {
-		font-size: 0.97rem;
-	}
-
-	@media (max-width: 980px) {
-		.services-grid {
-			grid-template-columns: 1fr;
+	@media (max-width: 768px) {
+		.service-row {
+			grid-template-columns: 2.5rem minmax(0, 1fr);
+			gap: 0.5rem 1rem;
 		}
 
-		.service-card:not(:first-child) {
-			border-inline-start: 0;
+		.service-row p {
+			grid-column: 2;
 		}
 	}
 </style>

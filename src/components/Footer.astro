@@ -7,167 +7,46 @@ import logoTextWhite from "../assets/brand/logo-text-white.png";
 
 const logoTextDark = await getImage({
 	src: logoTextWhite,
-	height: 24,
+	height: 20,
 	densities: [1, 2],
 });
 ---
 
-<footer id="contact" class="footer section">
-	<div class="container">
-		<div class="footer-panel panel reveal">
-			<div class="footer-links">
-				<div>
-					<h4>Contact</h4>
-					<a href="mailto:nyt87@proton.me">nyt87@proton.me</a>
-				</div>
-				<div>
-					<h4>GitHub</h4>
-					<a href="https://github.com/NYT87" target="_blank" rel="noopener noreferrer">
-						NYT87
-					</a>
-				</div>
-			</div>
-			<div class="footer-brand">
-				<p class="footer-note">
-					If you need senior engineering judgment, reach out with the problem you are trying to
-					solve.
-				</p>
-				<picture>
-					<source
-						srcset={logoTextDark.srcSet.attribute || logoTextDark.src}
-						media="(prefers-color-scheme: dark)"
-					/>
-					<Image src={logoText} alt="NYT87" height={24} densities={[1, 2]} class="footer-logo" />
-				</picture>
-			</div>
-		</div>
-	</div>
-	<div class="container footer-bottom">
-		<p>&copy; {new Date().getFullYear()} NYT87. All rights reserved.</p>
+<footer class="footer">
+	<div class="container footer-content">
+		<picture>
+			<source
+				srcset={logoTextDark.srcSet.attribute || logoTextDark.src}
+				media="(prefers-color-scheme: dark)"
+			/>
+			<Image src={logoText} alt="NYT87" height={20} densities={[1, 2]} class="footer-logo" />
+		</picture>
+		<p class="mono-label">&copy; {new Date().getFullYear()} NYT87 · Remote software studio</p>
+		<a href="#main-content" class="text-link footer-top">
+			Back to top
+		</a>
 	</div>
 </footer>
 
 <style>
-	.footer {
-		padding-top: 2.4rem;
-		padding-bottom: clamp(2rem, 4vw, 3.5rem);
-	}
-
-	.footer-panel {
-		padding: clamp(1.2rem, 2.8vw, 1.6rem);
+	.footer-content {
 		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
 		justify-content: space-between;
-		align-items: flex-end;
-		gap: 1.1rem;
-		text-align: left;
-	}
-
-	.footer-brand {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-end;
-		justify-content: flex-end;
-		gap: 0.7rem;
-		width: 100%;
-	}
-
-	.footer-note {
-		max-width: 30ch;
-		font-size: 0.92rem;
-		text-align: right;
+		gap: 1rem 2rem;
+		padding-block: 2rem clamp(2rem, 4vw, 3rem);
+		background: linear-gradient(var(--line-strong), var(--line-strong)) top center /
+			calc(100% - var(--page-gutter) * 2) 1px no-repeat;
 	}
 
 	.footer-logo {
-		height: 24px;
+		height: 20px;
 		width: auto;
+		display: block;
 	}
 
-	.footer-links {
-		display: flex;
-		align-items: flex-start;
-		justify-content: flex-start;
-		flex-wrap: wrap;
-		gap: 2rem;
-		min-width: 0;
-		width: auto;
-	}
-
-	.footer-links > div {
-		flex: 0 0 auto;
-		min-width: max-content;
-	}
-
-	.footer-links h4 {
+	.footer-top {
 		font-size: 0.92rem;
-		text-transform: uppercase;
-		letter-spacing: 0.07em;
-		margin-bottom: 0.5rem;
-		white-space: nowrap;
-	}
-
-	.footer-links a {
-		display: inline-flex;
-		width: fit-content;
-		color: var(--accent);
-		font-weight: 700;
-		white-space: nowrap;
-		text-decoration: underline;
-		text-decoration-thickness: 1px;
-		text-underline-offset: 0.18em;
-		transition:
-			color 0.24s ease,
-			opacity 0.24s ease;
-	}
-
-	.footer-links a:hover {
-		color: color-mix(in oklch, var(--accent) 84%, var(--text));
-	}
-
-	.footer-links a:active {
-		opacity: 0.8;
-	}
-
-	.footer-bottom {
-		padding: 1rem 0 0.2rem;
-		text-align: center;
-	}
-
-	.footer-bottom p {
-		font-size: 0.84rem;
-	}
-
-	@media (max-width: 860px) {
-		.footer-panel {
-			flex-direction: column;
-			align-items: flex-start;
-			padding: 1.15rem;
-		}
-
-		.footer-links {
-			gap: 1.3rem;
-		}
-	}
-
-	@media (max-width: 560px) {
-		.footer-panel {
-			padding: 1rem;
-		}
-
-		.footer-brand {
-			align-self: stretch;
-			align-items: flex-start;
-			justify-content: flex-start;
-			padding-top: 0.3rem;
-		}
-
-		.footer-note {
-			text-align: left;
-		}
-
-		.footer-links {
-			flex-direction: column;
-			align-items: flex-start;
-			gap: 0.9rem;
-		}
 	}
 </style>
