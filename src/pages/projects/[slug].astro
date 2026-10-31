@@ -1,0 +1,462 @@
+---
+/** biome-ignore-all lint/correctness/noUnusedImports: they are used in the template */
+/** biome-ignore-all lint/correctness/noUnusedVariables: they are used in the template */
+import { getCollection, render } from "astro:content";
+import Footer from "../../components/Footer.astro";
+import Navigation from "../../components/Navigation.astro";
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+	const projects = await getCollection("projects");
+	return projects.map((project) => ({
+		params: { slug: project.id },
+		props: { project },
+	}));
+}
+
+const { project } = Astro.props;
+const { data } = project;
+const { Content } = await render(project);
+
+const allProjects = (await getCollection("projects")).sort(
+	(a, b) => a.data.order - b.data.order,
+);
+const otherProjects = allProjects.filter((entry) => entry.id !== project.id);
+const index = String(data.order).padStart(2, "0");
+
+const seo = {
+	title: `${data.name} | NYT87`,
+	description: data.summary,
+};
+
+const studio = {
+	"@type": "Organization",
+	name: "NYT87",
+	url: "https://nyt87.github.io",
+};
+
+const roleLabel = {
+	studio: "Studio project",
+	client: "Client work",
+	contribution: "Open source contribution",
+}[data.role];
+
+const projectSchema = {
+	"@context": "https://schema.org",
+	"@type": data.repoUrl ? "SoftwareSourceCode" : "CreativeWork",
+	name: data.name,
+	description: data.summary,
+	url: new URL(Astro.url.pathname, Astro.site).href,
+	license: data.license,
+	...(data.repoUrl ? { codeRepository: data.repoUrl } : {}),
+	...(data.role === "contribution"
+		? { contributor: studio }
+		: { author: studio }),
+	...(data.liveUrl ? { sameAs: data.liveUrl } : {}),
+};
+
+const facts = [
+	{ term: "Role", detail: roleLabel },
+	{ term: "Type", detail: data.kind },
+	{ term: "Status", detail: data.status },
+	{ term: "License", detail: data.license },
+	{ term: "Stack", detail: data.stack.join(" · ") },
+];
+---
+
+<Layout title={seo.title} description={seo.description}>
+	<Fragment slot="head">
+		<script type="application/ld+json" set:html={JSON.stringify(projectSchema)} />
+	</Fragment>
+	<Navigation />
+	<main id="main-content">
+		<header class="project-hero">
+			<div class="container">
+				<p class="mono-label project-crumb reveal">
+					<a href="/projects/">Work</a>
+					<span aria-hidden="true">/</span>
+					<span class="project-index">{index}</span>
+					<span>{data.name}</span>
+				</p>
+				<h1 class="reveal">{data.name}</h1>
+				<div class="project-body">
+					<div class="project-intro reveal reveal-delay-1">
+						<p class="mono-label">{data.kind}</p>
+						<p class="lead">{data.summary}</p>
+						<div class="project-actions">
+							{data.liveUrl && (
+								<a
+									href={data.liveUrl}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="btn btn-primary"
+								>
+									{data.role === "studio" ? "Open the live app" : data.liveLabel}
+								</a>
+							)}
+							{data.repoUrl && (
+								<a
+									href={data.repoUrl}
+									target="_blank"
+									rel="noopener noreferrer"
+									class={`btn ${data.liveUrl ? "btn-outline" : "btn-primary"}`}
+								>
+									Source on {data.repoHost}
+								</a>
+							)}
+							{data.links.map((link) => (
+								<a
+									href={link.url}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="btn btn-outline"
+								>
+									{link.label}
+								</a>
+							))}
+						</div>
+					</div>
+					<div class="project-spec reveal reveal-delay-2">
+						<p class="mono-label">At a glance</p>
+						<dl>
+							{facts.map((fact) => (
+								<div class="spec-row">
+									<dt class="mono-label">{fact.term}</dt>
+									<dd>{fact.detail}</dd>
+								</div>
+							))}
+						</dl>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<section class="section" aria-labelledby="project-details-title">
+			<div class="container section-grid">
+				<p class="section-index">
+					<span>{index}</span>
+					<span>Details</span>
+				</p>
+				<div class="section-body">
+					<h2 id="project-details-title" class="visually-hidden">
+						About {data.name}
+					</h2>
+					<article class="prose">
+						<Content />
+					</article>
+				</div>
+			</div>
+		</section>
+
+		<section class="section" aria-labelledby="more-work-title">
+			<div class="container section-grid">
+				<p class="section-index">
+					<span>+</span>
+					<span>More work</span>
+				</p>
+				<div class="section-body">
+					<h2 id="more-work-title" class="section-title">
+						Other projects from the studio.
+					</h2>
+					<ul class="index-list more-list">
+						{otherProjects.map((entry) => (
+							<li class="more-row">
+								<a href={`/projects/${entry.id}/`} class="more-link">
+									<span class="mono-label more-num">
+										{String(entry.data.order).padStart(2, "0")}
+									</span>
+									<span class="more-head">
+										<span class="more-name">{entry.data.name}</span>
+										<span class="mono-label">{entry.data.kind}</span>
+									</span>
+									<span class="more-desc">{entry.data.summary}</span>
+								</a>
+							</li>
+						))}
+					</ul>
+					<div class="more-note">
+						<p>Need something similar for your own product or team?</p>
+						<div class="more-note-links">
+							<a href="/projects/" class="text-link">
+								All projects
+							</a>
+							<a href="/#contact" class="text-link">
+								Discuss your project
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+	<Footer />
+</Layout>
+
+<style>
+	.project-hero {
+		padding-top: calc(var(--nav-height) + clamp(2.5rem, 6vw, 5rem));
+		padding-bottom: clamp(2rem, 5vw, 4rem);
+	}
+
+	.project-crumb {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.6rem;
+	}
+
+	.project-crumb a {
+		color: var(--accent);
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.2em;
+		transition: color 0.2s ease;
+	}
+
+	.project-crumb a:hover {
+		color: var(--text);
+	}
+
+	.project-crumb span[aria-hidden],
+	.project-index {
+		color: var(--brand-text);
+	}
+
+	.project-hero h1 {
+		margin-top: clamp(1.25rem, 2.5vw, 2rem);
+		font-size: clamp(2.6rem, 1.6rem + 4vw, 5rem);
+		line-height: 1.02;
+		letter-spacing: -0.04em;
+		max-width: 16ch;
+	}
+
+	.project-body {
+		margin-top: clamp(2rem, 4vw, 3.5rem);
+		display: grid;
+		grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+		gap: clamp(2rem, 5vw, 5rem);
+		align-items: start;
+	}
+
+	.project-intro {
+		display: grid;
+		gap: 1.25rem;
+	}
+
+	.project-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		margin-top: 0.5rem;
+	}
+
+	.project-spec {
+		display: grid;
+		gap: 0.9rem;
+	}
+
+	.project-spec dl {
+		margin: 0;
+		border-top: 1px solid var(--line-strong);
+	}
+
+	.spec-row {
+		display: grid;
+		grid-template-columns: 6.5rem minmax(0, 1fr);
+		gap: 1rem;
+		padding-block: 0.9rem;
+		border-bottom: 1px solid var(--border);
+	}
+
+	.spec-row dt {
+		color: var(--text);
+		padding-top: 0.15rem;
+	}
+
+	.spec-row dd {
+		margin: 0;
+		color: var(--muted);
+		font-size: 0.98rem;
+	}
+
+	/* Rendered Markdown body, set like the rest of the document */
+	.prose {
+		display: grid;
+		gap: 1rem;
+		max-width: 68ch;
+	}
+
+	.prose :global(h2) {
+		font-size: clamp(1.5rem, 1.2rem + 1vw, 2.1rem);
+		margin-top: clamp(1.25rem, 3vw, 2rem);
+		padding-top: clamp(1.25rem, 3vw, 2rem);
+		border-top: 1px solid var(--border);
+	}
+
+	.prose :global(h2:first-child) {
+		margin-top: 0;
+		padding-top: 0;
+		border-top: 0;
+	}
+
+	.prose :global(h3) {
+		font-size: 1.2rem;
+		margin-top: 0.5rem;
+	}
+
+	.prose :global(p) {
+		max-width: 68ch;
+	}
+
+	.prose :global(ul),
+	.prose :global(ol) {
+		margin: 0;
+		padding-left: 1.25rem;
+		display: grid;
+		gap: 0.6rem;
+		color: var(--muted);
+		font-size: clamp(1rem, 0.96rem + 0.2vw, 1.1rem);
+	}
+
+	.prose :global(li::marker) {
+		color: var(--brand-text);
+	}
+
+	.prose :global(strong) {
+		color: var(--text);
+		font-weight: 700;
+	}
+
+	.prose :global(a) {
+		color: var(--accent);
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.2em;
+	}
+
+	.prose :global(a:hover) {
+		color: var(--text);
+	}
+
+	.prose :global(code) {
+		font-family: var(--font-mono);
+		font-size: 0.9em;
+		padding: 0.1em 0.35em;
+		border: 1px solid var(--border);
+		border-radius: 4px;
+		background: var(--surface);
+	}
+
+	.prose :global(pre) {
+		margin: 0;
+		padding: 1rem 1.25rem;
+		border: 1px solid var(--border);
+		border-radius: var(--radius-sm);
+		background: var(--surface);
+		overflow-x: auto;
+		font-size: 0.9rem;
+		line-height: 1.6;
+	}
+
+	.prose :global(pre code) {
+		padding: 0;
+		border: 0;
+		background: transparent;
+	}
+
+	.more-row {
+		transition: background-color 0.2s ease;
+	}
+
+	.more-row:hover {
+		background: var(--accent-wash);
+	}
+
+	.more-link {
+		display: grid;
+		grid-template-columns: 3rem minmax(0, 4fr) minmax(0, 6fr);
+		gap: 1.5rem;
+		align-items: baseline;
+		padding: clamp(1.25rem, 2.5vw, 1.75rem) 0.5rem;
+	}
+
+	.more-num {
+		color: var(--brand-text);
+	}
+
+	.more-head {
+		display: grid;
+		gap: 0.4rem;
+	}
+
+	.more-name {
+		font-family: var(--font-heading);
+		font-weight: 500;
+		font-size: clamp(1.2rem, 1.05rem + 0.5vw, 1.45rem);
+		letter-spacing: -0.03em;
+		line-height: 1.1;
+		text-decoration: underline;
+		text-decoration-color: transparent;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.2em;
+		transition: text-decoration-color 0.2s ease;
+	}
+
+	.more-link:hover .more-name {
+		text-decoration-color: var(--accent);
+	}
+
+	.more-desc {
+		color: var(--muted);
+		max-width: 52ch;
+	}
+
+	.more-note {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 0.75rem 2rem;
+	}
+
+	.more-note-links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem 1.5rem;
+	}
+
+	.visually-hidden {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+
+	@media (max-width: 900px) {
+		.project-body {
+			grid-template-columns: 1fr;
+		}
+
+		.more-link {
+			grid-template-columns: 3rem minmax(0, 1fr);
+			gap: 0.75rem 1rem;
+		}
+
+		.more-desc {
+			grid-column: 2;
+		}
+	}
+
+	@media (max-width: 520px) {
+		.project-actions .btn {
+			flex: 1 1 100%;
+		}
+
+		.spec-row {
+			grid-template-columns: 1fr;
+			gap: 0.35rem;
+		}
+	}
+</style>

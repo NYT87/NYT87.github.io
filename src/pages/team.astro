@@ -1,0 +1,347 @@
+---
+/** biome-ignore-all lint/correctness/noUnusedImports: they are used in the template */
+/** biome-ignore-all lint/correctness/noUnusedVariables: they are used in the template */
+import { Image } from "astro:assets";
+import { getCollection, render } from "astro:content";
+import Footer from "../components/Footer.astro";
+import Navigation from "../components/Navigation.astro";
+import Layout from "../layouts/Layout.astro";
+
+const members = await Promise.all(
+	(await getCollection("team"))
+		.sort((a, b) => a.data.order - b.data.order)
+		.map(async (member) => ({
+			...member,
+			Content: (await render(member)).Content,
+		})),
+);
+
+const seo = {
+	title: "Team | NYT87",
+	description:
+		"The people behind NYT87: senior engineering leadership with product discipline, working remotely with startups and established teams.",
+};
+
+const peopleSchema = members.map((member) => ({
+	"@context": "https://schema.org",
+	"@type": "Person",
+	name: member.data.fullName,
+	jobTitle: member.data.title,
+	worksFor: {
+		"@type": "Organization",
+		name: "NYT87",
+		url: "https://nyt87.github.io",
+	},
+	url: new URL("/team/", Astro.site).href,
+	sameAs: member.data.links
+		.filter((link) => link.url.startsWith("http"))
+		.map((link) => link.url),
+}));
+---
+
+<Layout title={seo.title} description={seo.description}>
+	<Fragment slot="head">
+		{peopleSchema.map((schema) => (
+			<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+		))}
+	</Fragment>
+	<Navigation />
+	<main id="main-content">
+		<header class="page-hero">
+			<div class="container">
+				<p class="mono-label page-crumb reveal">
+					<a href="/">NYT87</a>
+					<span aria-hidden="true">/</span>
+					<span>Team</span>
+				</p>
+				<h1 class="reveal">A small senior team you work with directly.</h1>
+				<p class="lead reveal reveal-delay-1">
+					No account managers and no hand-offs. The person who scopes the work is the person who
+					builds it and stays accountable for it.
+				</p>
+			</div>
+		</header>
+
+		{members.map((member, index) => (
+			<section class="section" aria-labelledby={`member-${member.id}`}>
+				<div class="container section-grid">
+					<p class="section-index">
+						<span>{String(index + 1).padStart(2, "0")}</span>
+						<span>Profile</span>
+					</p>
+					<div class="section-body">
+						<article class="member">
+							<div class="member-card">
+								<Image
+									src={member.data.photo}
+									alt={`Portrait of ${member.data.name}`}
+									width={240}
+									height={240}
+									densities={[1, 2]}
+									class="member-photo"
+								/>
+								<dl class="member-facts">
+									<div class="spec-row">
+										<dt class="mono-label">Role</dt>
+										<dd>{member.data.title}</dd>
+									</div>
+									{member.data.location && (
+										<div class="spec-row">
+											<dt class="mono-label">Based</dt>
+											<dd>{member.data.location}</dd>
+										</div>
+									)}
+									<div class="spec-row">
+										<dt class="mono-label">Focus</dt>
+										<dd>
+											<ul class="focus-list">
+												{member.data.focus.map((item) => (
+													<li>{item}</li>
+												))}
+											</ul>
+										</dd>
+									</div>
+								</dl>
+								<div class="member-links">
+									{member.data.links.map((link) => (
+										<a
+											href={link.url}
+											target={link.url.startsWith("http") ? "_blank" : undefined}
+											rel={link.url.startsWith("http") ? "noopener noreferrer" : undefined}
+											class="btn btn-outline"
+										>
+											{link.label}
+										</a>
+									))}
+								</div>
+							</div>
+							<div class="member-body">
+								<div class="member-head">
+									<h2 id={`member-${member.id}`}>{member.data.fullName}</h2>
+									<p class="lead">{member.data.summary}</p>
+								</div>
+								<div class="prose">
+									<member.Content />
+								</div>
+							</div>
+						</article>
+					</div>
+				</div>
+			</section>
+		))}
+
+		<section class="section" aria-labelledby="team-contact-title">
+			<div class="container section-grid">
+				<p class="section-index">
+					<span>+</span>
+					<span>Next</span>
+				</p>
+				<div class="section-body">
+					<h2 id="team-contact-title" class="section-title">
+						Start with the problem, not a brief.
+					</h2>
+					<div class="next-actions">
+						<a href="/#contact" class="btn btn-primary">
+							Discuss your project
+						</a>
+						<a href="/projects/" class="btn btn-outline">
+							See all projects
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+	<Footer />
+</Layout>
+
+<style>
+	.page-hero {
+		padding-top: calc(var(--nav-height) + clamp(2.5rem, 6vw, 5rem));
+		padding-bottom: clamp(1rem, 3vw, 2rem);
+	}
+
+	.page-crumb {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.6rem;
+	}
+
+	.page-crumb a {
+		color: var(--accent);
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.2em;
+		transition: color 0.2s ease;
+	}
+
+	.page-crumb a:hover {
+		color: var(--text);
+	}
+
+	.page-crumb span[aria-hidden] {
+		color: var(--brand-text);
+	}
+
+	.page-hero h1 {
+		margin-top: clamp(1.25rem, 2.5vw, 2rem);
+		font-size: clamp(2.4rem, 1.4rem + 3.4vw, 4.4rem);
+		line-height: 1.04;
+		letter-spacing: -0.04em;
+		max-width: 18ch;
+	}
+
+	.page-hero .lead {
+		margin-top: clamp(1.25rem, 2.5vw, 2rem);
+	}
+
+	.member {
+		display: grid;
+		grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+		gap: clamp(1.5rem, 4vw, 4rem);
+		align-items: start;
+	}
+
+	.member-card {
+		display: grid;
+		gap: 1.25rem;
+		justify-items: start;
+		position: sticky;
+		top: var(--section-anchor-offset);
+	}
+
+	.member-photo {
+		width: min(100%, 240px);
+		height: auto;
+		aspect-ratio: 1;
+		object-fit: cover;
+		border-radius: var(--radius-md);
+		border: 1px solid var(--border);
+	}
+
+	.member-facts {
+		margin: 0;
+		width: 100%;
+		border-top: 1px solid var(--line-strong);
+	}
+
+	.spec-row {
+		display: grid;
+		grid-template-columns: 4.5rem minmax(0, 1fr);
+		gap: 1rem;
+		padding-block: 0.9rem;
+		border-bottom: 1px solid var(--border);
+	}
+
+	.spec-row dt {
+		color: var(--text);
+		padding-top: 0.15rem;
+	}
+
+	.spec-row dd {
+		margin: 0;
+		color: var(--muted);
+		font-size: 0.98rem;
+	}
+
+	.focus-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		gap: 0.25rem;
+	}
+
+	.member-links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.6rem;
+	}
+
+	.member-body {
+		display: grid;
+		gap: clamp(1.5rem, 3vw, 2.5rem);
+		min-width: 0;
+	}
+
+	.member-head {
+		display: grid;
+		gap: 1rem;
+	}
+
+	.member-head h2 {
+		font-size: clamp(1.9rem, 1.3rem + 2vw, 3rem);
+	}
+
+	.prose {
+		display: grid;
+		gap: 1rem;
+		max-width: 68ch;
+	}
+
+	.prose :global(h2) {
+		font-size: clamp(1.4rem, 1.15rem + 0.9vw, 1.9rem);
+		margin-top: clamp(1rem, 2.5vw, 1.5rem);
+		padding-top: clamp(1rem, 2.5vw, 1.5rem);
+		border-top: 1px solid var(--border);
+	}
+
+	.prose :global(h2:first-child) {
+		margin-top: 0;
+		padding-top: 0;
+		border-top: 0;
+	}
+
+	.prose :global(ul) {
+		margin: 0;
+		padding-left: 1.25rem;
+		display: grid;
+		gap: 0.6rem;
+		color: var(--muted);
+		font-size: clamp(1rem, 0.96rem + 0.2vw, 1.1rem);
+	}
+
+	.prose :global(li::marker) {
+		color: var(--brand-text);
+	}
+
+	.prose :global(strong) {
+		color: var(--text);
+		font-weight: 700;
+	}
+
+	.prose :global(a) {
+		color: var(--accent);
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.2em;
+	}
+
+	.prose :global(a:hover) {
+		color: var(--text);
+	}
+
+	.next-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+
+	@media (max-width: 900px) {
+		.member {
+			grid-template-columns: 1fr;
+		}
+
+		.member-card {
+			position: static;
+		}
+	}
+
+	@media (max-width: 520px) {
+		.next-actions .btn,
+		.member-links .btn {
+			flex: 1 1 100%;
+		}
+	}
+</style>

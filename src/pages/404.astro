@@ -1,0 +1,56 @@
+---
+/** biome-ignore-all lint/correctness/noUnusedImports: they are used in the template */
+/** biome-ignore-all lint/correctness/noUnusedVariables: they are used in the template */
+import Layout from "../layouts/Layout.astro";
+
+const seo = {
+	title: "Page not found | NYT87",
+	description: "That page does not exist. Redirecting to the NYT87 homepage.",
+};
+---
+
+<Layout title={seo.title} description={seo.description} noindex>
+	<Fragment slot="head">
+		<meta http-equiv="refresh" content="2; url=/" />
+		<script is:inline>
+			window.location.replace("/");
+		</script>
+	</Fragment>
+	<main id="main-content" class="not-found">
+		<div class="container">
+			<p class="mono-label">
+				404 <span aria-hidden="true">/</span> Page not found
+			</p>
+			<h1>That page does not exist.</h1>
+			<p class="lead">Taking you to the homepage.</p>
+			<a href="/" class="btn btn-primary">
+				Go to the homepage now
+			</a>
+		</div>
+	</main>
+</Layout>
+
+<style>
+	.not-found {
+		min-height: 100vh;
+		display: grid;
+		align-items: center;
+		padding-block: clamp(3rem, 8vw, 6rem);
+	}
+
+	.not-found .container {
+		display: grid;
+		gap: 1.25rem;
+		justify-items: start;
+	}
+
+	.not-found .mono-label span {
+		color: var(--brand-text);
+		padding-inline: 0.35rem;
+	}
+
+	.not-found h1 {
+		font-size: clamp(2.2rem, 1.4rem + 3vw, 4rem);
+		max-width: 16ch;
+	}
+</style>

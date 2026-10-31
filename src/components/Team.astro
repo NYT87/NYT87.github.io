@@ -1,7 +1,12 @@
 ---
 /** biome-ignore-all lint/correctness/noUnusedImports: they are used in the template */
+/** biome-ignore-all lint/correctness/noUnusedVariables: they are used in the template */
 import { Image } from "astro:assets";
-import joseImg from "../assets/jose.jpeg";
+import { getCollection } from "astro:content";
+
+const members = (await getCollection("team")).sort(
+	(a, b) => a.data.order - b.data.order,
+);
 ---
 
 <section id="team" class="section" aria-labelledby="team-title">
@@ -14,35 +19,37 @@ import joseImg from "../assets/jose.jpeg";
 			<h2 id="team-title" class="section-title">
 				Senior engineering leadership with product discipline.
 			</h2>
-			<article class="profile">
-				<Image
-					src={joseImg}
-					alt="Portrait of José Miguel"
-					width={160}
-					height={160}
-					densities={[1, 2]}
-					class="profile-photo"
-				/>
-				<div class="profile-body">
-					<div class="profile-head">
-						<h3>José Miguel</h3>
-						<p class="mono-label">Founder · CTO &amp; Senior Software Engineer</p>
+			{members.map((member) => (
+				<article class="profile">
+					<Image
+						src={member.data.photo}
+						alt={`Portrait of ${member.data.name}`}
+						width={160}
+						height={160}
+						densities={[1, 2]}
+						class="profile-photo"
+					/>
+					<div class="profile-body">
+						<div class="profile-head">
+							<h3>{member.data.name}</h3>
+							<p class="mono-label">{member.data.title}</p>
+						</div>
+						<p>{member.data.summary}</p>
+						<div class="profile-links">
+							<a href="/team/" class="text-link">
+								Meet the team
+							</a>
+							{member.data.links
+								.filter((link) => link.label === "LinkedIn")
+								.map((link) => (
+									<a href={link.url} target="_blank" rel="noopener noreferrer" class="text-link">
+										LinkedIn profile
+									</a>
+								))}
+						</div>
 					</div>
-					<p>
-						José Miguel Navarro Iglesias builds software at the intersection of product delivery,
-						reliable architecture, and scaling strategy. He has led backend and full-stack
-						initiatives that turn ambitious ideas into fast, stable systems ready for growth.
-					</p>
-					<a
-						href="https://www.linkedin.com/in/jm8nav/"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="text-link"
-					>
-						LinkedIn profile
-					</a>
-				</div>
-			</article>
+				</article>
+			))}
 		</div>
 	</div>
 </section>
@@ -79,6 +86,12 @@ import joseImg from "../assets/jose.jpeg";
 
 	.profile-head h3 {
 		font-size: clamp(1.4rem, 1.2rem + 0.6vw, 1.75rem);
+	}
+
+	.profile-links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem 1.5rem;
 	}
 
 	@media (max-width: 600px) {

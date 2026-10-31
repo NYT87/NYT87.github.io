@@ -32,19 +32,39 @@ NYT87 helps companies build robust IT projects and contribute to the open-source
 │   ├── components/          # Reusable Astro components
 │   │   ├── Navigation.astro
 │   │   ├── Hero.astro
-│   │   ├── About.astro
 │   │   ├── Services.astro
-│   │   ├── Projects.astro
+│   │   ├── Projects.astro   # Work section, read from the projects collection
+│   │   ├── WorkList.astro   # Shared project rows (homepage + /projects/)
+│   │   ├── Approach.astro
 │   │   ├── Team.astro
+│   │   ├── Contact.astro
 │   │   └── Footer.astro
+│   ├── content/
+│   │   ├── projects/        # One Markdown file per project (frontmatter + long description)
+│   │   └── team/            # One Markdown file per team member
+│   ├── content.config.ts    # Content collection schema
 │   ├── layouts/
 │   │   └── Layout.astro     # Global layout, fonts, and base styles
 │   └── pages/
-│       └── index.astro      # Page entry point
+│       ├── index.astro      # Homepage
+│       ├── 404.astro        # Not-found page, redirects to the homepage
+│       ├── projects/
+│       │   ├── index.astro  # All projects, grouped by role
+│       │   └── [slug].astro # One page per project, generated from src/content/projects
+│       ├── team.astro       # Team page, generated from src/content/team
+│       └── sitemap.xml.ts   # Generated sitemap (all pages)
 ├── biome.json               # Biome config
 ├── .prettierrc              # Prettier config (Astro plugin)
 └── package.json
 ```
+
+## Adding a project
+
+Add a Markdown file to `src/content/projects/`. The frontmatter (`name`, `role`, `kind`, `summary`,
+`liveUrl`, `liveLabel`, `repoUrl`, `repoHost`, `links`, `status`, `license`, `stack`, `order`) feeds the Work list on
+the homepage and the header of the project page; the body is the project page's long
+description. `role` is `studio` (default), `client` or `contribution`; `repoUrl` is optional for
+client work with a private codebase. The file name becomes the URL: `bongsu.md` → `/projects/bongsu/`.
 
 ## Commands
 

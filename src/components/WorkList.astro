@@ -1,0 +1,130 @@
+---
+/** biome-ignore-all lint/correctness/noUnusedVariables: they are used in the template */
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+	projects: CollectionEntry<"projects">[];
+}
+
+const { projects } = Astro.props;
+---
+
+<ul class="index-list work-list">
+	{projects.map((project) => (
+		<li class="work-row">
+			<div class="work-head">
+				<h3>
+					<a href={`/projects/${project.id}/`} class="work-title-link">
+						{project.data.name}
+					</a>
+				</h3>
+				<p class="mono-label">{project.data.kind}</p>
+			</div>
+			<p class="work-desc">{project.data.summary}</p>
+			<div class="work-links">
+				<a href={`/projects/${project.id}/`} class="text-link">
+					Details<span class="visually-hidden"> about {project.data.name}</span>
+				</a>
+				{project.data.liveUrl && (
+					<a
+						href={project.data.liveUrl}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="text-link"
+					>
+						{project.data.role === "studio" ? "Live app" : "Website"}
+						<span class="visually-hidden"> for {project.data.name}</span>
+					</a>
+				)}
+				{project.data.repoUrl && (
+					<a
+						href={project.data.repoUrl}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="text-link"
+					>
+						Code<span class="visually-hidden"> for {project.data.name}</span>
+					</a>
+				)}
+			</div>
+		</li>
+	))}
+</ul>
+
+<style>
+	.work-row {
+		display: grid;
+		/* Fixed links column so rows with one or two links line up */
+		grid-template-columns: minmax(0, 4fr) minmax(0, 6fr) 5.5rem;
+		gap: 1.5rem;
+		align-items: baseline;
+		padding: clamp(1.25rem, 2.5vw, 1.75rem) 0.5rem;
+		transition: background-color 0.2s ease;
+	}
+
+	.work-row:hover {
+		background: var(--accent-wash);
+	}
+
+	.work-head {
+		display: grid;
+		gap: 0.4rem;
+	}
+
+	.work-head h3 {
+		font-size: clamp(1.3rem, 1.1rem + 0.6vw, 1.6rem);
+	}
+
+	.work-title-link {
+		text-decoration: underline;
+		text-decoration-color: transparent;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.2em;
+		transition: text-decoration-color 0.2s ease;
+	}
+
+	.work-title-link:hover,
+	.work-row:hover .work-title-link {
+		text-decoration-color: var(--accent);
+	}
+
+	.work-desc {
+		max-width: 52ch;
+	}
+
+	.work-links {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.35rem;
+		font-size: 0.95rem;
+	}
+
+	.work-links a {
+		display: inline-flex;
+		align-items: center;
+		min-height: 32px;
+	}
+
+	.visually-hidden {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+
+	@media (max-width: 900px) {
+		.work-row {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 0.75rem;
+		}
+
+		.work-links {
+			flex-direction: row;
+			flex-wrap: wrap;
+			gap: 0.5rem 1.25rem;
+		}
+	}
+</style>

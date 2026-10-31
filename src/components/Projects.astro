@@ -1,30 +1,12 @@
 ---
-// biome-ignore lint/correctness/noUnusedVariables: it is used in the template
-const projects = [
-	{
-		name: "Booba Pass",
-		kind: "Open source · Web app · PWA",
-		description:
-			"A centralized wallet for airline loyalty information with QR and barcode support, designed for quick access and practical day-to-day use.",
-		liveUrl: "https://nyt87.github.io/booba-pass/",
-		repoUrl: "https://github.com/NYT87/booba-pass",
-	},
-	{
-		name: "OpenTrack Viewer",
-		kind: "Open source · Web app · PWA",
-		description:
-			"A privacy-first, client-side web app and PWA for viewing activity tracking files, with everything processed locally in the browser.",
-		liveUrl: "https://nyt87.github.io/opentrack-viewer/",
-		repoUrl: "https://github.com/NYT87/opentrack-viewer",
-	},
-	{
-		name: "Agents PP",
-		kind: "Open source · Claude Code plugin",
-		description:
-			"Pair-programming workflows for coding agents: one agent codes while an independent reviewer comments, looping until every comment is resolved.",
-		repoUrl: "https://github.com/NYT87/agents-pp",
-	},
-];
+/** biome-ignore-all lint/correctness/noUnusedImports: they are used in the template */
+/** biome-ignore-all lint/correctness/noUnusedVariables: they are used in the template */
+import { getCollection } from "astro:content";
+import WorkList from "./WorkList.astro";
+
+const projects = (await getCollection("projects")).sort(
+	(a, b) => a.data.order - b.data.order,
+);
 ---
 
 <section id="projects" class="section" aria-labelledby="projects-title">
@@ -37,87 +19,26 @@ const projects = [
 			<h2 id="projects-title" class="section-title">
 				Recent work built for everyday use, not demo-day polish.
 			</h2>
-			<ul class="index-list work-list">
-				{projects.map((project) => (
-					<li class="work-row">
-						<div class="work-head">
-							<h3>{project.name}</h3>
-							<p class="mono-label">{project.kind}</p>
-						</div>
-						<p class="work-desc">{project.description}</p>
-						<div class="work-links">
-							{project.liveUrl && (
-								<a
-									href={project.liveUrl}
-									target="_blank"
-									rel="noopener noreferrer"
-									class="text-link"
-								>
-									Live app<span class="visually-hidden"> for {project.name}</span>
-								</a>
-							)}
-							<a href={project.repoUrl} target="_blank" rel="noopener noreferrer" class="text-link">
-								Code<span class="visually-hidden"> for {project.name}</span>
-							</a>
-						</div>
-					</li>
-				))}
-			</ul>
+			<WorkList projects={projects} />
 			<div class="work-note">
 				<p>
-					Private client systems and internal delivery tools are not public, but we can walk through
-					relevant work in a conversation.
+					Client codebases such as Criptan's are private, so only the studio's own projects and
+					upstream contributions are public. We can walk through client work in a conversation.
 				</p>
-				<a href="#contact" class="text-link">
-					Ask about client work
-				</a>
+				<div class="work-note-links">
+					<a href="/projects/" class="text-link">
+						All projects
+					</a>
+					<a href="#contact" class="text-link">
+						Ask about client work
+					</a>
+				</div>
 			</div>
 		</div>
 	</div>
 </section>
 
 <style>
-	.work-row {
-		display: grid;
-		/* Fixed links column so rows with one or two links line up */
-		grid-template-columns: minmax(0, 4fr) minmax(0, 6fr) 5.5rem;
-		gap: 1.5rem;
-		align-items: baseline;
-		padding: clamp(1.25rem, 2.5vw, 1.75rem) 0.5rem;
-		transition: background-color 0.2s ease;
-	}
-
-	.work-row:hover {
-		background: var(--accent-wash);
-	}
-
-	.work-head {
-		display: grid;
-		gap: 0.4rem;
-	}
-
-	.work-head h3 {
-		font-size: clamp(1.3rem, 1.1rem + 0.6vw, 1.6rem);
-	}
-
-	.work-desc {
-		max-width: 52ch;
-	}
-
-	.work-links {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		gap: 0.35rem;
-		font-size: 0.95rem;
-	}
-
-	.work-links a {
-		display: inline-flex;
-		align-items: center;
-		min-height: 32px;
-	}
-
 	.work-note {
 		display: flex;
 		flex-wrap: wrap;
@@ -130,24 +51,9 @@ const projects = [
 		max-width: 56ch;
 	}
 
-	.visually-hidden {
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		overflow: hidden;
-		clip-path: inset(50%);
-		white-space: nowrap;
-	}
-
-	@media (max-width: 900px) {
-		.work-row {
-			grid-template-columns: minmax(0, 1fr);
-			gap: 0.75rem;
-		}
-
-		.work-links {
-			flex-direction: row;
-			gap: 1.25rem;
-		}
+	.work-note-links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem 1.5rem;
 	}
 </style>

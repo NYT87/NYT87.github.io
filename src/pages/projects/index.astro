@@ -1,0 +1,178 @@
+---
+/** biome-ignore-all lint/correctness/noUnusedImports: they are used in the template */
+/** biome-ignore-all lint/correctness/noUnusedVariables: they are used in the template */
+import { getCollection } from "astro:content";
+import Footer from "../../components/Footer.astro";
+import Navigation from "../../components/Navigation.astro";
+import WorkList from "../../components/WorkList.astro";
+import Layout from "../../layouts/Layout.astro";
+
+const projects = (await getCollection("projects")).sort(
+	(a, b) => a.data.order - b.data.order,
+);
+
+const groups = [
+	{
+		index: "01",
+		label: "Client work",
+		title: "Engagements with product teams.",
+		note: "Client codebases are private. We can walk through the work in a conversation.",
+		items: projects.filter((project) => project.data.role === "client"),
+	},
+	{
+		index: "02",
+		label: "Studio projects",
+		title: "Tools we build, ship and maintain ourselves.",
+		note: "All open source, all in everyday use.",
+		items: projects.filter((project) => project.data.role === "studio"),
+	},
+	{
+		index: "03",
+		label: "Contributions",
+		title: "Upstream work on other people's projects.",
+		note: "Pull requests merged into open-source projects the studio relies on or admires.",
+		items: projects.filter((project) => project.data.role === "contribution"),
+	},
+].filter((group) => group.items.length > 0);
+
+const seo = {
+	title: "Projects | NYT87",
+	description:
+		"All work by NYT87: client engagements, open-source studio projects and upstream contributions, from fintech backends to desktop and web apps.",
+};
+
+const collectionSchema = {
+	"@context": "https://schema.org",
+	"@type": "CollectionPage",
+	name: "Projects",
+	description: seo.description,
+	url: new URL("/projects/", Astro.site).href,
+	hasPart: projects.map((project) => ({
+		"@type": "CreativeWork",
+		name: project.data.name,
+		url: new URL(`/projects/${project.id}/`, Astro.site).href,
+	})),
+};
+---
+
+<Layout title={seo.title} description={seo.description}>
+	<Fragment slot="head">
+		<script type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
+	</Fragment>
+	<Navigation />
+	<main id="main-content">
+		<header class="page-hero">
+			<div class="container">
+				<p class="mono-label page-crumb reveal">
+					<a href="/">NYT87</a>
+					<span aria-hidden="true">/</span>
+					<span>Projects</span>
+				</p>
+				<h1 class="reveal">Everything we have shipped, contributed to, or keep running.</h1>
+				<p class="lead reveal reveal-delay-1">
+					Client engagements, the studio's own open-source tools and upstream contributions, in one
+					index. Each entry has its own page with the details.
+				</p>
+			</div>
+		</header>
+
+		{groups.map((group) => (
+			<section class="section" aria-labelledby={`group-${group.index}`}>
+				<div class="container section-grid">
+					<p class="section-index">
+						<span>{group.index}</span>
+						<span>{group.label}</span>
+					</p>
+					<div class="section-body">
+						<h2 id={`group-${group.index}`} class="section-title">
+							{group.title}
+						</h2>
+						<WorkList projects={group.items} />
+						<p class="group-note">{group.note}</p>
+					</div>
+				</div>
+			</section>
+		))}
+
+		<section class="section" aria-labelledby="projects-contact-title">
+			<div class="container section-grid">
+				<p class="section-index">
+					<span>+</span>
+					<span>Next</span>
+				</p>
+				<div class="section-body">
+					<h2 id="projects-contact-title" class="section-title">
+						Have a project of your own?
+					</h2>
+					<div class="next-actions">
+						<a href="/#contact" class="btn btn-primary">
+							Discuss your project
+						</a>
+						<a href="/team/" class="btn btn-outline">
+							Meet the team
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+	<Footer />
+</Layout>
+
+<style>
+	.page-hero {
+		padding-top: calc(var(--nav-height) + clamp(2.5rem, 6vw, 5rem));
+		padding-bottom: clamp(1rem, 3vw, 2rem);
+	}
+
+	.page-crumb {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.6rem;
+	}
+
+	.page-crumb a {
+		color: var(--accent);
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.2em;
+		transition: color 0.2s ease;
+	}
+
+	.page-crumb a:hover {
+		color: var(--text);
+	}
+
+	.page-crumb span[aria-hidden] {
+		color: var(--brand-text);
+	}
+
+	.page-hero h1 {
+		margin-top: clamp(1.25rem, 2.5vw, 2rem);
+		font-size: clamp(2.4rem, 1.4rem + 3.4vw, 4.4rem);
+		line-height: 1.04;
+		letter-spacing: -0.04em;
+		max-width: 18ch;
+	}
+
+	.page-hero .lead {
+		margin-top: clamp(1.25rem, 2.5vw, 2rem);
+	}
+
+	.group-note {
+		max-width: 56ch;
+	}
+
+	.next-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+
+	@media (max-width: 520px) {
+		.next-actions .btn {
+			flex: 1 1 100%;
+		}
+	}
+</style>
