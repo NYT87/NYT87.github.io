@@ -33,7 +33,7 @@ const { projects } = Astro.props;
 						class="text-link"
 					>
 						{project.data.liveKind === "app" ? "Live app" : "Website"}
-						<span class="visually-hidden"> for {project.data.name}</span>
+						<span class="visually-hidden"> for {project.data.name} (opens in a new tab)</span>
 					</a>
 				)}
 				{project.data.repoUrl && (
@@ -43,7 +43,7 @@ const { projects } = Astro.props;
 						rel="noopener noreferrer"
 						class="text-link"
 					>
-						Code<span class="visually-hidden"> for {project.data.name}</span>
+						Code<span class="visually-hidden"> for {project.data.name} (opens in a new tab)</span>
 					</a>
 				)}
 			</div>
@@ -125,6 +125,11 @@ const { projects } = Astro.props;
 			flex-direction: row;
 			flex-wrap: wrap;
 			gap: 0.5rem 1.25rem;
+		}
+
+		/* Touch layouts: 44px targets with 8px+ spacing */
+		.work-links a {
+			min-height: 44px;
 		}
 	}
 </style>

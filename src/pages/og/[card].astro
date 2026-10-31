@@ -1,0 +1,279 @@
+---
+/**
+ * Share-image cards (Open Graph, GitHub social preview, LinkedIn banner).
+ * These pages are rendered at build time and screenshotted by `npm run og`
+ * into public/assets/og/. They are noindex and not in the sitemap.
+ */
+/** biome-ignore-all lint/correctness/noUnusedVariables: they are used in the template */
+import { getCollection } from "astro:content";
+
+interface Card {
+	id: string;
+	width: number;
+	height: number;
+	label: string;
+	kind?: string;
+	title: string;
+	summary: string;
+	index?: string;
+	url: string;
+}
+
+export async function getStaticPaths() {
+	const projects = (await getCollection("projects")).sort(
+		(a, b) => a.data.order - b.data.order,
+	);
+	const site: Card = {
+		id: "site",
+		width: 1200,
+		height: 630,
+		label: "Remote software studio",
+		kind: "Product, backend & infrastructure",
+		title:
+			"Designing and engineering products that survive real\u2011world scale.",
+		summary:
+			"Senior engineering for teams that cannot afford weak execution, unclear ownership, or expensive rewrites later.",
+		url: "nyt87.github.io",
+	};
+	const cards: Card[] = [
+		site,
+		{
+			...site,
+			id: "github",
+			width: 1280,
+			height: 640,
+			url: "github.com/NYT87",
+		},
+		{
+			...site,
+			id: "linkedin",
+			width: 1584,
+			height: 396,
+			summary:
+				"Product, backend and infrastructure work for startups and established teams.",
+			url: "nyt87.github.io",
+		},
+		...projects.map(
+			(project): Card => ({
+				id: project.id,
+				width: 1200,
+				height: 630,
+				label: "Work",
+				kind: project.data.kind,
+				title: project.data.name,
+				summary: project.data.summary,
+				index: String(project.data.order).padStart(2, "0"),
+				url: `nyt87.github.io/projects/${project.id}/`,
+			}),
+		),
+	];
+	return cards.map((card) => ({ params: { card: card.id }, props: { card } }));
+}
+
+const { card } = Astro.props;
+const isBanner = card.height / card.width < 0.4;
+const isProject = Boolean(card.index);
+---
+
+<!doctype html>
+<html lang="en-US" data-width={card.width} data-height={card.height}>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content={`width=${card.width}, initial-scale=1`} />
+		<meta name="robots" content="noindex,nofollow" />
+		<title>{`Share card: ${card.title}`}</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=block"
+		/>
+	</head>
+	<body class:list={[{ banner: isBanner, project: isProject }]}>
+		<div class="canvas">
+			<header class="top">
+				<p class="mono">
+					{card.index && <span class="num">{card.index}</span>}
+					<span>{card.label}</span>
+					{card.kind && (
+						<>
+							<span class="sep" aria-hidden="true">
+								/
+							</span>
+							<span>{card.kind}</span>
+						</>
+					)}
+				</p>
+			</header>
+			<main class="body">
+				<h1>{card.title}</h1>
+				<p class="summary">{card.summary}</p>
+			</main>
+			<footer class="bottom">
+				<span class="brand">
+					<img src="/assets/logo-icon.png" alt="" class="mark" />
+					<img src="/assets/logo-text.png" alt="NYT87" class="wordmark" />
+				</span>
+				<span class="mono url">{card.url}</span>
+			</footer>
+		</div>
+	</body>
+</html>
+
+<style is:global define:vars={{ w: `${card.width}px`, h: `${card.height}px` }}>
+	:root {
+		--bg: oklch(0.97 0.01 70);
+		--text: oklch(0.2 0.01 70);
+		--muted: oklch(0.46 0.015 70);
+		--line-strong: oklch(0.74 0.014 70 / 0.9);
+		--brand-text: oklch(0.53 0.16 43);
+		--font-heading: "Space Grotesk", sans-serif;
+		--font-body: "Manrope", sans-serif;
+		--font-mono: "JetBrains Mono", monospace;
+		--pad: 64px;
+	}
+
+	* {
+		box-sizing: border-box;
+		margin: 0;
+	}
+
+	html,
+	body {
+		width: var(--w);
+		height: var(--h);
+		overflow: hidden;
+		background: var(--bg);
+		color: var(--text);
+		font-family: var(--font-body);
+		-webkit-font-smoothing: antialiased;
+	}
+
+	.canvas {
+		width: var(--w);
+		height: var(--h);
+		padding: var(--pad);
+		display: grid;
+		grid-template-rows: auto minmax(0, 1fr) auto;
+		gap: 24px;
+		/* Section rule at the top, aligned to the content edges */
+		background: linear-gradient(var(--line-strong), var(--line-strong)) var(--pad) 48px /
+			calc(100% - var(--pad) * 2) 2px no-repeat;
+	}
+
+	.mono {
+		font-family: var(--font-mono);
+		font-size: 22px;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--muted);
+		display: flex;
+		gap: 16px;
+		align-items: baseline;
+	}
+
+	.num,
+	.sep {
+		color: var(--brand-text);
+	}
+
+	.body {
+		display: grid;
+		align-content: center;
+		gap: 24px;
+	}
+
+	h1 {
+		font-family: var(--font-heading);
+		font-weight: 500;
+		font-size: 64px;
+		line-height: 1.04;
+		letter-spacing: -0.04em;
+		max-width: 19ch;
+		text-wrap: balance;
+	}
+
+	.project h1 {
+		font-size: 112px;
+		max-width: 12ch;
+	}
+
+	.summary {
+		font-size: 26px;
+		line-height: 1.4;
+		color: var(--muted);
+		max-width: 44ch;
+	}
+
+	.project .summary {
+		font-size: 30px;
+		max-width: 36ch;
+	}
+
+	.bottom {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding-top: 28px;
+		border-top: 1px solid var(--line-strong);
+	}
+
+	.brand {
+		display: inline-flex;
+		align-items: center;
+		gap: 14px;
+		line-height: 0;
+	}
+
+	.mark {
+		height: 44px;
+		width: auto;
+	}
+
+	.wordmark {
+		height: 36px;
+		width: auto;
+	}
+
+	.url {
+		font-size: 20px;
+		text-transform: none;
+		letter-spacing: 0.02em;
+	}
+
+	/* Wide, short banner (LinkedIn): tighter rhythm, smaller type */
+	.banner {
+		--pad: 56px;
+	}
+
+	.banner .canvas {
+		gap: 14px;
+		background-position: var(--pad) 40px;
+	}
+
+	.banner .mono {
+		font-size: 18px;
+	}
+
+	.banner h1 {
+		font-size: 54px;
+		max-width: 22ch;
+	}
+
+	.banner .summary {
+		font-size: 22px;
+		max-width: 60ch;
+	}
+
+	.banner .bottom {
+		padding-top: 18px;
+	}
+
+	.banner .mark {
+		height: 36px;
+	}
+
+	.banner .wordmark {
+		height: 28px;
+	}
+</style>

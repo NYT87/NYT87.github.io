@@ -7,6 +7,9 @@ generic SaaS look the brief rules out.
 
 Page-specific overrides go in `pages/<page>.md`; if none exists, use this file.
 
+Brand-level guidance (logo usage, voice and tone, messaging, imagery, hex equivalents of the
+tokens) lives in `docs/brand-guidelines.md`. This file stays the source for implementation tokens.
+
 ## Direction
 
 Editorial-technical. The page reads like a well-set engineering document: a numbered section

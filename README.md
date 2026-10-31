@@ -52,7 +52,13 @@ NYT87 helps companies build robust IT projects and contribute to the open-source
 │       │   ├── index.astro  # All projects, grouped by role
 │       │   └── [slug].astro # One page per project, generated from src/content/projects
 │       ├── team.astro       # Team page, generated from src/content/team
+│       ├── og/
+│       │   └── [card].astro # Share-image cards, screenshotted by npm run og
 │       └── sitemap.xml.ts   # Generated sitemap (all pages)
+├── design-system/
+│   └── nyt87/MASTER.md      # Design system: tokens, layout, components
+├── docs/
+│   └── brand-guidelines.md  # Brand guidelines: palette, type, logo, voice, messaging
 ├── biome.json               # Biome config
 ├── .prettierrc              # Prettier config (Astro plugin)
 └── package.json
@@ -80,6 +86,7 @@ All commands are run from the root of the project:
 | `npm run format` | Format all files (Biome + Prettier) |
 | `npm run lint` | Lint and auto-fix with Biome |
 | `npm run check` | Run full format + lint check |
+| `npm run og` | Build, then screenshot the share cards under `/og/` into `public/assets/og/` (needs Chrome) |
 
 ## Deployment
 

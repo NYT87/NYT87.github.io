@@ -45,7 +45,7 @@ const peopleSchema = members.map((member) => ({
 			<script type="application/ld+json" set:html={JSON.stringify(schema)} />
 		))}
 	</Fragment>
-	<Navigation />
+	<Navigation current="team" />
 	<main id="main-content">
 		<header class="page-hero">
 			<div class="container">
@@ -71,57 +71,59 @@ const peopleSchema = members.map((member) => ({
 					</p>
 					<div class="section-body">
 						<article class="member">
-							<div class="member-card">
-								<Image
-									src={member.data.photo}
-									alt={`Portrait of ${member.data.name}`}
-									width={240}
-									height={240}
-									densities={[1, 2]}
-									class="member-photo"
-								/>
-								<dl class="member-facts">
-									<div class="spec-row">
-										<dt class="mono-label">Role</dt>
-										<dd>{member.data.title}</dd>
-									</div>
-									{member.data.location && (
-										<div class="spec-row">
-											<dt class="mono-label">Based</dt>
-											<dd>{member.data.location}</dd>
-										</div>
-									)}
-									<div class="spec-row">
-										<dt class="mono-label">Focus</dt>
-										<dd>
-											<ul class="focus-list">
-												{member.data.focus.map((item) => (
-													<li>{item}</li>
-												))}
-											</ul>
-										</dd>
-									</div>
-								</dl>
-								<div class="member-links">
-									{member.data.links.map((link) => (
-										<a
-											href={link.url}
-											target={link.url.startsWith("http") ? "_blank" : undefined}
-											rel={link.url.startsWith("http") ? "noopener noreferrer" : undefined}
-											class="btn btn-outline"
-										>
-											{link.label}
-										</a>
-									))}
-								</div>
+							<div class="member-head">
+								<h2 id={`member-${member.id}`}>{member.data.fullName}</h2>
+								<p class="lead">{member.data.summary}</p>
 							</div>
-							<div class="member-body">
-								<div class="member-head">
-									<h2 id={`member-${member.id}`}>{member.data.fullName}</h2>
-									<p class="lead">{member.data.summary}</p>
+							<div class="member-grid">
+								<div class="member-card">
+									<Image
+										src={member.data.photo}
+										alt={`Portrait of ${member.data.name}`}
+										width={240}
+										height={240}
+										densities={[1, 2]}
+										class="member-photo"
+									/>
+									<dl class="member-facts">
+										<div class="spec-row">
+											<dt class="mono-label">Role</dt>
+											<dd>{member.data.title}</dd>
+										</div>
+										{member.data.location && (
+											<div class="spec-row">
+												<dt class="mono-label">Based</dt>
+												<dd>{member.data.location}</dd>
+											</div>
+										)}
+										<div class="spec-row">
+											<dt class="mono-label">Focus</dt>
+											<dd>
+												<ul class="focus-list">
+													{member.data.focus.map((item) => (
+														<li>{item}</li>
+													))}
+												</ul>
+											</dd>
+										</div>
+									</dl>
+									<div class="member-links">
+										{member.data.links.map((link) => (
+											<a
+												href={link.url}
+												target={link.url.startsWith("http") ? "_blank" : undefined}
+												rel={link.url.startsWith("http") ? "noopener noreferrer" : undefined}
+												class="btn btn-outline"
+											>
+												{link.label}
+											</a>
+										))}
+									</div>
 								</div>
-								<div class="prose">
-									<member.Content />
+								<div class="member-body">
+									<div class="prose">
+										<member.Content />
+									</div>
 								</div>
 							</div>
 						</article>
@@ -169,6 +171,9 @@ const peopleSchema = members.map((member) => ({
 	}
 
 	.page-crumb a {
+		display: inline-flex;
+		align-items: center;
+		min-height: 32px;
 		color: var(--accent);
 		text-decoration: underline;
 		text-decoration-thickness: 1px;
@@ -197,6 +202,11 @@ const peopleSchema = members.map((member) => ({
 	}
 
 	.member {
+		display: grid;
+		gap: clamp(1.5rem, 3vw, 2.5rem);
+	}
+
+	.member-grid {
 		display: grid;
 		grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
 		gap: clamp(1.5rem, 4vw, 4rem);
@@ -257,6 +267,7 @@ const peopleSchema = members.map((member) => ({
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0.6rem;
+		width: 100%;
 	}
 
 	.member-body {
@@ -268,6 +279,7 @@ const peopleSchema = members.map((member) => ({
 	.member-head {
 		display: grid;
 		gap: 1rem;
+		max-width: 62ch;
 	}
 
 	.member-head h2 {
@@ -329,7 +341,7 @@ const peopleSchema = members.map((member) => ({
 	}
 
 	@media (max-width: 900px) {
-		.member {
+		.member-grid {
 			grid-template-columns: 1fr;
 		}
 

@@ -64,11 +64,11 @@ const facts = [
 ];
 ---
 
-<Layout title={seo.title} description={seo.description}>
+<Layout title={seo.title} description={seo.description} image={`/assets/og/${project.id}.png`}>
 	<Fragment slot="head">
 		<script type="application/ld+json" set:html={JSON.stringify(projectSchema)} />
 	</Fragment>
-	<Navigation />
+	<Navigation current="projects" />
 	<main id="main-content">
 		<header class="project-hero">
 			<div class="container">
@@ -92,6 +92,7 @@ const facts = [
 									class="btn btn-primary"
 								>
 									{data.liveKind === "app" ? "Open the live app" : data.liveLabel}
+									<span class="visually-hidden"> (opens in a new tab)</span>
 								</a>
 							)}
 							{data.repoUrl && (
@@ -102,6 +103,7 @@ const facts = [
 									class={`btn ${data.liveUrl ? "btn-outline" : "btn-primary"}`}
 								>
 									Source on {data.repoHost}
+									<span class="visually-hidden"> (opens in a new tab)</span>
 								</a>
 							)}
 							{data.links.map((link) => (
@@ -112,6 +114,7 @@ const facts = [
 									class="btn btn-outline"
 								>
 									{link.label}
+									<span class="visually-hidden"> (opens in a new tab)</span>
 								</a>
 							))}
 						</div>
@@ -206,6 +209,9 @@ const facts = [
 	}
 
 	.project-crumb a {
+		display: inline-flex;
+		align-items: center;
+		min-height: 32px;
 		color: var(--accent);
 		text-decoration: underline;
 		text-decoration-thickness: 1px;

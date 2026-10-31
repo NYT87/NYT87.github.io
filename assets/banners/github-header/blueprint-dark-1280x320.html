@@ -1,0 +1,47 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=1280">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500&family=Space+Grotesk:wght@500&display=block">
+<style>
+:root{--bg:oklch(0.18 0.01 250);--text:oklch(0.94 0.01 80);--muted:oklch(0.77 0.015 80);--line:oklch(0.55 0.015 250 / 0.8);--faint:oklch(0.4 0.015 250 / 0.45);--brand:oklch(0.75 0.15 50);--surface:oklch(0.23 0.01 250)}
+*{box-sizing:border-box;margin:0}
+html,body{width:1280px;height:320px;overflow:hidden;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+.mono{font-family:"JetBrains Mono",monospace;font-size:17px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.accent{color:var(--brand)}
+h1{font-family:"Space Grotesk",sans-serif;font-weight:500;letter-spacing:-.04em;line-height:1.02;text-wrap:balance}
+.brand{display:inline-flex;align-items:center;gap:12px;line-height:0}
+.brand .mark{height:38px} .brand .word{height:30px}
+
+.c{position:relative;width:1280px;height:320px;padding:48px 72px;display:grid;grid-template-columns:minmax(0,1fr) 552px;column-gap:48px;
+ background-color:var(--bg);
+ background-image:linear-gradient(var(--faint) 1px,transparent 1px),linear-gradient(90deg,var(--faint) 1px,transparent 1px);
+ background-size:32px 32px;background-position:-1px -1px}
+.left{display:grid;grid-template-rows:auto 1fr auto;gap:14px;position:relative}
+.left::before{content:"";position:absolute;inset:-18px -24px;background:var(--bg);opacity:.86;z-index:-1}
+h1{font-size:40px;align-self:center;max-width:24ch}
+.diagram{position:relative;align-self:center;height:224px}
+.box{position:absolute;box-sizing:border-box;height:68px;align-content:center;border:1.5px solid var(--line);background:var(--bg);padding:10px 14px;display:grid;gap:4px;}
+.box .mono{font-size:13px}
+.box b{font-family:"Space Grotesk",sans-serif;font-weight:500;font-size:19px;letter-spacing:-.02em}
+.box.hot{border-color:var(--brand);border-width:2px}
+.box.hot .mono{color:var(--brand)}
+svg{position:absolute;inset:0;overflow:visible}
+svg path{fill:none;stroke:var(--line);stroke-width:1.5}
+svg path.hot{stroke:var(--brand);stroke-width:2}
+
+</style></head><body><div class="c">
+ <div class="left">
+  <p class="mono"><span class="accent">NYT87</span> <span class="accent">/</span> Remote software studio</p>
+  <h1>Designing and engineering products that survive real&#8209;world scale.</h1>
+  <span class="brand"><img class="mark" src="../../../public/assets/logo-icon.png" alt=""><img class="word" src="../../../public/assets/logo-text-white.png" alt="NYT87"></span>
+ </div>
+ <div class="diagram" aria-hidden="true">
+  <svg viewBox="0 0 552 224" width="552" height="224">
+   <path d="M150 42 H168"/><path d="M150 182 H168"/><path d="M168 42 V182"/>
+   <path class="hot" d="M168 112 H186"/><path class="hot" d="M376 112 H412"/>
+  </svg>
+  <div class="box" style="left:0;top:8px;width:150px"><span class="mono">01 · client</span><b>Web &amp; mobile</b></div>
+  <div class="box" style="left:0;top:148px;width:150px"><span class="mono">02 · agents</span><b>MCP &amp; APIs</b></div>
+  <div class="box hot" style="left:186px;top:78px;width:190px"><span class="mono">03 · core</span><b>Backend services</b></div>
+  <div class="box" style="left:412px;top:78px;width:140px"><span class="mono">04 · run</span><b>Cloud infra</b></div>
+ </div>
+</div></body></html>

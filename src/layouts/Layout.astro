@@ -10,7 +10,7 @@ interface Props {
 const {
 	title,
 	description = "NYT87 is a remote software development company building reliable web applications, backend systems, and cloud infrastructure.",
-	image = "/assets/brand.png",
+	image = "/assets/og/site.png",
 	noindex = false,
 } = Astro.props;
 
@@ -172,6 +172,11 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 	a {
 		text-decoration: none;
 		color: inherit;
+	}
+
+	a,
+	button {
+		touch-action: manipulation;
 	}
 
 	img,
