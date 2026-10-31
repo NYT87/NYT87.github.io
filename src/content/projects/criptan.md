@@ -4,6 +4,7 @@ role: "client"
 kind: "Client · Fintech · Mobile app"
 summary: "Senior backend engineering for Criptan, a regulated Spanish crypto investment app, as the studio's main ongoing client engagement."
 liveUrl: "https://criptan.com"
+liveKind: "site"
 liveLabel: "criptan.com"
 links:
   - label: "App Store"

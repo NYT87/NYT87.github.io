@@ -10,7 +10,9 @@ const projects = defineCollection({
 		kind: z.string(),
 		summary: z.string(),
 		liveUrl: z.string().url().optional(),
-		liveLabel: z.string().default("Live app"),
+		/** "app": liveUrl opens the running product; "site": it is a project or product website */
+		liveKind: z.enum(["app", "site"]).default("app"),
+		liveLabel: z.string().default("Website"),
 		repoUrl: z.string().url().optional(),
 		repoHost: z.enum(["GitHub", "GitLab"]).optional(),
 		links: z

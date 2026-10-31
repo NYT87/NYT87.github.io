@@ -32,7 +32,7 @@ const { projects } = Astro.props;
 						rel="noopener noreferrer"
 						class="text-link"
 					>
-						{project.data.role === "studio" ? "Live app" : "Website"}
+						{project.data.liveKind === "app" ? "Live app" : "Website"}
 						<span class="visually-hidden"> for {project.data.name}</span>
 					</a>
 				)}

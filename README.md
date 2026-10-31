@@ -61,10 +61,11 @@ NYT87 helps companies build robust IT projects and contribute to the open-source
 ## Adding a project
 
 Add a Markdown file to `src/content/projects/`. The frontmatter (`name`, `role`, `kind`, `summary`,
-`liveUrl`, `liveLabel`, `repoUrl`, `repoHost`, `links`, `status`, `license`, `stack`, `order`) feeds the Work list on
+`liveUrl`, `liveKind`, `liveLabel`, `repoUrl`, `repoHost`, `links`, `status`, `license`, `stack`, `order`) feeds the Work list on
 the homepage and the header of the project page; the body is the project page's long
-description. `role` is `studio` (default), `client` or `contribution`; `repoUrl` is optional for
-client work with a private codebase. The file name becomes the URL: `bongsu.md` → `/projects/bongsu/`.
+description. `role` is `studio` (default), `client` or `contribution`; `liveKind` is `app` (default) when `liveUrl` opens the running
+product or `site` when it is a project website; `repoUrl` is optional for client work with a
+private codebase. The file name becomes the URL: `bongsu.md` → `/projects/bongsu/`.
 
 ## Commands
 
