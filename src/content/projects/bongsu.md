@@ -2,11 +2,11 @@
 name: "Bongsu"
 kind: "Open source · Self-hosted · Web app"
 summary: "A self-hosted publishing scheduler for creators: Instagram and YouTube Shorts in one queue, where agents can plan but only you approve and publish."
-liveUrl: "https://nyt87.gitlab.io/bongsu/"
+liveUrl: "https://nyt87.github.io/bongsu/"
 liveKind: "site"
 liveLabel: "Project site"
-repoUrl: "https://gitlab.com/nyt87/bongsu"
-repoHost: "GitLab"
+repoUrl: "https://github.com/NYT87/bongsu"
+repoHost: "GitHub"
 status: "Early development"
 license: "MIT"
 stack: ["TypeScript", "Cloudflare Workers", "D1 / SQLite / Postgres", "Docker", "MCP", "REST API"]
@@ -35,4 +35,4 @@ Bongsu runs on Cloudflare Workers with D1, or in Docker on your own server with 
 
 ## Status
 
-Bongsu is in early development under the MIT license and is not yet deployed. The project site, source and roadmap live on GitLab for now.
+Bongsu is in early development under the MIT license and is not yet deployed. The project site, source and roadmap are on GitHub.
