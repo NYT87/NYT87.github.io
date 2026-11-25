@@ -16,11 +16,11 @@
 	"dependencies": {
 		"@nyt87/tokens": "0.1.0",
 		"@nyt87/ui": "0.2.0",
-		"astro": "7.3.8"
+		"astro": "7.4.10"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.5.15",
+		"@biomejs/biome": "2.6.6",
 		"prettier": "3.9.10",
-		"prettier-plugin-astro": "1.1.1"
+		"prettier-plugin-astro": "1.1.2"
 	}
 }
