@@ -15,6 +15,7 @@ NYT87 helps companies build robust IT projects and contribute to the open-source
 - **Framework:** [Astro](https://astro.build) (Static Site Generation)
 - **Styling:** Vanilla CSS with Glassmorphism design
 - **Fonts:** [Outfit](https://fonts.google.com/specimen/Outfit) & [Inter](https://fonts.google.com/specimen/Inter) (Google Fonts)
+- **Design system:** colours, radius and buttons come from [`@nyt87/tokens`](https://github.com/NYT87/design-system) and `@nyt87/ui`; the header and footer are the shared site header and footer markup (plain HTML, no framework; the only script is the 0.45 KB menu behaviour from `@nyt87/ui/menu`). The page keeps the brand's parchment background through a three-token override in `src/layouts/Layout.astro`.
 - **Formatter:** [Biome](https://biomejs.dev) (JS/TS) + [Prettier](https://prettier.io) (Astro files)
 - **Deployment:** GitHub Pages via GitHub Actions
 
@@ -79,7 +80,7 @@ All commands are run from the root of the project:
 
 | Command | Action |
 | :--- | :--- |
-| `npm install` | Install dependencies |
+| `npm install` | Install dependencies. `@nyt87/*` packages come from GitHub Packages and need a token: `export NODE_AUTH_TOKEN=$(gh auth token)` (scope `read:packages`; `gh auth refresh -s read:packages` adds it). |
 | `npm run dev` | Start local dev server at `localhost:4321` |
 | `npm run build` | Build production site to `./dist/` |
 | `npm run preview` | Preview production build locally |

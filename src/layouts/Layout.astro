@@ -1,5 +1,8 @@
 ---
 /** biome-ignore-all lint/correctness/noUnusedVariables: they are used in the layout for structured data */
+import "@nyt87/tokens/tokens.css";
+import "@nyt87/ui/styles.css";
+
 interface Props {
 	title: string;
 	description?: string;
@@ -94,34 +97,24 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 		size-adjust: 102%;
 	}
 
-	/* Tokens are documented in design-system/nyt87/MASTER.md */
+	/* Colour, type scale, radius and the nav height come from @nyt87/tokens (see design-system/nyt87/MASTER.md).
+	   This block holds only what is specific to this site. */
 	:root {
 		color-scheme: light dark;
-		--bg: oklch(0.97 0.01 70);
-		--surface: oklch(0.99 0.008 70);
-		--surface-strong: oklch(1 0.004 70);
-		--text: oklch(0.2 0.01 70);
-		--muted: oklch(0.46 0.015 70);
-		--border: oklch(0.84 0.01 70 / 0.82);
-		--line-strong: oklch(0.74 0.014 70 / 0.9);
-		--brand: oklch(0.63 0.18 45);
-		--brand-strong: oklch(0.5 0.16 43);
-		--brand-fill: oklch(0.55 0.17 44);
-		--brand-text: oklch(0.53 0.16 43);
-		--on-brand: oklch(0.99 0.004 70);
-		--accent: oklch(0.5 0.08 208);
-		--accent-wash: color-mix(in oklch, var(--accent) 7%, transparent);
-		--focus-ring: oklch(0.72 0.16 45 / 0.9);
-		--shadow: 0 16px 34px oklch(0.24 0.02 60 / 0.08);
-		--radius-md: 12px;
-		--radius-sm: 8px;
+		/* The studio site keeps the brand's parchment page; the shared light theme is a lighter warm white. */
+		--bg: #faf4ee;
+		--bg-raised: #fffffc;
+		--bg-sunken: #f3ebe2;
+		/* Same families as the tokens, with the metric-adjusted fallbacks that prevent layout shift while the web fonts load. */
 		--font-heading: "Space Grotesk", "Space Grotesk Fallback", sans-serif;
-		--font-body: "Manrope", "Manrope Fallback", sans-serif;
+		--font-sans: "Manrope", "Manrope Fallback", sans-serif;
 		--font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-		--nav-height: 4.5rem;
+		/* Decorative section rules: lighter than --border-strong, which is for form controls. */
+		--line-strong: oklch(0.74 0.014 70 / 0.9);
+		--link-wash: color-mix(in oklch, var(--link) 7%, transparent);
+		--panel-shadow: 0 16px 34px oklch(0.24 0.02 60 / 0.08);
 		/* Fixed navbar height plus breathing room, for anchor jumps and keyboard focus */
 		--section-anchor-offset: 6rem;
-		--max-width: 1120px;
 		--page-gutter: clamp(1rem, 3vw, 1.4rem);
 	}
 
@@ -141,8 +134,8 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 	}
 
 	body {
-		font-family: var(--font-body);
-		color: var(--text);
+		font-family: var(--font-sans);
+		color: var(--fg);
 		background: var(--bg);
 		line-height: 1.65;
 		text-rendering: optimizeLegibility;
@@ -164,7 +157,7 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 
 	p {
 		margin: 0;
-		color: var(--muted);
+		color: var(--fg-muted);
 		font-size: clamp(1rem, 0.96rem + 0.2vw, 1.1rem);
 		overflow-wrap: break-word;
 	}
@@ -218,11 +211,11 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 		font-size: 0.8rem;
 		letter-spacing: 0.06em;
 		text-transform: uppercase;
-		color: var(--muted);
+		color: var(--fg-muted);
 	}
 
 	.section-index span:first-child {
-		color: var(--brand-text);
+		color: var(--accent-ink);
 	}
 
 	.section-body {
@@ -237,7 +230,7 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 	}
 
 	.lead {
-		color: var(--text);
+		color: var(--fg);
 		font-size: clamp(1.05rem, 1rem + 0.35vw, 1.25rem);
 		max-width: 62ch;
 	}
@@ -248,7 +241,7 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 		font-weight: 400;
 		letter-spacing: 0.06em;
 		text-transform: uppercase;
-		color: var(--muted);
+		color: var(--fg-muted);
 	}
 
 	/* Indexed rows shared by services, work and approach steps */
@@ -264,64 +257,15 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 	}
 
 	.text-link {
-		color: var(--accent);
+		color: var(--link);
 		font-family: var(--font-heading);
 		font-weight: 500;
-		text-decoration: underline;
-		text-decoration-thickness: 1px;
-		text-underline-offset: 0.2em;
+		text-decoration: none;
 		transition: color 0.2s ease;
 	}
 
 	.text-link:hover {
-		color: var(--text);
-	}
-
-	.btn {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		gap: 0.5rem;
-		min-height: 44px;
-		padding: 0.75rem 1.25rem;
-		border: 1px solid transparent;
-		border-radius: var(--radius-sm);
-		font-family: var(--font-heading);
-		font-weight: 500;
-		font-size: 0.95rem;
-		letter-spacing: 0.01em;
-		transition:
-			transform 0.2s ease,
-			box-shadow 0.2s ease,
-			background-color 0.2s ease,
-			border-color 0.2s ease,
-			color 0.2s ease;
-	}
-
-	.btn-primary {
-		color: var(--on-brand);
-		background: linear-gradient(135deg, var(--brand-strong), var(--brand-fill));
-		box-shadow: 0 6px 16px color-mix(in oklch, var(--brand) 20%, transparent);
-	}
-
-	.btn-primary:hover {
-		transform: translateY(-1px);
-		box-shadow: 0 10px 22px color-mix(in oklch, var(--brand) 26%, transparent);
-	}
-
-	.btn-outline {
-		color: var(--text);
-		border-color: var(--line-strong);
-		background: transparent;
-	}
-
-	.btn-outline:hover {
-		border-color: var(--accent);
-		background: var(--accent-wash);
-	}
-
-	.btn:active {
-		transform: translateY(1px);
+		color: var(--fg);
 	}
 
 	.skip-link {
@@ -332,7 +276,7 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 		z-index: 200;
 		padding: 0.7rem 1rem;
 		border-radius: var(--radius-sm);
-		background: var(--text);
+		background: var(--fg);
 		color: var(--bg);
 		font-weight: 700;
 		transition: transform 0.2s ease;
@@ -343,7 +287,7 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 	}
 
 	:focus-visible {
-		outline: 3px solid var(--focus-ring);
+		outline: 3px solid var(--ring);
 		outline-offset: 3px;
 		border-radius: var(--radius-sm);
 	}
@@ -381,19 +325,11 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow";
 		}
 	}
 
+	/* Dark surfaces, text and accent colours come from @nyt87/tokens. Only the site-specific values change here. */
 	@media (prefers-color-scheme: dark) {
 		:root {
-			--bg: oklch(0.18 0.01 250);
-			--surface: oklch(0.23 0.01 250);
-			--surface-strong: oklch(0.26 0.012 250);
-			--text: oklch(0.94 0.01 80);
-			--muted: oklch(0.77 0.015 80);
-			--border: oklch(0.4 0.015 250 / 0.7);
 			--line-strong: oklch(0.55 0.015 250 / 0.8);
-			--brand-text: oklch(0.75 0.15 50);
-			--accent: oklch(0.76 0.09 208);
-			--focus-ring: oklch(0.73 0.16 45 / 0.95);
-			--shadow: 0 18px 38px oklch(0.02 0.01 250 / 0.34);
+			--panel-shadow: 0 18px 38px oklch(0.02 0.01 250 / 0.34);
 		}
 	}
 

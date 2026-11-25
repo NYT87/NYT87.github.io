@@ -1,6 +1,10 @@
 ---
 /** biome-ignore-all lint/correctness/noUnusedImports: they are used in the template */
 /** biome-ignore-all lint/correctness/noUnusedVariables: they are used in the template */
+/**
+ * The primary navigation: the shared site header from @nyt87/ui, as plain HTML.
+ * Its only script is the 0.45 KB menu behaviour that opens the mobile panel.
+ */
 import { getImage, Image } from "astro:assets";
 import logoIcon from "../assets/brand/logo-icon.png";
 import logoText from "../assets/brand/logo-text.png";
@@ -12,8 +16,13 @@ interface Props {
 }
 
 const { current } = Astro.props;
-const currentAttr = (key: "projects" | "team") =>
-	current === key ? "page" : undefined;
+
+const links = [
+	{ label: "Services", href: "/#services", page: undefined },
+	{ label: "Work", href: "/#projects", page: "projects" },
+	{ label: "Approach", href: "/#about", page: undefined },
+	{ label: "Team", href: "/#team", page: "team" },
+];
 
 const logoTextDark = await getImage({
 	src: logoTextWhite,
@@ -22,421 +31,92 @@ const logoTextDark = await getImage({
 });
 ---
 
-<nav class="navbar" aria-label="Primary">
-	<div class="container nav-content">
-		<a href="/" class="logo-link" aria-label="NYT87 home">
-			<Image
-				src={logoIcon}
-				alt="NYT87 Icon"
-				height={28}
-				densities={[1, 2]}
-				loading="eager"
-				class="nav-brand-img icon"
-			/>
-			<picture>
-				<source
-					srcset={logoTextDark.srcSet.attribute || logoTextDark.src}
-					media="(prefers-color-scheme: dark)"
-				/>
-				<Image
-					src={logoText}
-					alt=""
-					height={24}
-					densities={[1, 2]}
-					loading="eager"
-					class="nav-brand-img text"
-				/>
-			</picture>
-		</a>
-		<div class="nav-links">
-			<a href="/#services">Services</a>
-			<a href="/#projects" aria-current={currentAttr("projects")}>
-				Work
+<div class="site-nav">
+	<header class="ds-header">
+		<div class="ds-container ds-header__bar">
+			<a class="ds-brand" href="/" aria-label="NYT87 home">
+				<span class="ds-brand__mark" aria-hidden="true">
+					<Image src={logoIcon} alt="" height={28} densities={[1, 2]} loading="eager" />
+				</span>
+				<span class="ds-brand__name">
+					<picture>
+						<source
+							srcset={logoTextDark.srcSet.attribute || logoTextDark.src}
+							media="(prefers-color-scheme: dark)"
+						/>
+						<Image src={logoText} alt="" height={24} densities={[1, 2]} loading="eager" />
+					</picture>
+				</span>
 			</a>
-			<a href="/#about">Approach</a>
-			<a href="/#team" aria-current={currentAttr("team")}>
-				Team
-			</a>
-			<a href="/#contact" class="btn btn-outline nav-cta">
-				Contact
-			</a>
-		</div>
-		<div class="nav-menu">
-			<button
-				type="button"
-				class="nav-menu-button"
-				id="mobile-nav-trigger"
-				aria-label="Open navigation menu"
-				aria-expanded="false"
-				aria-controls="mobile-nav-panel"
-			>
-				<span class="nav-menu-icon" aria-hidden="true"></span>
-			</button>
-			<div
-				id="mobile-nav-panel"
-				class="nav-menu-panel"
-				aria-labelledby="mobile-nav-trigger"
-				aria-hidden="true"
-				tabindex="-1"
-				hidden
-			>
-				<a href="/#services">Services</a>
-				<a href="/#projects" aria-current={currentAttr("projects")}>
-					Work
+			<nav class="ds-header__nav" aria-label="Primary">
+				{links.map((l) => (
+					<a
+						class="ds-header__link"
+						href={l.href}
+						aria-current={l.page && l.page === current ? "page" : undefined}
+					>
+						{l.label}
+					</a>
+				))}
+			</nav>
+			<div class="ds-header__actions">
+				<a class="ds-btn ds-btn--secondary ds-btn--md" href="/#contact">
+					Contact
 				</a>
-				<a href="/#about">Approach</a>
-				<a href="/#team" aria-current={currentAttr("team")}>
-					Team
-				</a>
-				<a href="/#contact">Contact</a>
+				<button
+					class="ds-header__menu"
+					type="button"
+					aria-expanded="false"
+					aria-controls="nav-panel"
+					aria-label="Open navigation menu"
+					data-label-open="Open navigation menu"
+					data-label-close="Close navigation menu"
+				>
+					<span class="ds-header__burger" aria-hidden="true"></span>
+				</button>
 			</div>
-			<noscript>
-				<div class="nav-menu-panel nav-menu-panel-fallback">
-					<a href="/#services">Services</a>
-					<a href="/#projects" aria-current={currentAttr("projects")}>
-						Work
-					</a>
-					<a href="/#about">Approach</a>
-					<a href="/#team" aria-current={currentAttr("team")}>
-						Team
-					</a>
-					<a href="/#contact">Contact</a>
-				</div>
-			</noscript>
 		</div>
-	</div>
-</nav>
+		<nav id="nav-panel" class="ds-header__panel" aria-label="Primary (menu)" hidden>
+			<div class="ds-container">
+				{links.map((l) => (
+					<a
+						class="ds-header__link"
+						href={l.href}
+						aria-current={l.page && l.page === current ? "page" : undefined}
+					>
+						{l.label}
+					</a>
+				))}
+			</div>
+		</nav>
+		<noscript>
+			<nav class="ds-header__panel" aria-label="Primary (no script)">
+				<div class="ds-container">
+					{links.map((l) => (
+						<a
+							class="ds-header__link"
+							href={l.href}
+							aria-current={l.page && l.page === current ? "page" : undefined}
+						>
+							{l.label}
+						</a>
+					))}
+				</div>
+			</nav>
+		</noscript>
+	</header>
+</div>
 
 <script>
-	const navMenu = document.querySelector(".nav-menu");
-	const menuButton = navMenu?.querySelector(".nav-menu-button");
-	const menuPanel = navMenu?.querySelector(".nav-menu-panel");
-	const menuLinks = menuPanel ? Array.from(menuPanel.querySelectorAll("a")) : [];
-	const mobileBreakpoint = window.matchMedia("(max-width: 900px)");
-
-	if (navMenu && menuButton instanceof HTMLButtonElement && menuPanel instanceof HTMLElement) {
-		const controller = new AbortController();
-		const { signal } = controller;
-		let previousFocus = null;
-
-		const focusFirstLink = () => {
-			const firstLink = menuLinks[0];
-			if (firstLink instanceof HTMLElement) {
-				firstLink.focus();
-			} else {
-				menuPanel.focus();
-			}
-		};
-
-		const setMenuState = (open, options = {}) => {
-			const { restoreFocus = false } = options;
-			navMenu.dataset.open = open ? "true" : "false";
-			menuButton.setAttribute("aria-expanded", String(open));
-			menuButton.setAttribute(
-				"aria-label",
-				open ? "Close navigation menu" : "Open navigation menu"
-			);
-			menuPanel.hidden = !open;
-			menuPanel.setAttribute("aria-hidden", String(!open));
-
-			if (open) {
-				previousFocus =
-					document.activeElement instanceof HTMLElement ? document.activeElement : null;
-				requestAnimationFrame(focusFirstLink);
-			} else if (restoreFocus) {
-				(previousFocus ?? menuButton).focus();
-				previousFocus = null;
-			}
-		};
-
-		const closeMenu = (options = {}) => setMenuState(false, options);
-		const toggleMenu = () => {
-			if (navMenu.dataset.open === "true") {
-				closeMenu({ restoreFocus: true });
-				return;
-			}
-
-			setMenuState(true);
-		};
-
-		setMenuState(false);
-
-		menuButton.addEventListener("click", toggleMenu, { signal });
-
-		menuLinks.forEach((link) => {
-			link.addEventListener("click", () => closeMenu(), { signal });
-		});
-
-		document.addEventListener(
-			"click",
-			(event) => {
-				if (
-					navMenu.dataset.open === "true" &&
-					event.target instanceof Node &&
-					!navMenu.contains(event.target)
-				) {
-					closeMenu();
-				}
-			},
-			{ signal }
-		);
-
-		document.addEventListener(
-			"keydown",
-			(event) => {
-				if (event.key === "Escape") {
-					closeMenu({ restoreFocus: true });
-					return;
-				}
-
-				if (
-					event.key === "Tab" &&
-					navMenu.dataset.open === "true" &&
-					menuLinks.length > 0 &&
-					document.activeElement instanceof HTMLElement
-				) {
-					const firstLink = menuLinks[0];
-					const lastLink = menuLinks[menuLinks.length - 1];
-
-					if (event.shiftKey && document.activeElement === firstLink) {
-						event.preventDefault();
-						lastLink.focus();
-					} else if (!event.shiftKey && document.activeElement === lastLink) {
-						event.preventDefault();
-						firstLink.focus();
-					}
-				}
-			},
-			{ signal }
-		);
-
-		mobileBreakpoint.addEventListener(
-			"change",
-			(event) => {
-				if (!event.matches) {
-					closeMenu();
-				}
-			},
-			{ signal }
-		);
-
-		window.addEventListener(
-			"hashchange",
-			() => {
-				closeMenu();
-			},
-			{ signal }
-		);
-
-		window.addEventListener(
-			"pagehide",
-			() => {
-				controller.abort();
-			},
-			{ once: true }
-		);
-	}
+	// Client script (bundled by Astro): opens and closes the mobile menu. 0.45 KB gzipped, no framework.
+	import "@nyt87/ui/menu";
 </script>
 
 <style>
-	.navbar {
+	/* Fixed, so page sections keep their padding-top of var(--nav-height) */
+	.site-nav {
 		position: fixed;
 		inset: 0 0 auto;
 		z-index: 60;
-		background: var(--bg);
-		border-bottom: 1px solid var(--border);
-	}
-
-	.nav-content {
-		height: var(--nav-height);
-		display: grid;
-		grid-template-columns: auto 1fr auto;
-		align-items: center;
-		gap: 1rem;
-	}
-
-	.logo-link {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.55rem;
-		min-width: 0;
-		line-height: 0;
-	}
-
-	.logo-link picture {
-		display: flex;
-		align-items: center;
-		min-width: 0;
-	}
-
-	.nav-brand-img {
-		height: 24px;
-		width: auto;
-		display: block;
-	}
-
-	.nav-brand-img.icon {
-		height: 28px;
-		flex-shrink: 0;
-	}
-
-	.nav-links {
-		display: flex;
-		align-items: center;
-		justify-content: flex-end;
-		justify-self: end;
-		gap: clamp(0.25rem, 1.4vw, 1rem);
-		font-family: var(--font-heading);
-		font-weight: 500;
-		font-size: 0.92rem;
-	}
-
-	.nav-links a:not(.nav-cta) {
-		display: inline-flex;
-		align-items: center;
-		min-height: 44px;
-		padding: 0.35rem 0.6rem;
-		color: var(--muted);
-		transition: color 0.2s ease;
-	}
-
-	.nav-links a[aria-current="page"],
-	.nav-menu-panel a[aria-current="page"] {
-		color: var(--text);
-		text-decoration: underline;
-		text-decoration-color: var(--brand-text);
-		text-decoration-thickness: 2px;
-		text-underline-offset: 0.35em;
-	}
-
-	.nav-links a:not(.nav-cta):hover {
-		color: var(--text);
-	}
-
-	.nav-cta {
-		margin-left: 0.5rem;
-		padding-block: 0.5rem;
-	}
-
-	.nav-menu {
-		position: relative;
-		width: 44px;
-		height: 44px;
-		display: none;
-		align-self: center;
-	}
-
-	.nav-menu-button {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 44px;
-		height: 44px;
-		padding: 0;
-		border: 1px solid var(--border);
-		border-radius: var(--radius-sm);
-		background: transparent;
-		color: var(--text);
-		cursor: pointer;
-		transition: border-color 0.2s ease;
-	}
-
-	.nav-menu-button:hover {
-		border-color: var(--line-strong);
-	}
-
-	.nav-menu-icon {
-		position: relative;
-		display: block;
-		width: 16px;
-		height: 2px;
-		border-radius: 999px;
-		background: currentColor;
-		transition: background-color 0.2s ease;
-	}
-
-	.nav-menu-icon::before,
-	.nav-menu-icon::after {
-		content: "";
-		position: absolute;
-		left: 0;
-		width: 16px;
-		height: 2px;
-		border-radius: 999px;
-		background: currentColor;
-		transition:
-			transform 0.24s ease,
-			top 0.24s ease;
-	}
-
-	.nav-menu-icon::before {
-		top: -5px;
-	}
-
-	.nav-menu-icon::after {
-		top: 5px;
-	}
-
-	.nav-menu[data-open="true"] .nav-menu-icon {
-		background: transparent;
-	}
-
-	.nav-menu[data-open="true"] .nav-menu-icon::before {
-		top: 0;
-		transform: rotate(45deg);
-	}
-
-	.nav-menu[data-open="true"] .nav-menu-icon::after {
-		top: 0;
-		transform: rotate(-45deg);
-	}
-
-	.nav-menu-panel {
-		position: absolute;
-		right: 0;
-		top: calc(100% + 0.6rem);
-		width: min(240px, calc(100vw - 2rem));
-		padding: 0.4rem;
-		display: grid;
-		gap: 0.1rem;
-		background: var(--surface-strong);
-		border: 1px solid var(--border);
-		border-radius: var(--radius-md);
-		box-shadow: var(--shadow);
-	}
-
-	.nav-menu-panel[hidden] {
-		display: none !important;
-	}
-
-	.nav-menu-panel a {
-		display: flex;
-		align-items: center;
-		min-height: 44px;
-		padding: 0.6rem 0.85rem;
-		border-radius: var(--radius-sm);
-		font-family: var(--font-heading);
-		font-weight: 500;
-		transition: background-color 0.2s ease;
-	}
-
-	.nav-menu-panel a:hover {
-		background: var(--accent-wash);
-	}
-
-	.nav-menu-panel-fallback {
-		position: static;
-		margin-top: 0.6rem;
-	}
-
-	@media (max-width: 900px) {
-		.nav-links {
-			display: none;
-		}
-
-		.nav-menu {
-			display: grid;
-			justify-self: end;
-		}
 	}
 </style>

@@ -63,7 +63,7 @@ const { projects } = Astro.props;
 	}
 
 	.work-row:hover {
-		background: var(--accent-wash);
+		background: var(--link-wash);
 	}
 
 	.work-head {
@@ -76,16 +76,13 @@ const { projects } = Astro.props;
 	}
 
 	.work-title-link {
-		text-decoration: underline;
-		text-decoration-color: transparent;
-		text-decoration-thickness: 1px;
-		text-underline-offset: 0.2em;
-		transition: text-decoration-color 0.2s ease;
+		text-decoration: none;
+		transition: color 0.2s ease;
 	}
 
 	.work-title-link:hover,
 	.work-row:hover .work-title-link {
-		text-decoration-color: var(--accent);
+		color: var(--link);
 	}
 
 	.work-desc {
