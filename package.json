@@ -14,9 +14,9 @@
 		"og": "astro build && bash scripts/og-export.sh"
 	},
 	"dependencies": {
-		"@nyt87/icons": "1.0.0",
-		"@nyt87/tokens": "0.1.0",
-		"@nyt87/ui": "0.2.1",
+		"@nyt87/icons": "1.0.1",
+		"@nyt87/tokens": "0.1.2",
+		"@nyt87/ui": "0.2.3",
 		"astro": "7.4.10"
 	},
 	"devDependencies": {

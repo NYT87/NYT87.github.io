@@ -80,7 +80,7 @@ All commands are run from the root of the project:
 
 | Command | Action |
 | :--- | :--- |
-| `npm install` | Install dependencies. `@nyt87/*` packages come from GitHub Packages and need a token: `export NODE_AUTH_TOKEN=$(gh auth token)` (scope `read:packages`; `gh auth refresh -s read:packages` adds it). |
+| `npm install` | Install dependencies. `@nyt87/*` packages are public on npmjs.org and need no token. A version published less than 14 days ago is blocked by `min-release-age`; for a first-party package add `--min-release-age=0`. |
 | `npm run dev` | Start local dev server at `localhost:4321` |
 | `npm run build` | Build production site to `./dist/` |
 | `npm run preview` | Preview production build locally |
